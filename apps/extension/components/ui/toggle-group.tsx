@@ -2,19 +2,25 @@ import type { ComponentProps } from 'preact';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 
-const toggleGroupVariants = cva('grid shrink-0 border-(length:--rule-width) border-solid border-border', {
+const toggleGroupVariants = cva('grid shrink-0 rule border-border', {
   variants: {
-    variant: {
-      default: '[&>button]:h-11 [&>button]:text-sm [&>button+button]:border-l-(length:--rule-width)',
-      tabs: 'grid-cols-4 [&>button]:h-11 [&>button]:text-xs [&>button+button]:border-l-(length:--rule-width)',
-      settings: '[&>button]:h-9 [&>button]:text-xs [&>button+button]:border-l-(length:--rule-width)',
-      framework: 'grid-cols-2 [&>button]:h-10 [&>button]:text-xs [&>button:nth-child(odd)]:border-r-(length:--rule-width) [&>button:nth-child(-n+2)]:border-b-(length:--rule-width)',
+    /** One row with a rule between items (set the columns with `grid-cols-*`), or a 2 × 2 grid. */
+    layout: {
+      row: '[&>button+button]:rule-l',
+      grid: 'grid-cols-2 [&>button:nth-child(odd)]:rule-r [&>button:nth-child(-n+2)]:rule-b',
+    },
+    /** Item height and label size: 44px/13px, 44px/12px, 40px/12px, 36px/12px. */
+    size: {
+      lg: '[&>button]:h-11 [&>button]:text-sm',
+      md: '[&>button]:h-11 [&>button]:text-xs',
+      sm: '[&>button]:h-10 [&>button]:text-xs',
+      xs: '[&>button]:h-9 [&>button]:text-xs',
     },
   },
-  defaultVariants: { variant: 'default' },
+  defaultVariants: { layout: 'row', size: 'lg' },
 });
 
-const toggleGroupItemVariants = cva('rounded-md border-0 border-solid border-border p-0 font-mono font-medium tracking-label', {
+const toggleGroupItemVariants = cva('rounded-md border-border p-0 font-mono font-medium tracking-label', {
   variants: {
     selected: {
       true: 'bg-foreground text-background',
@@ -26,8 +32,8 @@ const toggleGroupItemVariants = cva('rounded-md border-0 border-solid border-bor
 type ToggleGroupProps = ComponentProps<'div'> & VariantProps<typeof toggleGroupVariants>;
 type ToggleGroupItemProps = ComponentProps<'button'> & VariantProps<typeof toggleGroupItemVariants> & { selected: boolean };
 
-export function ToggleGroup({ variant, class: className, ...props }: ToggleGroupProps) {
-  return <div class={cn(toggleGroupVariants({ variant }), className as string)} {...props} />;
+export function ToggleGroup({ layout, size, class: className, ...props }: ToggleGroupProps) {
+  return <div class={cn(toggleGroupVariants({ layout, size }), className as string)} {...props} />;
 }
 
 export function ToggleGroupItem({ selected, class: className, ...props }: ToggleGroupItemProps) {

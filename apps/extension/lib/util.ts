@@ -49,6 +49,9 @@ export function metaLine(img: OgImage): string {
   return [img.width && img.height ? `${img.width} × ${img.height}` : '', img.format || '', formatBytes(img.bytes)].filter(Boolean).join(' · ');
 }
 
+/** "OG:IMAGE + TWITTER:IMAGE": every tag that points at the image. */
+export const tagLine = (img: OgImage): string => img.tags.join(' + ').toUpperCase();
+
 export const basename = (path: string): string => path.split(/[\\/]/).pop() || path;
 
 /** The plain checks shown on the link preview screen. */

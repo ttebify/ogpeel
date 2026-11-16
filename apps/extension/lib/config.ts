@@ -4,7 +4,7 @@ export const SITE_PAGES = { pricing: SITE + '/#pricing', coffee: SITE + '/#coffe
 
 export const FREE_PROMPTS = 2;
 
-/** Lemon Squeezy product id for "Unlimited prompts". 0 = not set yet: any key Lemon Squeezy activates is accepted. */
-export const LEMON_PRODUCT_ID = 0;
+/** Public half of the pair the worker signs keys with (`pnpm --filter @ogpeel/worker keygen`). Safe to publish. */
+export const LICENSE_PUBLIC_KEY = 'zeFOr5h8OqIncwuUqYhPdtRYVNl+cGqwI2g5UEg1lZY=';
 /** Accepted only in a development build, so the unlock flow can be tried before the product exists. */
 export const DEV_KEY = 'OGPEEL-TEST-TEST-TEST';

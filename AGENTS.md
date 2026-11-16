@@ -13,23 +13,24 @@ This file is the single set of instructions for every coding agent. `CLAUDE.md` 
 | `pnpm test` | Runs tests in each implemented workspace (extension: Vitest, happy-dom) |
 | `pnpm build` | Builds implemented workspaces; extension store build in `apps/extension/.output/chrome-mv3` |
 | `pnpm build:e2e && pnpm smoke [url]` | Loads the extension in a real browser, clicks through it, saves screenshots to `apps/extension/.output/smoke/` |
+| `pnpm --filter @ogpeel/frontend test` | Builds the site and checks every page against `design/site/*.png` pixel by pixel, plus axe and keyboard tests |
 | `pnpm icons` | Regenerates `apps/extension/public/icon/*.png` |
 
 A change is done when typecheck, tests and build pass, and for anything visible in the popup, when the smoke run's screenshots look right. Look at the screenshots; don't assume.
 
 ## Layout
 
-pnpm workspaces under `apps/`: `extension` is implemented; `worker` (payment webhooks and license delivery) and `frontend` (ogpeel.com) are placeholders. Their frameworks, runtimes and deployments are not selected. Root build, test and typecheck run workspace scripts where defined. Extension commands can also run through `pnpm --filter @ogpeel/extension <command>`.
+pnpm workspaces under `apps/`: `extension` and `worker` (a Cloudflare Worker: Bachs checkout and key email) are implemented; `frontend` (ogpeel.com) is a static Astro site; its deployment is not selected. `packages/` holds only what must be identical in more than one app: `packages/theme` is the paper look (colours, fonts, theme tokens) used by both the popup and the site, `packages/license` is the key format, and `packages/pricing` is the price, the coffee and the refund window that the popup, the site and the key email all quote. Components are not shared: the popup is Preact and the site is Astro, so each app keeps its own, built from the theme's tokens. Root build, test and typecheck run workspace scripts where defined. Extension commands can also run through `pnpm --filter @ogpeel/extension <command>`.
 
 The extension paths below are relative to `apps/extension/`; `design/` remains at the repository root.
 
-- `entrypoints/popup/app.tsx` – all state and actions. `screens/*.tsx` – one presentational component per screen, `({ s, a }: ScreenProps)`. `components/ui/` – shared controls styled with Tailwind utilities. `entrypoints/popup/style.css` – bundled fonts, theme tokens and base styles.
+- `entrypoints/popup/app.tsx` – all state and actions. `screens/*.tsx` – one presentational component per screen, `({ s, a }: ScreenProps)`. `screens/parts.tsx` – pieces more than one screen uses (headers, the error line). `components/ui/` – the popup's controls, with their `cva` variants. `entrypoints/popup/style.css` – popup-only sizes on top of `@ogpeel/theme`.
 - `lib/types.ts` – the contract between logic and screens. Change it first when a screen needs new data.
-- `lib/read-page.ts` – runs inside the visited page. `lib/browser-actions.ts` – downloads, clipboard, tabs. `lib/prompt.ts` – the developer prompt. `lib/license.ts` – key check. `lib/config.ts` – prices, URLs, product id.
+- `lib/read-page.ts` – runs inside the visited page. `lib/browser-actions.ts` – downloads, clipboard, tabs. `lib/prompt.ts` – the developer prompt. `lib/license.ts` – key check, on the device. `lib/config.ts` – URLs, the free prompt count, the public key that keys are checked against.
 - `design/` – every design, grouped by where it's used. Each one is a pair with the same name: `name.dc.html` is the source of truth (exact colours, sizes, spacing in inline styles) and `name.png` is how it looks.
   - `design/extension/` – the popup screens, the brand board (`main`) and the icons.
   - `design/store/` – the store screenshots (`shot1`–`shot5`, 1280×800), the small tile (`promo`, 440×280) and the marquee (1400×560). The PNGs are the files to upload.
-  - `design/site/` – the website pages, the receipt email and the site's share image. Not built yet.
+  - `design/site/` – the website pages, the receipt email and the site's share image. The pages are built in `apps/frontend/` and tested against these PNGs.
 - `tests/` – unit tests. `scripts/` – icons and the smoke test.
 
 ## Project rules
@@ -37,7 +38,7 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 **Privacy is the product.** These are promises made on the store listing and the privacy page.
 - Permissions stay `activeTab`, `scripting`, `downloads`, `storage`, `clipboardWrite`. Never add `<all_urls>` or any host permission to the store build. `OGPEEL_E2E=1` adds broad access for the smoke test only.
 - Nothing runs until the icon is clicked: no background script, no content script that loads on its own.
-- No network requests except the Lemon Squeezy license check and loading the image the page names. No analytics, no error reporting, no remote fonts or code.
+- No network requests except loading the image the page names. A key is checked on the device, never sent. No analytics, no error reporting, no remote fonts or code.
 - Access to an image's host is asked for one host at a time, only when Copy image needs it.
 - If a change would make the privacy page or store listing untrue, stop and ask.
 
@@ -48,20 +49,24 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 - Logic goes in `app.tsx` or `lib/`; screens only render `s` and call `a`.
 - Import across folders with `@/` (the extension root, e.g. `@/lib/types`); use `./` only for files in the same folder.
 - Reading tags correctly is the core. Any change to `read-page.ts` comes with a test case.
-- The worker workspace is reserved for the planned server component. This restructuring does not authorize implementing payment or licensing changes; agree on that scope before adding server behavior.
+- A change to a page of the site starts in its design: edit `design/site/<name>.dc.html`, export the PNG again, then change the page until `pnpm --filter @ogpeel/frontend test` passes.
+- A lost key is answered by hand (ogpeel.com/key gives an address; `pnpm --filter @ogpeel/worker make-key` prints the key). The thanks page shows no key; it is only emailed.
+- The worker (`apps/worker/`) does two things: `GET /buy` starts a Bachs checkout, `POST /webhook` emails a signed key when Bachs reports the payment. It stores nothing, and the extension never contacts it. Ask before adding a route or storing anything.
+- The key format lives in `packages/license/`: the worker signs, the extension verifies. A change there, or a new signing pair, stops every key already sold from working.
+- Secrets (Bachs keys, the Resend key, the private signing key) live in `apps/worker/.dev.vars` and Wrangler secrets, never in the repository.
 
 **Design**
 - Match the designs in `design/`. Paper look: square corners, 1.5px ink rules, a double rule under headers, depth as a 3px offset ink block, never a soft shadow or a gradient.
-- Colours only through the shadcn-named CSS variables in `style.css` (`--background`, `--card`, `--foreground`, `--muted`, `--muted-foreground`, `--primary`, `--primary-foreground`, `--border`, `--ring`), so the night look keeps working. Vermilion (`--primary`) is for actions that save a file or pay.
-- Sizes come from theme tokens: the 4px `--spacing` scale, `text-xs/sm/base/2xl/display`, `leading-heading/body`, `tracking-label/brand/display`, `--rule-width` for rules, `aspect-share`. Reach for an arbitrary `[value]` only for a true one-off.
-- Components follow shadcn: `cva` variants and `cn` from the `cn` package.
+- Colours only through the shadcn-named CSS variables in `packages/theme/theme.css` (`--background`, `--card`, `--foreground`, `--muted`, `--muted-foreground`, `--primary`, `--primary-foreground`, `--border`, `--ring`), so the night look keeps working. Vermilion (`--primary`) is for actions that save a file or pay.
+- Sizes come from theme tokens: the 4px `--spacing` scale, `text-xs/sm/base/2xl/display`, `leading-heading/body`, `tracking-label/brand/display`, `rule` / `rule-b` / `rule-t`… for the 1.5px rules, `aspect-share`. Borders are solid and zero-width unless a utility sets a width, so never write `border-0` or `border-solid`. Reach for an arbitrary `[value]` only for a true one-off.
+- Components follow shadcn: `cva` variants and `cn` from the `cn` package. `cn` reads any unknown `border-*` class as a colour and drops it next to `border-border`; that is why the rule width has its own `rule*` utilities.
 - Use semantic Tailwind utilities mapped to those tokens. Put repeated control styling in component variants rather than custom CSS classes; use utilities directly for screen layouts.
 - Newsreader for words a person reads, IBM Plex Mono (uppercase) for labels and file facts. Fonts are bundled, never loaded from a CDN.
 - The popup is exactly 360 × 600. Long content scrolls inside its own box.
 - Real `<button>`s, `aria-label` on icon-only buttons, a visible focus outline. No emoji.
 - Screen copy is plain and for users, not developers. No screen explains how a feature works inside. Don't promise in copy what the code doesn't do.
 
-**Not decided, don't change without asking:** the $9 price, the $3 coffee, the 14-day refund, Lemon Squeezy as the provider (`lib/config.ts`). `LEMON_PRODUCT_ID` is 0 until the product exists; the dev-only key `OGPEEL-TEST-TEST-TEST` works in `pnpm dev` and must never work in a store build.
+**Not decided, don't change without asking:** the $9 price, the $3 coffee, the 14-day refund (all three in `packages/pricing`, and as plain text in the designs), Bachs as the payment provider and Resend for the key email (`apps/worker/`). `BACHS_PRODUCT_ID` in `apps/worker/wrangler.jsonc` is empty until the product exists, and no key is sent while it is; the dev-only key `OGPEEL-TEST-TEST-TEST` works in `pnpm dev` and must never work in a store build.
 
 **Git:** commit, push or open a PR only when asked. Never commit `.output`, `.wxt` or `node_modules`.
 

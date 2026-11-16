@@ -1,0 +1,19 @@
+{
+  "name": "@ogpeel/license",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Ogpeel key format: the worker signs keys, the extension checks them on the device.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

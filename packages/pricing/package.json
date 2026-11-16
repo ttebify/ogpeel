@@ -1,0 +1,11 @@
+{
+  "name": "@ogpeel/pricing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The price, the coffee and the refund window that the popup, ogpeel.com and the key email all quote.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  }
+}

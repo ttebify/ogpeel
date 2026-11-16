@@ -5,3 +5,5 @@ node_modules
 *.log
 web-ext.config.ts
 .pnpm-store
+.dev.vars
+.wrangler

@@ -1,0 +1,7 @@
+---
+import Dot from './dot.astro';
+
+interface Props { href: string }
+const { href } = Astro.props;
+---
+<a href={href} class="text-3xl font-semibold no-underline">Ogpeel<Dot /></a>

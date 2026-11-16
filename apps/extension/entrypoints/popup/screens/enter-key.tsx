@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Frame } from '@/components/ui/frame';
 import { useState } from 'preact/hooks';
+import { Button } from '@/components/ui/button';
+import { Frame } from '@/components/ui/frame';
+import { Input } from '@/components/ui/input';
 import type { ScreenProps } from '@/lib/types';
 import { NavHead } from './parts';
 
@@ -25,7 +25,7 @@ export function EnterKey({ s, a }: ScreenProps) {
   return (
     <Frame>
       <NavHead a={a} to="unlock">Enter your key</NavHead>
-      <p class="m-0 mt-6 text-base leading-body">It's in the email from your payment, and on the page you saw after paying.</p>
+      <p class="m-0 mt-6 text-base leading-body">It's in the email we sent when you paid.</p>
       <label for="k" class="mt-6 font-mono text-xs tracking-label">LICENSE KEY</label>
       <Input
         id="k"
@@ -35,11 +35,11 @@ export function EnterKey({ s, a }: ScreenProps) {
         spellcheck={false}
         aria-invalid={s.keyError}
         aria-describedby={s.keyError ? 'k-err' : undefined}
-        onInput={(e) => { setKey((e.target as HTMLInputElement).value); a.clearKeyError(); }}
+        onInput={(e) => { setKey(e.currentTarget.value); a.clearKeyError(); }}
         onKeyDown={(e) => { if (e.key === 'Enter') submit(); }}
       />
       {s.keyError && (
-        <div id="k-err" role="alert" class="mt-2 text-base text-primary">That key doesn't match. Check for a missing letter, or find it again on ogpeel.com/key.</div>
+        <div id="k-err" role="alert" class="mt-2 text-base text-primary">That key doesn't match. Check for a missing letter, or copy it again from your email.</div>
       )}
       <div class="mt-auto flex flex-col gap-2">
         <Button variant="solid" disabled={!!s.busy} onClick={submit}>{checking ? 'CHECKING…' : 'UNLOCK'}</Button>

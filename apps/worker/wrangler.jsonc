@@ -1,0 +1,17 @@
+{
+  "name": "ogpeel-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "vars": {
+    // Sandbox until launch. Live: https://api.bachs.io
+    "BACHS_API_URL": "https://sandbox-api.bachs.io",
+    // The "Unlimited prompts" product. Empty = no product yet: no key is ever sent.
+    "BACHS_PRODUCT_ID": "",
+    // Where Bachs sends the buyer after paying.
+    "SUCCESS_URL": "https://ogpeel.com/thanks",
+    // Must be an address on a domain verified with Resend.
+    "MAIL_FROM": "Ogpeel <hello@ogpeel.com>"
+  }
+  // Secrets, set with `wrangler secret put <NAME>` (locally: .dev.vars):
+  // BACHS_SECRET_KEY, BACHS_WEBHOOK_SECRET, LICENSE_PRIVATE_KEY, RESEND_API_KEY
+}

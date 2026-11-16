@@ -1,0 +1,77 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import '@ogpeel/theme/theme.css';
+
+/* Site-only sizes; colours, fonts and shared tokens come from @ogpeel/theme. Values are from design/site/. */
+@theme inline {
+  --text-lg: 18px;
+  --text-lg--line-height: inherit;
+  --text-prose: 19px;
+  --text-prose--line-height: inherit;
+  --text-xl: 20px;
+  --text-xl--line-height: inherit;
+  --text-intro: 22px;
+  --text-intro--line-height: inherit;
+  --text-title: 28px;
+  --text-title--line-height: inherit;
+  --text-3xl: 32px;
+  --text-3xl--line-height: inherit;
+  --text-stat: 64px;
+  --text-stat--line-height: inherit;
+  --text-code: 14px;
+  --text-code--line-height: inherit;
+  --text-h2: clamp(40px, 5vw, 64px);
+  --text-h2--line-height: inherit;
+  --text-page: clamp(48px, 7vw, 80px);
+  --text-page--line-height: inherit;
+  --text-thanks: clamp(48px, 8vw, 96px);
+  --text-thanks--line-height: inherit;
+  --text-hero: clamp(56px, 9vw, 128px);
+  --text-hero--line-height: inherit;
+
+  --leading-hero: 0.9;
+  --leading-page: 0.92;
+  --leading-h2: 0.95;
+  --leading-heading: 1.1;
+  --leading-title: 1.15;
+  --leading-lead: 1.35;
+  --leading-list: 1.4;
+  --leading-snug: 1.45;
+  --leading-body: 1.5;
+  --leading-prose: 1.55;
+  --leading-code: 1.6;
+
+  --tracking-hero: -0.03em;
+  --tracking-h2: -0.02em;
+
+  --container-site: 1200px;
+  --container-header: 960px;
+  --container-article: 720px;
+  --container-answer: 640px;
+  --container-lead: 560px;
+  --container-copy: 520px;
+
+  --shadow-block: 8px 8px 0 var(--foreground);
+  --aspect-og: 1200 / 675;
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* A wrapping row of columns, each at least 280px. :where keeps the defaults overridable by a child's utilities. */
+@layer components {
+  .cols { display: flex; flex-wrap: wrap; }
+  :where(.cols > *) { flex: 1 1 280px; min-width: 0; box-sizing: border-box; }
+}
+
+@layer base {
+  html { background: var(--background); }
+  body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-serif); }
+  a { color: inherit; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}

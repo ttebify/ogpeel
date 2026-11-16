@@ -1,9 +1,9 @@
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from '@/components/ui/button';
 import { Frame } from '@/components/ui/frame';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import type { ScreenProps } from '@/lib/types';
 import { metaLine } from '@/lib/util';
-import { GearIcon, Head } from './parts';
+import { ErrorLine, GearIcon, Head } from './parts';
 
 export function Popup({ s, a }: ScreenProps) {
   const img = s.images[s.current];
@@ -13,9 +13,9 @@ export function Popup({ s, a }: ScreenProps) {
   return (
     <Frame>
       <Head s={s} />
-      <div class="mt-4 shrink-0 border-(length:--rule-width) border-solid border-border bg-card">
+      <div class="mt-4 shrink-0 rule border-border bg-card">
         <img class="block max-h-47.5 w-full bg-foreground object-contain" src={img.url} alt={img.alt || 'Share image'} />
-        <div class="flex items-center justify-between gap-2 border-0 border-t-(length:--rule-width) border-solid border-border px-3 py-2 font-mono text-xs">
+        <div class="flex items-center justify-between gap-2 rule-t border-border px-3 py-2 font-mono text-xs">
           <span class="max-w-[60%] truncate bg-foreground px-1.5 py-0.5 text-background" title={img.tags.join(' + ')}>{s.usingLargest ? 'LARGEST IMAGE' : (img.tags[0] || '').toUpperCase() + (img.tags.length > 1 ? ' +' + (img.tags.length - 1) : '')}</span>
           <span>{metaLine(img)}</span>
         </div>
@@ -29,7 +29,7 @@ export function Popup({ s, a }: ScreenProps) {
         <span>SEE HOW IT LOOKS WHEN SHARED</span><span>→</span>
       </Button>
       <div class="mt-auto flex flex-col gap-3 pt-3">
-        {s.error && <p class="m-0 font-mono text-xs text-primary" role="alert">{s.error}</p>}
+        <ErrorLine s={s} />
         <Button variant="action" disabled={busy} onClick={() => a.download()}>
           {s.busy === 'download' ? 'SAVING…' : '↓ DOWNLOAD IMAGE'}
         </Button>
@@ -41,7 +41,7 @@ export function Popup({ s, a }: ScreenProps) {
             {s.copied === 'link' ? '✓ COPIED' : 'COPY LINK'}
           </ToggleGroupItem>
         </ToggleGroup>
-        <div class="flex items-center justify-between border-0 border-t-(length:--rule-width) border-solid border-border pt-1">
+        <div class="flex items-center justify-between rule-t border-border pt-1">
           <Button variant="italic-link" class="w-auto" onClick={() => a.go('dev')}>Make one like this for your site →</Button>
           <Button variant="icon" aria-label="Settings" onClick={() => a.go('settings')}><GearIcon /></Button>
         </div>

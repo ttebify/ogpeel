@@ -33,13 +33,12 @@ export type Settings = { naming: Naming; look: Look; keepSource: boolean };
 export type License = { unlocked: boolean; key?: string; freeLeft: number };
 
 export type Framework = 'nextjs' | 'astro' | 'wordpress' | 'html';
-export type Network = 'x' | 'linkedin' | 'slack' | 'whatsapp';
 
 export type Route = 'popup' | 'all' | 'saved' | 'preview' | 'dev' | 'copied' | 'unlock' | 'key' | 'settings';
 /** What the 'popup' route shows. */
 export type Status = 'loading' | 'ready' | 'empty' | 'failed';
 
-export type Saved = { id: number; filename: string; bytes?: number; image: OgImage; count: number };
+export type Saved = { id: number; filename: string; image: OgImage; count: number };
 export type Check = { ok: boolean; text: string };
 
 export type State = {
@@ -67,6 +66,8 @@ export type State = {
   prompt: string;
   checks: Check[];
   keyError: boolean;
+  /** The extension's version, for the settings screen. */
+  version: string;
 };
 
 export type Actions = {

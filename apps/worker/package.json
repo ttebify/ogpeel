@@ -2,5 +2,25 @@
   "name": "@ogpeel/worker",
   "version": "0.1.0",
   "private": true,
-  "type": "module"
+  "description": "Starts the Bachs checkout and emails a signed key when the payment succeeds.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir .output",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "keygen": "node scripts/keygen.mjs",
+    "make-key": "node scripts/make-key.mjs"
+  },
+  "dependencies": {
+    "@ogpeel/license": "workspace:*",
+    "@ogpeel/pricing": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.163.0"
+  }
 }

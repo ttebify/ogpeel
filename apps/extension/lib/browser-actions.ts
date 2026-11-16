@@ -1,5 +1,6 @@
 import { browser } from 'wxt/browser';
-import type { OgImage, PageInfo, Saved } from './types';
+import { readPage } from './read-page';
+import type { OgImage, PageInfo, RawPage, Saved } from './types';
 import { basename, extFromMime, extOf, slug } from './util';
 
 /** The tab the popup was opened on. An e2e build may pass ?tabId= instead. */
@@ -8,6 +9,17 @@ export async function targetTab() {
   if (forced) return browser.tabs.get(Number(forced));
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
   return tab;
+}
+
+/** Reads the tab's share tags. null = the browser keeps extensions out of this page (settings pages, the store, PDFs). */
+export async function readTab(tab: { id?: number; url?: string } | undefined): Promise<RawPage | null> {
+  if (tab?.id === undefined || !/^https?:/i.test(tab.url || '')) return null;
+  try {
+    const [res] = await browser.scripting.executeScript({ target: { tabId: tab.id }, func: readPage });
+    return (res?.result as RawPage) || null;
+  } catch {
+    return null;
+  }
 }
 
 /** Loads the image in the popup to learn its real size. null = it didn't load. */
@@ -26,16 +38,16 @@ export async function downloadImage(img: OgImage, page: PageInfo, naming: 'title
   const ext = extOf(img.url);
   const opts: { url: string; saveAs: boolean; filename?: string } = { url: img.url, saveAs: false };
   // Chromium only: lets us name the file after the page even when the URL has no extension.
-  const naming$ = (browser.downloads as any).onDeterminingFilename;
-  let listener: ((item: any, suggest: (s?: { filename: string }) => void) => void) | undefined;
+  const onFilename = browser.downloads.onDeterminingFilename;
+  let listener: Parameters<typeof onFilename.addListener>[0] | undefined;
   if (stem && ext) opts.filename = `${stem}.${ext}`;
-  else if (stem && naming$) {
+  else if (stem && onFilename) {
     listener = (item, suggest) => {
       if (item.url !== img.url && item.finalUrl !== img.url) return;
       const e = extFromMime(item.mime) || (basename(item.filename || '').match(/\.([a-z0-9]{3,4})$/i)?.[1] ?? '');
       suggest({ filename: e ? `${stem}.${e}` : stem });
     };
-    naming$.addListener(listener);
+    onFilename.addListener(listener);
   }
   try {
     const id = await browser.downloads.download(opts);
@@ -44,14 +56,15 @@ export async function downloadImage(img: OgImage, page: PageInfo, naming: 'title
       const [item] = await browser.downloads.search({ id });
       if (item?.state === 'complete') {
         const format = (extFromMime(item.mime) || extOf(item.filename)).toUpperCase() || img.format;
-        return { id, filename: basename(item.filename), bytes: item.fileSize > 0 ? item.fileSize : undefined, image: { ...img, format, bytes: item.fileSize > 0 ? item.fileSize : undefined }, count: 1 };
+        const bytes = item.fileSize > 0 ? item.fileSize : undefined;
+        return { id, filename: basename(item.filename), image: { ...img, format, bytes }, count: 1 };
       }
       if (item?.state === 'interrupted') throw new Error(item.error || 'interrupted');
       await new Promise((r) => setTimeout(r, 100));
     }
     throw new Error('timeout');
   } finally {
-    if (listener) naming$.removeListener(listener);
+    if (listener) onFilename.removeListener(listener);
   }
 }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checksFor, extFromMime, extOf, formatBytes, hostOf, metaLine, slug } from '@/lib/util';
+import { checksFor, extFromMime, extOf, formatBytes, hostOf, metaLine, slug, tagLine } from '@/lib/util';
 import type { OgImage, PageInfo } from '@/lib/types';
 
 describe('slug', () => {
@@ -80,5 +80,12 @@ describe('checksFor', () => {
   it('flags missing alt', () => {
     const c = checksFor(page, img({ width: 1200, height: 630 }));
     expect(c.find((x) => x.text.includes('alt'))?.ok).toBe(false);
+  });
+});
+
+describe('tagLine', () => {
+  it('joins every tag that points at the image', () => {
+    expect(tagLine({ url: '', tags: ['og:image', 'twitter:image'] })).toBe('OG:IMAGE + TWITTER:IMAGE');
+    expect(tagLine({ url: '', tags: ['og:image'] })).toBe('OG:IMAGE');
   });
 });

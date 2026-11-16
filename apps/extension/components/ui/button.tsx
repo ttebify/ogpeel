@@ -2,25 +2,33 @@ import type { ComponentProps } from 'preact';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 
-const buttonVariants = cva('flex shrink-0 items-center justify-center rounded-md', {
+/** The bordered buttons: full width, a mono label. `size` sets their height. */
+const boxed = 'w-full rule border-border px-2 py-0 font-mono text-sm font-medium tracking-label';
+
+const buttonVariants = cva('box-border flex shrink-0 items-center justify-center rounded-md', {
   variants: {
     variant: {
-      outline: 'h-12 w-full border-(length:--rule-width) border-solid border-border bg-transparent px-2 py-0 text-foreground font-mono text-sm font-medium tracking-label',
-      solid: 'h-12 w-full border-(length:--rule-width) border-solid border-border bg-foreground px-2 py-0 font-mono text-sm font-medium tracking-label text-background',
-      action: 'h-12 w-full border-(length:--rule-width) border-solid border-border bg-primary px-2 py-0 font-mono text-sm font-medium tracking-label text-primary-foreground shadow-offset',
-      link: 'border-0 bg-transparent p-0 text-foreground tracking-[inherit] underline',
-      'italic-link': 'h-11 w-full border-0 bg-transparent p-0 text-foreground text-base italic underline',
-      'mono-link': 'h-11 w-full border-0 bg-transparent p-0 text-foreground font-mono text-xs tracking-label underline',
-      row: 'h-11 w-full text-foreground justify-between border-0 border-b-(length:--rule-width) border-solid border-border bg-transparent p-0 text-left font-mono text-xs tracking-label',
-      external: 'h-10 w-full text-foreground justify-between border-0 border-b border-solid border-border bg-transparent p-0 font-serif text-base',
-      icon: 'size-11 text-foreground border-0 bg-transparent p-0',
-      'icon-outline': 'size-11 text-foreground border-(length:--rule-width) border-solid border-border bg-transparent p-0 font-mono text-base',
+      outline: `${boxed} bg-transparent text-foreground`,
+      solid: `${boxed} bg-foreground text-background`,
+      /** Vermilion: saves a file or pays. */
+      action: `${boxed} bg-primary text-primary-foreground shadow-offset`,
+      link: 'bg-transparent p-0 text-foreground tracking-[inherit] underline',
+      'italic-link': 'h-11 w-full bg-transparent p-0 text-base text-foreground italic underline',
+      'mono-link': 'h-11 w-full bg-transparent p-0 font-mono text-xs tracking-label text-foreground underline',
+      /** A full-width line with a rule under it: words on the left, an arrow on the right. */
+      row: 'h-11 w-full justify-between rule-b border-border bg-transparent p-0 text-left font-mono text-xs tracking-label text-foreground',
+      /** The same line for links that leave the popup. */
+      external: 'h-10 w-full justify-between border-b border-border bg-transparent p-0 font-serif text-base text-foreground',
+      icon: 'size-11 bg-transparent p-0 text-foreground',
+      'icon-outline': 'size-11 rule border-border bg-transparent p-0 font-mono text-base text-foreground',
     },
-    size: {
-      default: '',
-      compact: 'h-11',
-    },
+    /** Applies to the bordered buttons only; the others carry their own height. */
+    size: { default: '', compact: '' },
   },
+  compoundVariants: [
+    { variant: ['outline', 'solid', 'action'], size: 'default', class: 'h-12' },
+    { variant: ['outline', 'solid', 'action'], size: 'compact', class: 'h-11' },
+  ],
   defaultVariants: { variant: 'outline', size: 'default' },
 });
 

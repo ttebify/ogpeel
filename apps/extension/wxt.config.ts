@@ -11,7 +11,7 @@ export default defineConfig({
     name: 'Ogpeel',
     description: "Save any page's share image. Full size, one click.",
     permissions: ['activeTab', 'scripting', 'downloads', 'storage', 'clipboardWrite'],
-    host_permissions: ['https://api.lemonsqueezy.com/*', ...(e2e ? ['<all_urls>'] : [])],
+    host_permissions: e2e ? ['<all_urls>'] : [],
     // Asked for one image host at a time, only when Copy image needs it.
     optional_host_permissions: ['*://*/*'],
     action: { default_title: 'Ogpeel' },

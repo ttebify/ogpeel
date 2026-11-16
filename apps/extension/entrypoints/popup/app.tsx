@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { browser } from 'wxt/browser';
-import { copyImageToClipboard, downloadImage, probe, targetTab } from '@/lib/browser-actions';
+import { copyImageToClipboard, downloadImage, probe, readTab, targetTab } from '@/lib/browser-actions';
 import { SITE_PAGES } from '@/lib/config';
 import { activateKey } from '@/lib/license';
 import { buildPrompt, samplePalette } from '@/lib/prompt';
-import { readPage } from '@/lib/read-page';
 import { DEFAULT_LICENSE, DEFAULT_SETTINGS, loadPrefs, saveLicense, saveSettings } from '@/lib/storage';
 import type { Actions, OgImage, PageInfo, RawPage, State } from '@/lib/types';
 import { checksFor, formatOf, hostOf } from '@/lib/util';
@@ -24,7 +23,7 @@ import { Unlock } from '@/entrypoints/popup/screens/unlock';
 const initial: State = {
   status: 'loading', route: 'popup', page: null, images: [], current: 0, restricted: false, usingLargest: false,
   saved: null, copied: null, busy: null, error: null, settings: DEFAULT_SETTINGS, license: DEFAULT_LICENSE,
-  framework: 'nextjs', prompt: '', checks: [], keyError: false,
+  framework: 'nextjs', prompt: '', checks: [], keyError: false, version: browser.runtime.getManifest().version,
 };
 
 export function App() {
@@ -62,14 +61,7 @@ export function App() {
     set({ status: 'loading', route: 'popup', error: null, restricted: false });
     const tab = await targetTab().catch(() => undefined);
     const blank: PageInfo = { url: tab?.url || '', host: hostOf(tab?.url), title: tab?.title || '', description: '', hasLargest: false };
-    if (!tab?.id || !/^https?:/i.test(tab.url || '')) return set({ status: 'empty', restricted: true, page: blank, images: [] });
-    try {
-      const res = await browser.scripting.executeScript({ target: { tabId: tab.id }, func: readPage });
-      raw.current = (res[0]?.result as RawPage) || null;
-    } catch {
-      raw.current = null;
-    }
-    const r = raw.current;
+    const r = (raw.current = await readTab(tab));
     if (!r) return set({ status: 'empty', restricted: true, page: blank, images: [] });
     const page: PageInfo = { url: r.url, host: hostOf(r.url), title: r.title, description: r.description, hasLargest: !!r.largest };
     const images: OgImage[] = r.images.map((i) => ({ url: i.url, tags: i.tags, width: i.width, height: i.height, alt: i.alt, format: formatOf(i.url) }));

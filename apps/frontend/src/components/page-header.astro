@@ -1,0 +1,15 @@
+---
+import Wordmark from './wordmark.astro';
+
+interface Props {
+  /** The double rule spans the page (privacy, key) or only the column (thanks), as in the designs. */
+  rule?: 'page' | 'column';
+}
+const { rule = 'page' } = Astro.props;
+const doubleRule = 'border-b-4 border-double border-border';
+---
+<header class={rule === 'page' ? doubleRule : undefined}>
+  <div class:list={['mx-auto box-border flex max-w-header items-center justify-between px-6 pt-6 pb-4', rule === 'column' && doubleRule]}>
+    <Wordmark href="/" /><a class="mono" href="/">← Back to ogpeel.com</a>
+  </div>
+</header>

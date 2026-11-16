@@ -1,0 +1,21 @@
+---
+import Layout from '@/layouts/layout.astro';
+import PageHeader from '@/components/page-header.astro';
+import ButtonLink from '@/components/button-link.astro';
+import Dot from '@/components/dot.astro';
+import { SUPPORT_EMAIL } from '@/config';
+---
+<Layout title="Find my key · Ogpeel" description="Where your Ogpeel key is, and how to get it sent again.">
+  <div class="min-h-[800px]">
+    <PageHeader />
+    <main class="mx-auto box-border max-w-article px-6 pt-16 pb-24">
+      <h1 class="m-0 text-page font-semibold leading-page tracking-hero">Find my key<Dot /></h1>
+      <p class="mt-6 mb-0 text-xl leading-snug">Your key is in the email we sent when you paid. Search your inbox for “Your Ogpeel key”, and look in spam too.</p>
+      <div class="mt-8 bg-card p-6 rule border-border shadow-block">
+        <h2 class="mono m-0 font-normal">Can't find it?</h2>
+        <p class="mt-3 mb-0 text-xl leading-snug">Write to us from the email you paid with and a person sends your key again.</p>
+        <ButtonLink variant="solid" class="mt-6 w-fit" href={`mailto:${SUPPORT_EMAIL}`}>Email {SUPPORT_EMAIL}</ButtonLink>
+      </div>
+    </main>
+  </div>
+</Layout>

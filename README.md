@@ -27,18 +27,19 @@ pnpm smoke        # browser check; screenshots in apps/extension/.output/smoke/
 
 ## Layout
 
-This repository uses pnpm workspaces. Root commands run the extension or, for build, test and typecheck, every workspace that defines the corresponding script. Run a specific app with `pnpm --filter @ogpeel/extension <command>` (or `@ogpeel/worker`, `@ogpeel/frontend` once implemented).
+This repository uses pnpm workspaces. Root commands run the extension or, for build, test and typecheck, every workspace that defines the corresponding script. Run a specific app with `pnpm --filter @ogpeel/extension <command>` (or `@ogpeel/worker`, `@ogpeel/frontend`).
 
 - `apps/extension/` the working browser extension: `entrypoints/popup/` for UI, `lib/` for logic, `tests/` for unit tests, `scripts/` for icons and browser smoke checks
-- `apps/worker/` reserved for payment webhooks and license delivery; runtime and hosting are not selected yet
-- `apps/frontend/` reserved for ogpeel.com; framework and implementation are not selected yet
+- `apps/worker/` a Cloudflare Worker that starts the Bachs checkout and emails a signed key after payment; see its README
+- `apps/frontend/` ogpeel.com, a static Astro site, tested pixel by pixel against the designs; see its README
+- `packages/license/` the key format shared by the worker (signs) and the extension (verifies)
+- `packages/pricing/` the price, the coffee and the refund window, quoted by the popup, the site and the key email
+- `packages/theme/` the paper look shared by the popup and the site: colours, fonts and theme tokens. Components are not shared; each app keeps its own
 - `design/` shared designs, grouped into `extension/`, `store/` and `site/`; each is a source file (`.dc.html`) with a PNG of the same name
-
-The worker and frontend currently contain only workspace metadata and documentation. They have no build or dev commands yet.
 
 ## Payment
 
-Ogpeel is free. Developer prompts are free twice; after that a one-time licence key unlocks them. The key is checked directly with Lemon Squeezy from the extension; there is no Ogpeel server. In a development build, the key `OGPEEL-TEST-TEST-TEST` unlocks.
+Ogpeel is free. Developer prompts are free twice; after that a one-time licence key unlocks them. Payment goes through Bachs; a small worker (`apps/worker/`) then emails a signed key. The extension checks the key on the device and sends nothing. In a development build, the key `OGPEEL-TEST-TEST-TEST` unlocks.
 
 ## Licence
 

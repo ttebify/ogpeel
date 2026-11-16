@@ -12,13 +12,13 @@ export function SavedScreen({ s, a }: ScreenProps) {
       {saved && (
         <>
           <div class="mt-6 flex items-start gap-4">
-            <img class="block aspect-share w-30 shrink-0 border-(length:--rule-width) border-solid border-foreground bg-foreground object-cover shadow-saved" src={saved.image.url} alt="" />
+            <img class="block aspect-share w-30 shrink-0 rule border-foreground bg-foreground object-cover shadow-saved" src={saved.image.url} alt="" />
             <div class="flex flex-col gap-2">
               <span class="font-mono text-xs tracking-label">✓ SAVED</span>
               <span class="text-2xl leading-heading">In your Downloads</span>
             </div>
           </div>
-          <div class="mt-6 break-all border-y-(length:--rule-width) border-solid border-foreground py-3 font-mono text-xs leading-[1.6]">
+          <div class="mt-6 break-all rule-y border-foreground py-3 font-mono text-xs leading-[1.6]">
             {saved.filename}
             <br />
             <span class="text-muted-foreground">

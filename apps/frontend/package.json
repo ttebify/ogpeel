@@ -2,5 +2,33 @@
   "name": "@ogpeel/frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module"
+  "description": "ogpeel.com, a static Astro site.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@ogpeel/pricing": "workspace:*",
+    "@ogpeel/theme": "workspace:*",
+    "astro": "^7.4.12",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.5.2",
+    "cookie": "^2.0.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/pngjs": "^6.0.5",
+    "pixelmatch": "^8.0.0",
+    "pngjs": "^7.0.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^6.0.3"
+  }
 }

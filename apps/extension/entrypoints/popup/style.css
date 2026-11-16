@@ -1,101 +1,24 @@
 @layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
-@import '@fontsource-variable/newsreader/opsz.css';
-@import '@fontsource-variable/newsreader/opsz-italic.css';
-@import '@fontsource/ibm-plex-mono/400.css';
-@import '@fontsource/ibm-plex-mono/500.css';
+@import '@ogpeel/theme/theme.css';
 
-:root {
-  --radius: 0px;
-  --rule-width: 1.5px;
-  --background: #efe6d8;
-  --foreground: #1a1714;
-  --card: #f7f1e6;
-  --card-foreground: #1a1714;
-  --muted: #e4d9c7;
-  --muted-foreground: #5e554b;
-  --primary: #c8401e;
-  --primary-foreground: #fff;
-  --border: #1a1714;
-  --input: #1a1714;
-  --ring: #c8401e;
-  /* The share preview mimics another site, so it keeps its own colours in both looks. */
-  --preview: #fff;
-  --preview-foreground: #1a1714;
-  --preview-muted-foreground: #5e554b;
-  --preview-border: #c9bfae;
-}
-:root[data-look='night'] {
-  --background: #1a1714;
-  --foreground: #efe6d8;
-  --card: #24201c;
-  --card-foreground: #efe6d8;
-  --muted: #2c2722;
-  --muted-foreground: #b8afa2;
-  --primary: #e2593a;
-  --primary-foreground: #1a1714;
-  --border: #efe6d8;
-  --input: #efe6d8;
-  --ring: #e2593a;
-}
-
+/* Popup-only sizes; colours, fonts and shared tokens come from @ogpeel/theme. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-preview: var(--preview);
-  --color-preview-foreground: var(--preview-foreground);
-  --color-preview-muted-foreground: var(--preview-muted-foreground);
-  --color-preview-border: var(--preview-border);
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-
-  --font-serif: 'Newsreader Variable', Newsreader, serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-
-  --spacing: 4px;
-
-  /* Type sizes keep the inherited line height; set it with leading-*. */
-  --text-xs: 12px;
-  --text-xs--line-height: inherit;
-  --text-sm: 13px;
-  --text-sm--line-height: inherit;
-  --text-base: 16px;
-  --text-base--line-height: inherit;
-  --text-2xl: 24px;
-  --text-2xl--line-height: inherit;
   --text-display: 40px;
   --text-display--line-height: inherit;
 
   --leading-heading: 1.1;
   --leading-body: 1.4;
 
-  --tracking-label: 1px;
   --tracking-brand: -0.5px;
   --tracking-display: -1px;
 
   --aspect-share: 1200 / 630;
-
-  --shadow-offset: 3px 3px 0 var(--foreground);
-  --shadow-saved: 3px 3px 0 var(--primary);
 }
 
 @layer base {
+  * { box-sizing: border-box; }
   html, body { margin: 0; overflow: hidden; }
   body { width: 360px; height: 600px; background: var(--background); }
-  * { box-sizing: border-box; border-width: 0; border-style: solid; }
-  button { font: inherit; color: inherit; cursor: pointer; border-radius: 0; }
-  button:disabled { cursor: default; opacity: .6; }
-  button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
 }

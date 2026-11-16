@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ogpeel website</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#EFE6D8}
+a{color:#1A1714}
+.w{max-width:1200px;margin:0 auto;padding:0 24px;box-sizing:border-box}
+.m{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.btn{min-height:52px;padding:0 24px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid #1A1714;text-decoration:none;font:500 13px 'IBM Plex Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:#1A1714;background:transparent}
+.hot{background:#C8401E;color:#fff;box-shadow:3px 3px 0 #1A1714}
+.ink{background:#1A1714;color:#EFE6D8}
+.h1{font-size:clamp(56px,9vw,128px);font-weight:600;line-height:.9;letter-spacing:-.03em;margin:0}
+.h2{font-size:clamp(40px,5vw,64px);font-weight:600;line-height:.95;letter-spacing:-.02em;margin:0}
+.sec{padding:96px 0;border-top:1.5px solid #1A1714}
+.cols{display:flex;flex-wrap:wrap}
+.cols>*{flex:1 1 280px;min-width:0;box-sizing:border-box}
+</style>
+</helmet>
+<div style="background: #EFE6D8; color: #1A1714; font-family: Newsreader, serif">
+  <header class="w" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding-top: 24px; padding-bottom: 16px; border-bottom: 4px double #1A1714">
+    <a href="#top" style="text-decoration: none; font-size: 32px; font-weight: 600">Ogpeel<span style="color: #C8401E">.</span></a>
+    <nav class="m" style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+      <a href="#how">How it works</a><a href="#developers">Developers</a><a href="#pricing">Pricing</a><a href="Privacy.dc.html">Privacy</a>
+      <a class="btn ink" href="#install" style="min-height: 44px">Add to browser</a>
+    </nav>
+  </header>
+
+  <section id="top" class="w" style="padding-top: 64px; padding-bottom: 96px">
+    <div class="m" style="display: flex; justify-content: space-between; padding-bottom: 12px; border-bottom: 1.5px solid #1A1714"><span>A browser extension</span><span>Free · Chrome · Edge · Safari</span></div>
+    <div class="cols" style="gap: 48px; align-items: flex-end; padding-top: 48px">
+      <div style="flex: 2 1 480px">
+        <h1 class="h1">Save any page's share image<span style="color: #C8401E">.</span></h1>
+        <p style="margin: 32px 0 0; font-size: 24px; font-style: italic; line-height: 1.35; max-width: 560px">Every link has a picture it shows when it's shared. Click Ogpeel and it's yours, full size, named after the page.</p>
+        <div id="install" style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px">
+          <a class="btn hot" href="#install">Add to Chrome</a><a class="btn" href="#install">Add to Edge</a><a class="btn" href="#install">Get for Safari</a>
+        </div>
+      </div>
+      <figure style="margin: 0; flex: 1 1 320px">
+        <img src="/_blob/eebcf5f573a066a8d8e631baa9a4b9dc" alt="Share image saved from a Linear article" style="display: block; width: 100%; aspect-ratio: 1200 / 675; border: 1.5px solid #1A1714; box-shadow: 8px 8px 0 #1A1714">
+        <figcaption class="m" style="margin-top: 20px; display: flex; justify-content: space-between; font-size: 12px"><span>og:image · linear.app</span><span>1200 × 675 · PNG</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="how" class="sec">
+    <div class="w">
+      <div class="m" style="margin-bottom: 32px">How it works</div>
+      <div class="cols" style="border-top: 1.5px solid #1A1714">
+        <div style="padding: 24px 24px 0 0; border-right: 1px solid #1A1714"><div class="m">01</div><h3 style="margin: 12px 0 0; font-size: 32px; font-weight: 600; line-height: 1.1">Open any article</h3><p style="font-size: 18px; line-height: 1.5">A blog post, a product page, a news story.</p></div>
+        <div style="padding: 24px 24px 0; border-right: 1px solid #1A1714"><div class="m">02</div><h3 style="margin: 12px 0 0; font-size: 32px; font-weight: 600; line-height: 1.1">Click the Ogpeel icon</h3><p style="font-size: 18px; line-height: 1.5">You see the image, its size and its format.</p></div>
+        <div style="padding: 24px 0 0 24px"><div class="m">03</div><h3 style="margin: 12px 0 0; font-size: 32px; font-weight: 600; line-height: 1.1">Download or copy</h3><p style="font-size: 18px; line-height: 1.5">The original file, or straight to your clipboard.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background: #1A1714; color: #EFE6D8; border-top: 0">
+    <div class="w cols" style="gap: 48px">
+      <div><div class="m" style="margin-bottom: 24px">Free, for everyone</div><h2 class="h2">No account. No catch<span style="color: #E2593A">.</span></h2></div>
+      <ul style="list-style: none; margin: 0; padding: 0; font-size: 20px; line-height: 1.4; border-top: 1.5px solid #EFE6D8">
+        <li style="padding: 16px 0; border-bottom: 1px solid #EFE6D8">Download the share image, full size</li>
+        <li style="padding: 16px 0; border-bottom: 1px solid #EFE6D8">Copy the image or its link</li>
+        <li style="padding: 16px 0; border-bottom: 1px solid #EFE6D8">Every image a page sets, listed</li>
+        <li style="padding: 16px 0; border-bottom: 1px solid #EFE6D8">See how a link looks on X, LinkedIn, Slack and WhatsApp</li>
+        <li style="padding: 16px 0; border-bottom: 1px solid #EFE6D8">Reads a page only when you click the icon</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="developers" class="sec">
+    <div class="w cols" style="gap: 48px; align-items: center">
+      <div>
+        <div class="m" style="margin-bottom: 24px">For developers</div>
+        <h2 class="h2">Like a site's share image? Make one in its style<span style="color: #C8401E">.</span></h2>
+        <p style="margin: 24px 0 0; font-size: 20px; line-height: 1.45; max-width: 520px">Ogpeel writes a prompt for your coding agent. It measures the image and builds one for every page on your site, with your own words and colours. Next.js, Astro, WordPress or plain HTML.</p>
+      </div>
+      <pre class="m" style="margin: 0; white-space: pre-wrap; text-transform: none; letter-spacing: 0; font-size: 14px; line-height: 1.6; padding: 24px; border: 1.5px solid #1A1714; background: #F7F1E6; box-shadow: 8px 8px 0 #1A1714">Build Open Graph images for every post on my next.js site.
+Size: 1200 × 630, PNG.
+Layout: dark ground, thin rule grid, mono labels top-left, icon row right.
+Use my brand colours and fonts, not the reference site's.
+Add og:image, og:image:width, og:image:height and og:image:alt to each page.</pre>
+    </div>
+  </section>
+
+  <section id="pricing" class="sec">
+    <div class="w">
+      <div class="m" style="margin-bottom: 24px">Pricing</div>
+      <h2 class="h2" style="margin-bottom: 48px">Two prompts free. Then pay once<span style="color: #C8401E">.</span></h2>
+      <div class="cols" style="border: 1.5px solid #1A1714">
+        <div style="padding: 32px; border-right: 1.5px solid #1A1714; display: flex; flex-direction: column; gap: 16px">
+          <div class="m">Ogpeel</div><div style="font-size: 64px; font-weight: 600; line-height: 1">$0</div>
+          <p style="margin: 0; font-size: 18px; line-height: 1.5">Everything above, forever. Plus 2 developer prompts.</p>
+          <a class="btn" href="#install" style="margin-top: auto">Add to browser</a>
+        </div>
+        <div style="padding: 32px; background: #F7F1E6; display: flex; flex-direction: column; gap: 16px">
+          <div class="m">Unlimited prompts</div><div style="font-size: 64px; font-weight: 600; line-height: 1">$9 <span style="font-size: 20px; font-weight: 400; font-style: italic">once</span></div>
+          <p style="margin: 0; font-size: 18px; line-height: 1.5">Every framework, every site you build. A key by email, no account. Refund within 14 days, no questions.</p>
+          <a class="btn hot" href="Thanks.dc.html" style="margin-top: auto">Pay $9 — secure checkout</a>
+          <span class="m" style="font-size: 12px; color: #5E554B">Card, Apple Pay, Google Pay, PayPal · tax handled by Lemon Squeezy</span>
+        </div>
+      </div>
+      <div id="coffee" style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; padding: 24px 0; border-top: 1.5px solid #1A1714; border-bottom: 1.5px solid #1A1714">
+        <p style="margin: 0; font-size: 24px; font-style: italic">Don't need prompts but like Ogpeel?</p>
+        <a class="btn ink" href="#coffee">Buy me a coffee · $3</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="w cols" style="gap: 48px">
+      <div><div class="m" style="margin-bottom: 24px">Questions</div><h2 class="h2">Asked before<span style="color: #C8401E">.</span></h2></div>
+      <div style="flex: 2 1 480px; border-top: 1.5px solid #1A1714">
+        <sc-for list="{{faq}}" as="q" hint-placeholder-count="5">
+          <div style="border-bottom: 1.5px solid #1A1714">
+            <button onClick="{{q.toggle}}" aria-expanded="{{q.open}}" style="width: 100%; min-height: 64px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border: 0; background: none; padding: 0; text-align: left; font: 600 22px Newsreader, serif; color: #1A1714; cursor: pointer"><span>{{q.q}}</span><span class="m">{{q.sign}}</span></button>
+            <sc-if value="{{q.isOpen}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 24px; font-size: 18px; line-height: 1.5; max-width: 640px">{{q.a}}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top: 4px double #1A1714">
+    <div class="w m" style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; padding-top: 24px; padding-bottom: 48px; font-size: 12px">
+      <span>Ogpeel · made by Justice Ekemezie</span>
+      <span style="display: flex; flex-wrap: wrap; gap: 24px"><a href="Privacy.dc.html">Privacy</a><a href="Restore.dc.html">Find my key</a><a href="#coffee">Buy me a coffee</a><a href="#top">Back to top ↑</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const open = (this.state && this.state.open) ?? 0;
+    const items = [
+      ['Does Ogpeel read the pages I visit?', 'Only the page you click the icon on, and only at that moment. Nothing is sent anywhere.'],
+      ['Can I use images I download?', 'Ogpeel saves what the page already shares publicly. Who owns the picture doesn’t change, so ask the site before you reuse it in your own work.'],
+      ['What do I get for $9?', 'Unlimited developer prompts for every framework, on every browser where you enter your key.'],
+      ['I lost my key.', 'Enter the email you paid with on the Find my key page and we send it again.'],
+      ['Can I get a refund?', 'Yes, within 14 days. Reply to your receipt email.']
+    ];
+    return { faq: items.map(([q, a], i) => ({
+      q, a, isOpen: open === i, open: open === i ? 'true' : 'false', sign: open === i ? '−' : '+',
+      toggle: () => this.setState({ open: open === i ? -1 : i })
+    })) };
+  }
+}
+</script>
+</body>
+</html>

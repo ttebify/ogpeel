@@ -1,0 +1,19 @@
+{
+  "name": "ogpeel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Save any page's share image. Full size, one click.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @ogpeel/extension dev",
+    "dev:chrome": "pnpm --filter @ogpeel/extension dev:chrome",
+    "build": "pnpm -r --if-present build",
+    "build:e2e": "pnpm --filter @ogpeel/extension build:e2e",
+    "zip": "pnpm --filter @ogpeel/extension zip",
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "icons": "pnpm --filter @ogpeel/extension icons",
+    "smoke": "pnpm --filter @ogpeel/extension smoke"
+  }
+}

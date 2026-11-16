@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ogpeel thank you</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#EFE6D8}
+a{color:#1A1714}
+.w{max-width:960px;margin:0 auto;padding:0 24px;box-sizing:border-box}
+.m{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+</style>
+</helmet>
+<div style="background: #EFE6D8; color: #1A1714; font-family: Newsreader, serif; min-height: 900px">
+  <header class="w" style="display: flex; justify-content: space-between; align-items: center; padding-top: 24px; padding-bottom: 16px; border-bottom: 4px double #1A1714">
+    <a href="Landing.dc.html" style="text-decoration: none; font-size: 32px; font-weight: 600">Ogpeel<span style="color: #C8401E">.</span></a>
+    <a class="m" href="Landing.dc.html">← Back to ogpeel.com</a>
+  </header>
+  <main class="w" style="padding-top: 64px; padding-bottom: 96px">
+    <div class="m">✓ Payment received · $9</div>
+    <h1 style="margin: 16px 0 0; font-size: clamp(48px, 8vw, 96px); font-weight: 600; line-height: .92; letter-spacing: -.03em">Thank you. Here's your key<span style="color: #C8401E">.</span></h1>
+
+    <div style="margin-top: 48px; display: flex; flex-wrap: wrap; border: 1.5px solid #1A1714; background: #F7F1E6; box-shadow: 8px 8px 0 #1A1714">
+      <div style="flex: 1 1 360px; padding: 24px; font-family: 'IBM Plex Mono', monospace; font-size: clamp(20px, 3vw, 32px); letter-spacing: 2px; word-break: break-all">OGPEEL-7Q2K-M4XD-91RB</div>
+      <button onClick="{{copy}}" style="flex: 0 1 200px; min-height: 64px; border: 0; border-left: 1.5px solid #1A1714; border-radius: 0; background: {{bg}}; color: {{fg}}; font: 500 13px 'IBM Plex Mono', monospace; letter-spacing: 1px">{{label}}</button>
+    </div>
+    <p style="margin: 16px 0 0; font-size: 18px; font-style: italic">We also sent it to you@example.com, with your receipt.</p>
+
+    <div class="m" style="margin-top: 64px; margin-bottom: 16px">Unlock Ogpeel</div>
+    <ol style="list-style: none; margin: 0; padding: 0; border-top: 1.5px solid #1A1714">
+      <li style="display: flex; gap: 24px; padding: 16px 0; border-bottom: 1px solid #1A1714; font-size: 20px"><span class="m">01</span>Click the Ogpeel icon, then “Make one like this for your site”.</li>
+      <li style="display: flex; gap: 24px; padding: 16px 0; border-bottom: 1px solid #1A1714; font-size: 20px"><span class="m">02</span>Choose “I have a key” and paste it.</li>
+      <li style="display: flex; gap: 24px; padding: 16px 0; border-bottom: 1px solid #1A1714; font-size: 20px"><span class="m">03</span>Use the same key on any browser you work in.</li>
+    </ol>
+    <p class="m" style="margin-top: 48px; font-size: 12px; color: #5E554B">Changed your mind? Reply to the receipt within 14 days for a full refund.</p>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const c = this.state && this.state.c;
+    return { label: c ? '✓ COPIED' : 'COPY KEY', bg: c ? '#1A1714' : '#C8401E', fg: c ? '#EFE6D8' : '#fff', copy: () => this.setState({ c: true }) };
+  }
+}
+</script>
+</body>
+</html>

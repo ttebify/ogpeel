@@ -1,0 +1,23 @@
+import { defineConfig } from 'wxt';
+import preact from '@preact/preset-vite';
+
+// OGPEEL_E2E=1 adds broad host access so an automated test can open the popup
+// as a normal page and still read another tab. Never set it for a store build.
+const e2e = process.env.OGPEEL_E2E === '1';
+
+export default defineConfig({
+  manifest: {
+    name: 'Ogpeel',
+    description: "Save any page's share image. Full size, one click.",
+    permissions: ['activeTab', 'scripting', 'downloads', 'storage', 'clipboardWrite'],
+    host_permissions: ['https://api.lemonsqueezy.com/*', ...(e2e ? ['<all_urls>'] : [])],
+    // Asked for one image host at a time, only when Copy image needs it.
+    optional_host_permissions: ['*://*/*'],
+    action: { default_title: 'Ogpeel' },
+  },
+  vite: () => ({ plugins: [preact()] }),
+  webExt: {
+    binaries: { edge: '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' },
+    startUrls: ['https://linear.app/now/behind-the-latest-design-refresh'],
+  },
+});

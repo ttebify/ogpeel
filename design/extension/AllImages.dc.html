@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ogpeel all images</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0} a{color:#1A1714}</style>
+</helmet>
+<div style="width: 360px; height: 600px; box-sizing: border-box; padding: 16px; background: #EFE6D8; color: #1A1714; font-family: Newsreader, serif; display: flex; flex-direction: column">
+  <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 8px; border-bottom: 4px double #1A1714">
+    <a href="Popup.dc.html" aria-label="Back" style="width: 44px; height: 44px; box-sizing: border-box; border: 1.5px solid #1A1714; display: flex; align-items: center; justify-content: center; text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 16px">←</a>
+    <span style="font-size: 24px; font-weight: 600">3 images</span>
+    <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px">blog.example.com</span>
+  </div>
+
+  <sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1.5px solid #1A1714">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; width: 16px">{{r.n}}</span>
+      <div style="width: 88px; height: 48px; flex-shrink: 0; border: 1.5px solid #1A1714; background: {{r.bg}}"></div>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 12px">
+        <span style="font-weight: 500">{{r.tag}}</span>
+        <span style="color: #5E554B">{{r.meta}}</span>
+      </div>
+      <button aria-label="Download {{r.tag}}" style="width: 44px; height: 44px; border: 1.5px solid #1A1714; border-radius: 0; background: transparent; color: #1A1714; font: 500 16px 'IBM Plex Mono', monospace">↓</button>
+    </div>
+  </sc-for>
+
+  <div style="padding: 12px 0; font-size: 16px; font-style: italic; color: #5E554B">Each tag can point to a different size.</div>
+
+  <button style="margin-top: auto; height: 48px; border: 1.5px solid #1A1714; border-radius: 0; background: #C8401E; color: #fff; font: 500 13px 'IBM Plex Mono', monospace; letter-spacing: 1px; box-shadow: 3px 3px 0 #1A1714">↓ DOWNLOAD ALL 3</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":360,"height":600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { rows: [
+      { n: '01', tag: 'OG:IMAGE', meta: '1200 × 630 · JPG · 148 KB', bg: '#1A1714' },
+      { n: '02', tag: 'TWITTER:IMAGE', meta: '1200 × 600 · PNG · 212 KB', bg: '#C8401E' },
+      { n: '03', tag: 'OG:IMAGE · 2ND', meta: '800 × 800 · WEBP · 64 KB', bg: '#5E554B' }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

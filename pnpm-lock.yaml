@@ -105,6 +105,9 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+      wrangler:
+        specifier: ^4.163.0
+        version: 4.163.0(@types/node@26.6.6)
 
   apps/worker:
     dependencies:

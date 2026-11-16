@@ -1,6 +1,9 @@
 {
   "name": "ogpeel-worker",
   "main": "src/index.ts",
+  "routes": [
+    { "pattern": "api.ogpeel.com", "custom_domain": true }
+  ],
   "compatibility_date": "2026-11-01",
   "vars": {
     // Sandbox until launch. Live: https://api.bachs.io

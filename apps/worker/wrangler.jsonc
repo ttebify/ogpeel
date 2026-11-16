@@ -6,8 +6,7 @@
   ],
   "compatibility_date": "2026-11-01",
   "vars": {
-    // Sandbox until launch. Live: https://api.bachs.io
-    "BACHS_API_URL": "https://sandbox-api.bachs.io",
+    "BACHS_API_URL": "https://api.bachs.io",
     // The "Unlimited prompts" product. Empty = no product yet: no key is ever sent.
     "BACHS_PRODUCT_ID": "",
     // Where Bachs sends the buyer after paying.

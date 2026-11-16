@@ -23,7 +23,7 @@ pnpm workspaces under `apps/`: `extension` is implemented; `worker` (payment web
 
 The extension paths below are relative to `apps/extension/`; `design/` remains at the repository root.
 
-- `entrypoints/popup/app.tsx` – all state and actions. `screens/*.tsx` – one presentational component per screen, `({ s, a }: ScreenProps)`. `style.css` – every style.
+- `entrypoints/popup/app.tsx` – all state and actions. `screens/*.tsx` – one presentational component per screen, `({ s, a }: ScreenProps)`. `components/ui/` – shared controls styled with Tailwind utilities. `entrypoints/popup/style.css` – bundled fonts, theme tokens and base styles.
 - `lib/types.ts` – the contract between logic and screens. Change it first when a screen needs new data.
 - `lib/read-page.ts` – runs inside the visited page. `lib/browser-actions.ts` – downloads, clipboard, tabs. `lib/prompt.ts` – the developer prompt. `lib/license.ts` – key check. `lib/config.ts` – prices, URLs, product id.
 - `design/` – every design, grouped by where it's used. Each one is a pair with the same name: `name.dc.html` is the source of truth (exact colours, sizes, spacing in inline styles) and `name.png` is how it looks.
@@ -52,7 +52,10 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 
 **Design**
 - Match the designs in `design/`. Paper look: square corners, 1.5px ink rules, a double rule under headers, depth as a 3px offset ink block, never a soft shadow or a gradient.
-- Colours only through the CSS variables in `style.css` (`--ground`, `--sheet`, `--ink`, `--pencil`, `--hot`, `--on-hot`), so the night look keeps working. Vermilion (`--hot`) is for actions that save a file or pay.
+- Colours only through the shadcn-named CSS variables in `style.css` (`--background`, `--card`, `--foreground`, `--muted`, `--muted-foreground`, `--primary`, `--primary-foreground`, `--border`, `--ring`), so the night look keeps working. Vermilion (`--primary`) is for actions that save a file or pay.
+- Sizes come from theme tokens: the 4px `--spacing` scale, `text-xs/sm/base/2xl/display`, `leading-heading/body`, `tracking-label/brand/display`, `--rule-width` for rules, `aspect-share`. Reach for an arbitrary `[value]` only for a true one-off.
+- Components follow shadcn: `cva` variants and `cn` from the `cn` package.
+- Use semantic Tailwind utilities mapped to those tokens. Put repeated control styling in component variants rather than custom CSS classes; use utilities directly for screen layouts.
 - Newsreader for words a person reads, IBM Plex Mono (uppercase) for labels and file facts. Fonts are bundled, never loaded from a CDN.
 - The popup is exactly 360 × 600. Long content scrolls inside its own box.
 - Real `<button>`s, `aria-label` on icon-only buttons, a visible focus outline. No emoji.

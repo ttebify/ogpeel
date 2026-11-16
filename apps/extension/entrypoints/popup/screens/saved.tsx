@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+import { Frame } from '@/components/ui/frame';
 import type { ScreenProps } from '@/lib/types';
 import { metaLine } from '@/lib/util';
 import { Brand, NavHead } from './parts';
@@ -5,31 +7,31 @@ import { Brand, NavHead } from './parts';
 export function SavedScreen({ s, a }: ScreenProps) {
   const saved = s.saved;
   return (
-    <div class="frame">
+    <Frame>
       <NavHead a={a} to="popup" host={s.page?.host || ''}><Brand /></NavHead>
       {saved && (
         <>
-          <div class="saved-top">
-            <img class="saved-thumb" src={saved.image.url} alt="" />
-            <div class="stack8">
-              <span class="mono ls">✓ SAVED</span>
-              <span style={{ fontSize: '24px', lineHeight: 1.1 }}>In your Downloads</span>
+          <div class="mt-6 flex items-start gap-4">
+            <img class="block aspect-share w-30 shrink-0 border-(length:--rule-width) border-solid border-foreground bg-foreground object-cover shadow-saved" src={saved.image.url} alt="" />
+            <div class="flex flex-col gap-2">
+              <span class="font-mono text-xs tracking-label">✓ SAVED</span>
+              <span class="text-2xl leading-heading">In your Downloads</span>
             </div>
           </div>
-          <div class="file">
+          <div class="mt-6 break-all border-y-(length:--rule-width) border-solid border-foreground py-3 font-mono text-xs leading-[1.6]">
             {saved.filename}
             <br />
-            <span class="pencil">
+            <span class="text-muted-foreground">
               {metaLine(saved.image)}
               {saved.count > 1 ? ` and ${saved.count - 1} more` : ''}
             </span>
           </div>
         </>
       )}
-      <div class="push stack">
-        <button class="btn dark" onClick={a.showInFolder}>SHOW IN FOLDER</button>
-        <button class="mono-link" onClick={() => a.go('popup')}>BACK TO THE IMAGE</button>
+      <div class="mt-auto flex flex-col gap-3">
+        <Button variant="solid" onClick={a.showInFolder}>SHOW IN FOLDER</Button>
+        <Button variant="mono-link" onClick={() => a.go('popup')}>BACK TO THE IMAGE</Button>
       </div>
-    </div>
+    </Frame>
   );
 }

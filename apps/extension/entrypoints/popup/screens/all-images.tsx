@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+import { Frame } from '@/components/ui/frame';
 import type { ScreenProps } from '@/lib/types';
 import { metaLine } from '@/lib/util';
 import { NavHead, pad2 } from './parts';
@@ -6,33 +8,33 @@ export function AllImages({ s, a }: ScreenProps) {
   const n = s.images.length;
   const busy = !!s.busy;
   return (
-    <div class="frame">
+    <Frame>
       <NavHead a={a} to="popup" host={s.page?.host || ''}>{n} images</NavHead>
-      <div class="list">
+      <div class="min-h-0 flex-auto overflow-y-auto">
         {s.images.map((img, i) => {
           const tag = img.tags.join(' + ').toUpperCase();
           return (
-            <div class="irow" key={img.url + i}>
-              <button class="pick" onClick={() => a.select(i)} aria-label={`Show image ${i + 1}, ${tag}`}>
-                <span class="mono n">{pad2(i + 1)}</span>
-                {img.broken ? <div class="thumb" /> : <img class="thumb" src={img.url} alt="" />}
-                <span class="txt">
-                  <span style={{ fontWeight: 500 }}>{tag}</span>
-                  <span class="pencil">{img.broken ? "DIDN'T LOAD" : metaLine(img)}</span>
+            <div class="flex items-center gap-3 border-0 border-b-(length:--rule-width) border-solid border-border py-3" key={img.url + i}>
+              <button class="flex min-w-0 flex-1 items-center gap-3 border-0 bg-transparent p-0 text-left" onClick={() => a.select(i)} aria-label={`Show image ${i + 1}, ${tag}`}>
+                <span class="font-mono text-xs w-4 shrink-0">{pad2(i + 1)}</span>
+                {img.broken ? <div class="block h-12 w-22 shrink-0 border-(length:--rule-width) border-solid border-border bg-foreground object-cover" /> : <img class="block h-12 w-22 shrink-0 border-(length:--rule-width) border-solid border-border bg-foreground object-cover" src={img.url} alt="" />}
+                <span class="flex min-w-0 flex-1 flex-col gap-1 font-mono text-xs">
+                  <span class="truncate font-medium">{tag}</span>
+                  <span class="text-muted-foreground">{img.broken ? "DIDN'T LOAD" : metaLine(img)}</span>
                 </span>
               </button>
               {!img.broken && (
-                <button class="dl" aria-label={`Download ${tag}`} disabled={busy} onClick={() => a.download(i)}>↓</button>
+                <Button variant="icon-outline" class="font-medium" aria-label={`Download ${tag}`} disabled={busy} onClick={() => a.download(i)}>↓</Button>
               )}
             </div>
           );
         })}
+        <div class="py-3 text-base italic text-muted-foreground">Each tag can point to a different size.</div>
       </div>
-      <div class="note">Each tag can point to a different size.</div>
-      {s.error && <p class="err" role="alert" style={{ marginBottom: '8px' }}>{s.error}</p>}
-      <button class="btn hot" disabled={busy} onClick={a.downloadAll}>
+      {s.error && <p class="m-0 mb-2 font-mono text-xs text-primary" role="alert">{s.error}</p>}
+      <Button variant="action" disabled={busy} onClick={a.downloadAll}>
         {s.busy === 'download' ? 'SAVING…' : `↓ DOWNLOAD ALL ${n}`}
-      </button>
-    </div>
+      </Button>
+    </Frame>
   );
 }

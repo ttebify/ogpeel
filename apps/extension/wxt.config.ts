@@ -1,5 +1,6 @@
 import { defineConfig } from 'wxt';
 import preact from '@preact/preset-vite';
+import tailwindcss from '@tailwindcss/vite';
 
 // OGPEEL_E2E=1 adds broad host access so an automated test can open the popup
 // as a normal page and still read another tab. Never set it for a store build.
@@ -15,7 +16,7 @@ export default defineConfig({
     optional_host_permissions: ['*://*/*'],
     action: { default_title: 'Ogpeel' },
   },
-  vite: () => ({ plugins: [preact()] }),
+  vite: () => ({ plugins: [preact(), tailwindcss()] }),
   webExt: {
     binaries: { edge: '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' },
     startUrls: ['https://linear.app/now/behind-the-latest-design-refresh'],

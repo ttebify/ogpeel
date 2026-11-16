@@ -1,35 +1,38 @@
+import { Button } from '@/components/ui/button';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Frame } from '@/components/ui/frame';
 import { FRAMEWORKS } from '@/lib/prompt';
 import type { ScreenProps } from '@/lib/types';
 import { NavHead } from './parts';
 
 export function Dev({ s, a }: ScreenProps) {
   return (
-    <div class="frame">
+    <Frame>
       <NavHead a={a} to="popup">Make one like this</NavHead>
-      <p class="lead">A prompt for your coding agent. It builds a share image in this style for every page on your site, with your own words and colours.</p>
-      <div class="label">YOUR SITE IS BUILT WITH</div>
-      <div class="seg fw" style={{ marginTop: '8px' }}>
+      <p class="m-0 mt-3 text-base leading-[1.35]">A prompt for your coding agent. It builds a share image in this style for every page on your site, with your own words and colours.</p>
+      <div class="mt-4 font-mono text-xs tracking-label">YOUR SITE IS BUILT WITH</div>
+      <ToggleGroup variant="framework" class="mt-2">
         {FRAMEWORKS.map((f) => (
-          <button key={f.id} aria-pressed={f.id === s.framework} class={f.id === s.framework ? 'on' : ''} onClick={() => a.setFramework(f.id)}>
+          <ToggleGroupItem key={f.id} aria-pressed={f.id === s.framework} selected={f.id === s.framework} onClick={() => a.setFramework(f.id)}>
             {f.label}
-          </button>
+          </ToggleGroupItem>
         ))}
-      </div>
-      <div class="prompt" tabIndex={0} aria-label="Prompt">{s.prompt}</div>
-      <div class="bottom">
-        {s.error && <p class="err" role="alert">{s.error}</p>}
-        <div class="line">
+      </ToggleGroup>
+      <div class="mt-4 h-34 shrink-0 overflow-y-auto whitespace-pre-wrap border-(length:--rule-width) border-solid border-foreground bg-card p-3 font-mono text-xs leading-normal [overflow-wrap:break-word]" tabIndex={0} aria-label="Prompt">{s.prompt}</div>
+      <div class="mt-auto flex shrink-0 flex-col gap-2">
+        {s.error && <p class="m-0 font-mono text-xs text-primary" role="alert">{s.error}</p>}
+        <div class="flex items-center justify-between font-mono text-xs tracking-label">
           {s.license.unlocked ? (
             <span>UNLIMITED PROMPTS</span>
           ) : (
             <>
               <span>{s.license.freeLeft} OF 2 FREE PROMPTS LEFT</span>
-              <button class="link-btn" onClick={() => a.go('unlock')}>UNLIMITED →</button>
+              <Button variant="link" onClick={() => a.go('unlock')}>UNLIMITED →</Button>
             </>
           )}
         </div>
-        <button class="btn dark" disabled={!!s.busy || !s.prompt} onClick={a.copyPrompt}>COPY PROMPT</button>
+        <Button variant="solid" disabled={!!s.busy || !s.prompt} onClick={a.copyPrompt}>COPY PROMPT</Button>
       </div>
-    </div>
+    </Frame>
   );
 }

@@ -1,3 +1,6 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Frame } from '@/components/ui/frame';
 import { useState } from 'preact/hooks';
 import type { ScreenProps } from '@/lib/types';
 import { NavHead } from './parts';
@@ -9,24 +12,23 @@ export function EnterKey({ s, a }: ScreenProps) {
 
   if (s.license.unlocked) {
     return (
-      <div class="frame">
+      <Frame>
         <NavHead a={a} to="unlock">Enter your key</NavHead>
-        <div class="mono ls" style={{ marginTop: '32px' }}>✓ UNLOCKED ON THIS BROWSER</div>
-        <div class="big" style={{ marginTop: '8px' }}>Thank you<span class="dot">.</span></div>
-        <p class="body16" style={{ margin: '12px 0 0' }}>Prompts are unlimited now, for every framework.</p>
-        <button class="btn dark push" onClick={() => a.go('dev')}>BACK TO MY PROMPT</button>
-      </div>
+        <div class="mt-8 font-mono text-xs tracking-label">✓ UNLOCKED ON THIS BROWSER</div>
+        <div class="mt-2 text-display font-semibold leading-none tracking-display">Thank you<span class="text-primary">.</span></div>
+        <p class="m-0 mt-3 text-base leading-body">Prompts are unlimited now, for every framework.</p>
+        <Button variant="solid" class="mt-auto" onClick={() => a.go('dev')}>BACK TO MY PROMPT</Button>
+      </Frame>
     );
   }
 
   return (
-    <div class="frame">
+    <Frame>
       <NavHead a={a} to="unlock">Enter your key</NavHead>
-      <p class="body16" style={{ margin: '24px 0 0' }}>It's in the email from your payment, and on the page you saw after paying.</p>
-      <label for="k" class="keylabel">LICENSE KEY</label>
-      <input
+      <p class="m-0 mt-6 text-base leading-body">It's in the email from your payment, and on the page you saw after paying.</p>
+      <label for="k" class="mt-6 font-mono text-xs tracking-label">LICENSE KEY</label>
+      <Input
         id="k"
-        class={`keyin${s.keyError ? ' bad' : ''}`}
         value={key}
         placeholder="Paste your key"
         autocomplete="off"
@@ -37,12 +39,12 @@ export function EnterKey({ s, a }: ScreenProps) {
         onKeyDown={(e) => { if (e.key === 'Enter') submit(); }}
       />
       {s.keyError && (
-        <div id="k-err" role="alert" class="keyerr">That key doesn't match. Check for a missing letter, or find it again on ogpeel.com/key.</div>
+        <div id="k-err" role="alert" class="mt-2 text-base text-primary">That key doesn't match. Check for a missing letter, or find it again on ogpeel.com/key.</div>
       )}
-      <div class="push stack8">
-        <button class="btn dark" disabled={!!s.busy} onClick={submit}>{checking ? 'CHECKING…' : 'UNLOCK'}</button>
-        <button class="italic-link" onClick={() => a.openSite('key')}>Lost it? Find my key ↗</button>
+      <div class="mt-auto flex flex-col gap-2">
+        <Button variant="solid" disabled={!!s.busy} onClick={submit}>{checking ? 'CHECKING…' : 'UNLOCK'}</Button>
+        <Button variant="italic-link" onClick={() => a.openSite('key')}>Lost it? Find my key ↗</Button>
       </div>
-    </div>
+    </Frame>
   );
 }

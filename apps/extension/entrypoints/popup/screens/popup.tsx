@@ -1,5 +1,5 @@
-import type { ScreenProps } from '../../../lib/types';
-import { metaLine } from '../../../lib/util';
+import type { ScreenProps } from '@/lib/types';
+import { metaLine } from '@/lib/util';
 import { GearIcon, Head } from './parts';
 
 export function Popup({ s, a }: ScreenProps) {

@@ -1,5 +1,5 @@
 import type { ComponentChildren } from 'preact';
-import type { Actions, Route, State } from '../../../lib/types';
+import type { Actions, Route, State } from '@/lib/types';
 
 export function Brand() {
   return <span class="brand">Ogpeel<span class="dot">.</span></span>;

@@ -23,12 +23,12 @@ pnpm workspaces under `apps/`: `extension` is implemented; `worker` (payment web
 
 The extension paths below are relative to `apps/extension/`; `design/` remains at the repository root.
 
-- `entrypoints/popup/App.tsx` – all state and actions. `screens/*.tsx` – one presentational component per screen, `({ s, a }: ScreenProps)`. `style.css` – every style.
+- `entrypoints/popup/app.tsx` – all state and actions. `screens/*.tsx` – one presentational component per screen, `({ s, a }: ScreenProps)`. `style.css` – every style.
 - `lib/types.ts` – the contract between logic and screens. Change it first when a screen needs new data.
 - `lib/read-page.ts` – runs inside the visited page. `lib/browser-actions.ts` – downloads, clipboard, tabs. `lib/prompt.ts` – the developer prompt. `lib/license.ts` – key check. `lib/config.ts` – prices, URLs, product id.
-- `design/` – every design, grouped by where it's used. Each one is a pair with the same name: `Name.dc.html` is the source of truth (exact colours, sizes, spacing in inline styles) and `Name.png` is how it looks.
-  - `design/extension/` – the popup screens, the brand board (`Main`) and the icons.
-  - `design/store/` – the store screenshots (`Shot1`–`Shot5`, 1280×800), the small tile (`Promo`, 440×280) and the marquee (1400×560). The PNGs are the files to upload.
+- `design/` – every design, grouped by where it's used. Each one is a pair with the same name: `name.dc.html` is the source of truth (exact colours, sizes, spacing in inline styles) and `name.png` is how it looks.
+  - `design/extension/` – the popup screens, the brand board (`main`) and the icons.
+  - `design/store/` – the store screenshots (`shot1`–`shot5`, 1280×800), the small tile (`promo`, 440×280) and the marquee (1400×560). The PNGs are the files to upload.
   - `design/site/` – the website pages, the receipt email and the site's share image. Not built yet.
 - `tests/` – unit tests. `scripts/` – icons and the smoke test.
 
@@ -42,9 +42,11 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 - If a change would make the privacy page or store listing untrue, stop and ask.
 
 **Code**
+- Use kebab-case for project filenames, including component files and design assets. Keep conventional filenames such as `AGENTS.md`, `CLAUDE.md`, `README.md` and `LICENSE`.
 - `readPage()` is injected into pages: it must use nothing from outside its own body.
 - `lib/read-page.ts`, `lib/util.ts` and `lib/prompt.ts` import nothing from the browser API, so they can be unit tested. Keep it that way.
-- Logic goes in `App.tsx` or `lib/`; screens only render `s` and call `a`.
+- Logic goes in `app.tsx` or `lib/`; screens only render `s` and call `a`.
+- Import across folders with `@/` (the extension root, e.g. `@/lib/types`); use `./` only for files in the same folder.
 - Reading tags correctly is the core. Any change to `read-page.ts` comes with a test case.
 - The worker workspace is reserved for the planned server component. This restructuring does not authorize implementing payment or licensing changes; agree on that scope before adding server behavior.
 

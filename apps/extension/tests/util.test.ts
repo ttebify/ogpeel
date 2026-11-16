@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { checksFor, extFromMime, extOf, formatBytes, hostOf, metaLine, slug } from '../lib/util';
-import type { OgImage, PageInfo } from '../lib/types';
+import { checksFor, extFromMime, extOf, formatBytes, hostOf, metaLine, slug } from '@/lib/util';
+import type { OgImage, PageInfo } from '@/lib/types';
 
 describe('slug', () => {
   it('drops punctuation', () => expect(slug('A calmer interface!')).toBe('a-calmer-interface'));

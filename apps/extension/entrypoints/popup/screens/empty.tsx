@@ -1,4 +1,4 @@
-import type { ScreenProps } from '../../../lib/types';
+import type { ScreenProps } from '@/lib/types';
 import { Head } from './parts';
 
 export function Empty({ s, a }: ScreenProps) {

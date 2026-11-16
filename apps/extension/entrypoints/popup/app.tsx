@@ -1,25 +1,25 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { browser } from 'wxt/browser';
-import { copyImageToClipboard, downloadImage, probe, targetTab } from '../../lib/browser-actions';
-import { SITE_PAGES } from '../../lib/config';
-import { activateKey } from '../../lib/license';
-import { buildPrompt, samplePalette } from '../../lib/prompt';
-import { readPage } from '../../lib/read-page';
-import { DEFAULT_LICENSE, DEFAULT_SETTINGS, loadPrefs, saveLicense, saveSettings } from '../../lib/storage';
-import type { Actions, OgImage, PageInfo, RawPage, State } from '../../lib/types';
-import { checksFor, formatOf, hostOf } from '../../lib/util';
-import { AllImages } from './screens/AllImages';
-import { Copied } from './screens/Copied';
-import { Dev } from './screens/Dev';
-import { Empty } from './screens/Empty';
-import { EnterKey } from './screens/EnterKey';
-import { Failed } from './screens/Failed';
-import { Loading } from './screens/Loading';
-import { Popup } from './screens/Popup';
-import { Preview } from './screens/Preview';
-import { SavedScreen } from './screens/Saved';
-import { SettingsScreen } from './screens/Settings';
-import { Unlock } from './screens/Unlock';
+import { copyImageToClipboard, downloadImage, probe, targetTab } from '@/lib/browser-actions';
+import { SITE_PAGES } from '@/lib/config';
+import { activateKey } from '@/lib/license';
+import { buildPrompt, samplePalette } from '@/lib/prompt';
+import { readPage } from '@/lib/read-page';
+import { DEFAULT_LICENSE, DEFAULT_SETTINGS, loadPrefs, saveLicense, saveSettings } from '@/lib/storage';
+import type { Actions, OgImage, PageInfo, RawPage, State } from '@/lib/types';
+import { checksFor, formatOf, hostOf } from '@/lib/util';
+import { AllImages } from '@/entrypoints/popup/screens/all-images';
+import { Copied } from '@/entrypoints/popup/screens/copied';
+import { Dev } from '@/entrypoints/popup/screens/dev';
+import { Empty } from '@/entrypoints/popup/screens/empty';
+import { EnterKey } from '@/entrypoints/popup/screens/enter-key';
+import { Failed } from '@/entrypoints/popup/screens/failed';
+import { Loading } from '@/entrypoints/popup/screens/loading';
+import { Popup } from '@/entrypoints/popup/screens/popup';
+import { Preview } from '@/entrypoints/popup/screens/preview';
+import { SavedScreen } from '@/entrypoints/popup/screens/saved';
+import { SettingsScreen } from '@/entrypoints/popup/screens/settings';
+import { Unlock } from '@/entrypoints/popup/screens/unlock';
 
 const initial: State = {
   status: 'loading', route: 'popup', page: null, images: [], current: 0, restricted: false, usingLargest: false,

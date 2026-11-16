@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildPrompt, FRAMEWORKS } from '../lib/prompt';
-import type { Framework, OgImage, PageInfo } from '../lib/types';
+import { buildPrompt, FRAMEWORKS } from '@/lib/prompt';
+import type { Framework, OgImage, PageInfo } from '@/lib/types';
 
 const image: OgImage = { url: 'https://ref.com/og.png', tags: ['og:image'], width: 1200, height: 675, format: 'PNG' };
 const page: PageInfo = { url: 'https://ref.com/post', host: 'ref.com', title: 'Post', description: '', hasLargest: false };

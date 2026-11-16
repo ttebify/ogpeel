@@ -1,5 +1,5 @@
 import { browser } from 'wxt/browser';
-import type { ScreenProps, Settings } from '../../../lib/types';
+import type { ScreenProps, Settings } from '@/lib/types';
 import { NavHead } from './parts';
 
 type Opt<K extends keyof Settings> = { value: Settings[K]; label: string };

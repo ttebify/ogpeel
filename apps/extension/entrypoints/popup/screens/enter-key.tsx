@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import type { ScreenProps } from '../../../lib/types';
+import type { ScreenProps } from '@/lib/types';
 import { NavHead } from './parts';
 
 export function EnterKey({ s, a }: ScreenProps) {

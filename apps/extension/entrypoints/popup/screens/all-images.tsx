@@ -1,5 +1,5 @@
-import type { ScreenProps } from '../../../lib/types';
-import { metaLine } from '../../../lib/util';
+import type { ScreenProps } from '@/lib/types';
+import { metaLine } from '@/lib/util';
 import { NavHead, pad2 } from './parts';
 
 export function AllImages({ s, a }: ScreenProps) {

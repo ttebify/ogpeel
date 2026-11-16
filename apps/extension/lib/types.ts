@@ -1,4 +1,4 @@
-// Shared contract between the popup's logic (App.tsx) and its screens.
+// Shared contract between the popup's logic (app.tsx) and its screens.
 
 export type RawImage = { url: string; tags: string[]; width?: number; height?: number; alt?: string; type?: string };
 export type RawPage = {

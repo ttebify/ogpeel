@@ -1,5 +1,5 @@
-import { FRAMEWORKS } from '../../../lib/prompt';
-import type { ScreenProps } from '../../../lib/types';
+import { FRAMEWORKS } from '@/lib/prompt';
+import type { ScreenProps } from '@/lib/types';
 import { NavHead } from './parts';
 
 export function Dev({ s, a }: ScreenProps) {

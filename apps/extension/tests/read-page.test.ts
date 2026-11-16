@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { readPage } from '../lib/read-page';
+import { readPage } from '@/lib/read-page';
 
 // happy-dom does not implement document.images; browsers do.
 if (!('images' in document) || document.images === undefined) {

@@ -6,7 +6,7 @@ export const LINKS = {
   chrome: '#install',
   edge: '#install',
   safari: '#install',
-  checkout: '#pricing',
+  checkout: 'https://api.ogpeel.com/buy',
   coffee: '#coffee',
 } as const;
 

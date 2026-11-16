@@ -3,7 +3,10 @@ import { readPage } from '@/lib/read-page';
 
 // happy-dom does not implement document.images; browsers do.
 if (!('images' in document) || document.images === undefined) {
-  Object.defineProperty(document, 'images', { configurable: true, get: () => document.getElementsByTagName('img') });
+  Object.defineProperty(document, 'images', {
+    configurable: true,
+    get: () => document.getElementsByTagName('img'),
+  });
 }
 
 const set = (head: string, body = '') => {
@@ -22,14 +25,18 @@ describe('readPage', () => {
   });
 
   it('merges og and twitter tags pointing at the same URL', () => {
-    set('<meta property="og:image" content="https://example.com/a.png"><meta name="twitter:image" content="https://example.com/a.png">');
+    set(
+      '<meta property="og:image" content="https://example.com/a.png"><meta name="twitter:image" content="https://example.com/a.png">',
+    );
     const p = readPage();
     expect(p.images).toHaveLength(1);
     expect(p.images[0]!.tags).toEqual(['og:image', 'twitter:image']);
   });
 
   it('lists different og and twitter images in document order', () => {
-    set('<meta name="twitter:image" content="https://example.com/t.png"><meta property="og:image" content="https://example.com/o.png">');
+    set(
+      '<meta name="twitter:image" content="https://example.com/t.png"><meta property="og:image" content="https://example.com/o.png">',
+    );
     const p = readPage();
     expect(p.images.map((i) => [i.url, i.tags])).toEqual([
       ['https://example.com/t.png', ['twitter:image']],
@@ -48,19 +55,33 @@ describe('readPage', () => {
       <meta property="og:image:height" content="800">
       <meta property="og:image:alt" content="Second">`);
     const [a, b] = readPage().images;
-    expect(a).toMatchObject({ url: 'https://example.com/1.png', width: 1200, height: 630, alt: 'First' });
-    expect(b).toMatchObject({ url: 'https://example.com/2.png', width: 800, height: 800, alt: 'Second' });
+    expect(a).toMatchObject({
+      url: 'https://example.com/1.png',
+      width: 1200,
+      height: 630,
+      alt: 'First',
+    });
+    expect(b).toMatchObject({
+      url: 'https://example.com/2.png',
+      width: 800,
+      height: 800,
+      alt: 'Second',
+    });
   });
 
   it('accepts name= instead of property=', () => {
-    set('<meta name="og:image" content="https://example.com/a.png"><meta name="og:title" content="T">');
+    set(
+      '<meta name="og:image" content="https://example.com/a.png"><meta name="og:title" content="T">',
+    );
     const p = readPage();
     expect(p.images[0]!.url).toBe('https://example.com/a.png');
     expect(p.title).toBe('T');
   });
 
   it('prefers the https secure_url twin of an http og:image', () => {
-    set('<meta property="og:image" content="http://example.com/a.png"><meta property="og:image:secure_url" content="https://example.com/a.png">');
+    set(
+      '<meta property="og:image" content="http://example.com/a.png"><meta property="og:image:secure_url" content="https://example.com/a.png">',
+    );
     const p = readPage();
     expect(p.images).toEqual([{ url: 'https://example.com/a.png', tags: ['og:image'] }]);
   });
@@ -86,7 +107,9 @@ describe('readPage', () => {
   });
 
   it('title falls back og:title -> twitter:title -> document.title', () => {
-    set('<title>Doc</title><meta name="twitter:title" content="Tw"><meta property="og:title" content="Og">');
+    set(
+      '<title>Doc</title><meta name="twitter:title" content="Tw"><meta property="og:title" content="Og">',
+    );
     expect(readPage().title).toBe('Og');
     set('<title>Doc</title><meta name="twitter:title" content="Tw">');
     expect(readPage().title).toBe('Tw');
@@ -95,7 +118,9 @@ describe('readPage', () => {
   });
 
   it('description falls back og -> twitter -> meta description', () => {
-    set('<meta name="description" content="M"><meta name="twitter:description" content="Tw"><meta property="og:description" content="Og">');
+    set(
+      '<meta name="description" content="M"><meta name="twitter:description" content="Tw"><meta property="og:description" content="Og">',
+    );
     expect(readPage().description).toBe('Og');
     set('<meta name="description" content="M"><meta name="twitter:description" content="Tw">');
     expect(readPage().description).toBe('Tw');

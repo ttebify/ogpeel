@@ -1,7 +1,22 @@
 import type { Check, OgImage, PageInfo } from './types';
 
-const EXT: Record<string, string> = { jpeg: 'jpg', jpg: 'jpg', png: 'png', webp: 'webp', gif: 'gif', avif: 'avif', svg: 'svg' };
-const MIME: Record<string, string> = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/avif': 'avif', 'image/svg+xml': 'svg' };
+const EXT: Record<string, string> = {
+  jpeg: 'jpg',
+  jpg: 'jpg',
+  png: 'png',
+  webp: 'webp',
+  gif: 'gif',
+  avif: 'avif',
+  svg: 'svg',
+};
+const MIME: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+  'image/avif': 'avif',
+  'image/svg+xml': 'svg',
+};
 
 /** File extension from the URL's path, lower case, or '' when it has none we know. */
 export function extOf(url: string): string {
@@ -12,7 +27,8 @@ export function extOf(url: string): string {
     return '';
   }
 }
-export const extFromMime = (mime: string | undefined): string => MIME[(mime || '').split(';')[0]!.trim().toLowerCase()] || '';
+export const extFromMime = (mime: string | undefined): string =>
+  MIME[(mime || '').split(';')[0]!.trim().toLowerCase()] || '';
 export const formatOf = (url: string): string | undefined => extOf(url).toUpperCase() || undefined;
 
 export function hostOf(url: string | undefined): string {
@@ -46,7 +62,13 @@ export function formatBytes(n: number | undefined): string {
 
 /** "1200 × 675 · PNG · 302 KB", leaving out what isn't known. */
 export function metaLine(img: OgImage): string {
-  return [img.width && img.height ? `${img.width} × ${img.height}` : '', img.format || '', formatBytes(img.bytes)].filter(Boolean).join(' · ');
+  return [
+    img.width && img.height ? `${img.width} × ${img.height}` : '',
+    img.format || '',
+    formatBytes(img.bytes),
+  ]
+    .filter(Boolean)
+    .join(' · ');
 }
 
 /** "OG:IMAGE + TWITTER:IMAGE": every tag that points at the image. */
@@ -60,13 +82,34 @@ export function checksFor(page: PageInfo, img: OgImage): Check[] {
   if (img.width && img.height) {
     const ratio = img.width / img.height;
     const wide = ratio > 1.7 && ratio < 2.1;
-    if (img.width < 600) out.push({ ok: false, text: `Image is ${img.width} × ${img.height}, small enough that some apps show a tiny thumbnail` });
-    else if (!wide) out.push({ ok: false, text: `Image is ${img.width} × ${img.height}; most apps crop to about 1.91:1` });
-    else out.push({ ok: true, text: `Image is ${img.width} × ${img.height}, a size most apps expect` });
+    if (img.width < 600)
+      out.push({
+        ok: false,
+        text: `Image is ${img.width} × ${img.height}, small enough that some apps show a tiny thumbnail`,
+      });
+    else if (!wide)
+      out.push({
+        ok: false,
+        text: `Image is ${img.width} × ${img.height}; most apps crop to about 1.91:1`,
+      });
+    else
+      out.push({
+        ok: true,
+        text: `Image is ${img.width} × ${img.height}, a size most apps expect`,
+      });
   }
   if (page.title && page.description) out.push({ ok: true, text: 'Title and description are set' });
-  else out.push({ ok: false, text: page.title ? 'No description for the link' : 'No title for the link' });
-  out.push(img.alt ? { ok: true, text: 'Image has alt text' } : { ok: false, text: 'No alt text for the image' });
-  if (!img.tags.includes('twitter:image') && img.tags.includes('og:image')) out.push({ ok: true, text: 'No twitter:image, so X uses the og:image' });
+  else
+    out.push({
+      ok: false,
+      text: page.title ? 'No description for the link' : 'No title for the link',
+    });
+  out.push(
+    img.alt
+      ? { ok: true, text: 'Image has alt text' }
+      : { ok: false, text: 'No alt text for the image' },
+  );
+  if (!img.tags.includes('twitter:image') && img.tags.includes('og:image'))
+    out.push({ ok: true, text: 'No twitter:image, so X uses the og:image' });
   return out;
 }

@@ -8,11 +8,17 @@ export function SavedScreen({ s, a }: ScreenProps) {
   const saved = s.saved;
   return (
     <Frame>
-      <NavHead a={a} to="popup" host={s.page?.host || ''}><Brand /></NavHead>
+      <NavHead a={a} to="popup" host={s.page?.host || ''}>
+        <Brand />
+      </NavHead>
       {saved && (
         <>
           <div class="mt-6 flex items-start gap-4">
-            <img class="block aspect-share w-30 shrink-0 rule border-foreground bg-foreground object-cover shadow-saved" src={saved.image.url} alt="" />
+            <img
+              class="block aspect-share w-30 shrink-0 rule border-foreground bg-foreground object-cover shadow-saved"
+              src={saved.image.url}
+              alt=""
+            />
             <div class="flex flex-col gap-2">
               <span class="font-mono text-xs tracking-label">✓ SAVED</span>
               <span class="text-2xl leading-heading">In your Downloads</span>
@@ -29,8 +35,12 @@ export function SavedScreen({ s, a }: ScreenProps) {
         </>
       )}
       <div class="mt-auto flex flex-col gap-3">
-        <Button variant="solid" onClick={a.showInFolder}>SHOW IN FOLDER</Button>
-        <Button variant="mono-link" onClick={() => a.go('popup')}>BACK TO THE IMAGE</Button>
+        <Button variant="solid" onClick={a.showInFolder}>
+          SHOW IN FOLDER
+        </Button>
+        <Button variant="mono-link" onClick={() => a.go('popup')}>
+          BACK TO THE IMAGE
+        </Button>
       </div>
     </Frame>
   );

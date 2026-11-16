@@ -26,11 +26,20 @@ describe('license keys', async () => {
 
   it('rejects a key signed by someone else', async () => {
     const other = await generateKeys();
-    expect(await verifyKey(publicKey, await signKey(other.privateKey, 'ch_1a2b3c4d5e6f'))).toBe(false);
+    expect(await verifyKey(publicKey, await signKey(other.privateKey, 'ch_1a2b3c4d5e6f'))).toBe(
+      false,
+    );
   });
 
   it('rejects anything that is not a key', async () => {
-    for (const junk of ['', 'OGPEEL-TEST-TEST-TEST', 'OGPEEL-', 'hello', key.slice(0, -4), key.replace('OGPEEL-', '')]) {
+    for (const junk of [
+      '',
+      'OGPEEL-TEST-TEST-TEST',
+      'OGPEEL-',
+      'hello',
+      key.slice(0, -4),
+      key.replace('OGPEEL-', ''),
+    ]) {
       expect(await verifyKey(publicKey, junk)).toBe(false);
     }
   });

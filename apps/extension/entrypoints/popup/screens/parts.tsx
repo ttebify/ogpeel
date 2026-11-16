@@ -7,7 +7,11 @@ import type { Actions, Route, State } from '@/lib/types';
 const header = 'flex shrink-0 border-b-4 border-double border-border pb-2';
 
 export function Brand() {
-  return <span class="text-2xl font-semibold tracking-brand">Ogpeel<span class="text-primary">.</span></span>;
+  return (
+    <span class="text-2xl font-semibold tracking-brand">
+      Ogpeel<span class="text-primary">.</span>
+    </span>
+  );
 }
 
 function Host({ host }: { host?: string }) {
@@ -23,10 +27,22 @@ export function Head({ s }: { s: State }) {
   );
 }
 
-export function NavHead({ a, to, host, children }: { a: Actions; to: Route; host?: string; children: ComponentChildren }) {
+export function NavHead({
+  a,
+  to,
+  host,
+  children,
+}: {
+  a: Actions;
+  to: Route;
+  host?: string;
+  children: ComponentChildren;
+}) {
   return (
     <div class={cn(header, 'items-center justify-start gap-3')}>
-      <Button variant="icon-outline" aria-label="Back" onClick={() => a.go(to)}>←</Button>
+      <Button variant="icon-outline" aria-label="Back" onClick={() => a.go(to)}>
+        ←
+      </Button>
       <span class="text-2xl font-semibold">{children}</span>
       {host !== undefined && <Host host={host} />}
     </div>
@@ -46,12 +62,24 @@ export function Notice({ title, children }: { title: string; children: Component
 /** The sentence shown when an action failed. Renders nothing while there is no error. */
 export function ErrorLine({ s, class: className }: { s: State; class?: string }) {
   if (!s.error) return null;
-  return <p class={cn('m-0 font-mono text-xs text-primary', className)} role="alert">{s.error}</p>;
+  return (
+    <p class={cn('m-0 font-mono text-xs text-primary', className)} role="alert">
+      {s.error}
+    </p>
+  );
 }
 
 export function GearIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      aria-hidden="true"
+    >
       <circle cx="12" cy="12" r="3" />
       <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" />
     </svg>

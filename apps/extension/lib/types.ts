@@ -1,6 +1,13 @@
 // Shared contract between the popup's logic (app.tsx) and its screens.
 
-export type RawImage = { url: string; tags: string[]; width?: number; height?: number; alt?: string; type?: string };
+export type RawImage = {
+  url: string;
+  tags: string[];
+  width?: number;
+  height?: number;
+  alt?: string;
+  type?: string;
+};
 export type RawPage = {
   url: string;
   title: string;
@@ -25,7 +32,13 @@ export type OgImage = {
   broken?: boolean;
 };
 
-export type PageInfo = { url: string; host: string; title: string; description: string; hasLargest: boolean };
+export type PageInfo = {
+  url: string;
+  host: string;
+  title: string;
+  description: string;
+  hasLargest: boolean;
+};
 
 export type Naming = 'title' | 'original';
 export type Look = 'auto' | 'day' | 'night';
@@ -34,7 +47,8 @@ export type License = { unlocked: boolean; key?: string; freeLeft: number };
 
 export type Framework = 'nextjs' | 'astro' | 'wordpress' | 'html';
 
-export type Route = 'popup' | 'all' | 'saved' | 'preview' | 'dev' | 'copied' | 'unlock' | 'key' | 'settings';
+export type Route =
+  'popup' | 'all' | 'saved' | 'preview' | 'dev' | 'copied' | 'unlock' | 'key' | 'settings';
 /** What the 'popup' route shows. */
 export type Status = 'loading' | 'ready' | 'empty' | 'failed';
 

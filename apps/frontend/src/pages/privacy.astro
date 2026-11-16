@@ -4,20 +4,44 @@ import PageHeader from '@/components/page-header.astro';
 import Dot from '@/components/dot.astro';
 
 const sections = [
-  ['What the extension reads', 'The tags in the page you clicked on: the share image, title and description. Nothing from other tabs, and nothing in the background.'],
-  ['What it stores', "Your settings and, if you paid, your key. Both stay in your browser. Uninstall Ogpeel and they're gone."],
-  ['What it sends', 'Nothing about you or the pages you visit. It loads the share image from the site that hosts it, and your key is checked on your device, never sent.'],
-  ['When you pay', 'Bachs takes the payment and keeps your email and receipt, under its own privacy policy. We see your email and what you bought, so we can send your key again if you lose it.'],
+  [
+    'What the extension reads',
+    'The tags in the page you clicked on: the share image, title and description. Nothing from other tabs, and nothing in the background.',
+  ],
+  [
+    'What it stores',
+    "Your settings and, if you paid, your key. Both stay in your browser. Uninstall Ogpeel and they're gone.",
+  ],
+  [
+    'What it sends',
+    'Nothing about you or the pages you visit. It loads the share image from the site that hosts it, and your key is checked on your device, never sent.',
+  ],
+  [
+    'When you pay',
+    'Bachs takes the payment and keeps your email and receipt, under its own privacy policy. We see your email and what you bought, so we can send your key again if you lose it.',
+  ],
   ['Analytics', 'None in the extension. The website counts page visits without cookies.'],
-  ['Questions or deletion', 'Reply to any Ogpeel email and ask. We delete what we hold within 30 days.'],
+  [
+    'Questions or deletion',
+    'Reply to any Ogpeel email and ask. We delete what we hold within 30 days.',
+  ],
 ];
 ---
-<Layout title="Privacy · Ogpeel" description="Ogpeel looks at a page only when you click its icon. It keeps nothing about what you browse.">
+
+<Layout
+  title="Privacy · Ogpeel"
+  description="Ogpeel looks at a page only when you click its icon. It keeps nothing about what you browse."
+>
   <PageHeader />
   <main class="mx-auto box-border max-w-article px-6 pt-16 pb-24">
     <p class="mono m-0">Updated November 2026</p>
-    <h1 class="mt-4 mb-0 text-page font-semibold leading-page tracking-hero">Privacy, in plain words<Dot /></h1>
-    <p class="mt-6 mb-0 pb-6 text-intro italic leading-snug border-b-4 border-double border-border">Ogpeel looks at a page only when you click its icon. It keeps nothing about what you browse.</p>
+    <h1 class="mt-4 mb-0 text-page font-semibold leading-page tracking-hero">
+      Privacy, in plain words
+      <Dot />
+    </h1>
+    <p class="mt-6 mb-0 pb-6 text-intro italic leading-snug border-b-4 border-double border-border">
+      Ogpeel looks at a page only when you click its icon. It keeps nothing about what you browse.
+    </p>
     {sections.map(([title, text]) => (
       <section class="py-6 rule-b border-border">
         <h2 class="m-0 text-title font-semibold leading-title">{title}</h2>

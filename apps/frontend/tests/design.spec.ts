@@ -7,7 +7,8 @@ import { fileURLToPath } from 'node:url';
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
 
-const design = (name: string) => fileURLToPath(new URL(`../../../design/site/${name}.png`, import.meta.url));
+const design = (name: string) =>
+  fileURLToPath(new URL(`../../../design/site/${name}.png`, import.meta.url));
 
 /** Share of pixels allowed to differ: a few dozen anti-aliased glyph edges, nothing a layout change could hide in. */
 const MAX_DIFF = 0.0005;
@@ -24,12 +25,19 @@ for (const { name, path } of pages) {
     const want = PNG.sync.read(readFileSync(design(name)));
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
-    const got = PNG.sync.read(await page.screenshot({ fullPage: true, animations: 'disabled', caret: 'hide' }));
+    const got = PNG.sync.read(
+      await page.screenshot({ fullPage: true, animations: 'disabled', caret: 'hide' }),
+    );
 
-    expect({ width: got.width, height: got.height }, 'page size').toEqual({ width: want.width, height: want.height });
+    expect({ width: got.width, height: got.height }, 'page size').toEqual({
+      width: want.width,
+      height: want.height,
+    });
 
     const diff = new PNG({ width: want.width, height: want.height });
-    const changed = pixelmatch(got.data, want.data, diff.data, want.width, want.height, { threshold: 0.2 });
+    const changed = pixelmatch(got.data, want.data, diff.data, want.width, want.height, {
+      threshold: 0.2,
+    });
     const share = changed / (want.width * want.height);
     if (share > MAX_DIFF) {
       const dir = info.outputPath();

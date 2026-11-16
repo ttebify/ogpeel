@@ -1,15 +1,25 @@
 import { REFUND_DAYS } from '@ogpeel/pricing';
+import type { Env } from '@/env';
 
 /**
  * Emails a key through Resend. The idempotency key stops a second email when
  * Bachs delivers the same payment twice. Throws when the email was not accepted.
  */
-export async function sendKeyEmail(apiKey: string, from: string, to: string, licenseKey: string, idempotencyKey: string): Promise<void> {
+export async function sendKeyEmail(
+  env: Env,
+  to: string,
+  licenseKey: string,
+  paymentId: string,
+): Promise<void> {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey },
+    headers: {
+      Authorization: 'Bearer ' + env.RESEND_API_KEY,
+      'Content-Type': 'application/json',
+      'Idempotency-Key': 'ogpeel-key-' + paymentId,
+    },
     body: JSON.stringify({
-      from,
+      from: env.MAIL_FROM,
       to,
       subject: 'Your Ogpeel key',
       text: [

@@ -27,9 +27,15 @@ const HOW: Record<Framework, string> = {
 - Add an npm script so the images are rebuilt before each deploy.`,
 };
 
-export function buildPrompt(p: { framework: Framework; image: OgImage; page: PageInfo; palette: string[] }): string {
+export function buildPrompt(p: {
+  framework: Framework;
+  image: OgImage;
+  page: PageInfo;
+  palette: string[];
+}): string {
   const { image, page, palette, framework } = p;
-  const w = image.width || 1200, h = image.height || 630;
+  const w = image.width || 1200,
+    h = image.height || 630;
   const ratio = (w / h).toFixed(2);
   const lines = [
     `Build Open Graph (share) images for every page of my site, in the style of a reference I like.`,
@@ -37,7 +43,9 @@ export function buildPrompt(p: { framework: Framework; image: OgImage; page: Pag
     `Reference (for style only): ${image.url}`,
     `Seen on: ${page.url}`,
     `- Size ${w} × ${h} px (${ratio}:1)${image.format ? ', ' + image.format : ''}. Look at the image itself before you start.`,
-    palette.length ? `- Its main colours, measured: ${palette.join(', ')}. Use these only to understand contrast and how much of the frame each tone covers.` : `- Note its contrast, how much of the frame is empty, and where the text sits.`,
+    palette.length
+      ? `- Its main colours, measured: ${palette.join(', ')}. Use these only to understand contrast and how much of the frame each tone covers.`
+      : `- Note its contrast, how much of the frame is empty, and where the text sits.`,
     `- Study the layout: grid, margins, type size against the frame, how the title wraps, where a logo or label sits.`,
     ``,
     `Rules`,
@@ -65,7 +73,8 @@ export async function samplePalette(url: string): Promise<string[]> {
     img.crossOrigin = 'anonymous';
     img.src = url;
     await img.decode();
-    const W = 48, H = Math.max(1, Math.round((48 * img.naturalHeight) / img.naturalWidth));
+    const W = 48,
+      H = Math.max(1, Math.round((48 * img.naturalHeight) / img.naturalWidth));
     const c = document.createElement('canvas');
     c.width = W;
     c.height = H;
@@ -74,11 +83,16 @@ export async function samplePalette(url: string): Promise<string[]> {
     const d = ctx.getImageData(0, 0, W, H).data;
     const buckets = new Map<number, { n: number; r: number; g: number; b: number }>();
     for (let i = 0; i < d.length; i += 4) {
-      const r = d[i]!, g = d[i + 1]!, b = d[i + 2]!;
+      const r = d[i]!,
+        g = d[i + 1]!,
+        b = d[i + 2]!;
       if (d[i + 3]! < 128) continue;
       const key = ((r >> 5) << 6) | ((g >> 5) << 3) | (b >> 5);
       const k = buckets.get(key) || { n: 0, r: 0, g: 0, b: 0 };
-      k.n++; k.r += r; k.g += g; k.b += b;
+      k.n++;
+      k.r += r;
+      k.g += g;
+      k.b += b;
       buckets.set(key, k);
     }
     const hex = (v: number) => Math.round(v).toString(16).padStart(2, '0');

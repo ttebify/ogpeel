@@ -18,7 +18,17 @@
 }
 
 @layer base {
-  * { box-sizing: border-box; }
-  html, body { margin: 0; overflow: hidden; }
-  body { width: 360px; height: 600px; background: var(--background); }
+  * {
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+  body {
+    width: 360px;
+    height: 600px;
+    background: var(--background);
+  }
 }

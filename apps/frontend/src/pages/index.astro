@@ -23,10 +23,22 @@ const free = [
   'Reads a page only when you click the icon',
 ];
 const faq = [
-  ['Does Ogpeel read the pages I visit?', 'Only the page you click the icon on, and only at that moment. Nothing is sent anywhere.'],
-  ['Can I use images I download?', 'Ogpeel saves what the page already shares publicly. Who owns the picture doesn’t change, so ask the site before you reuse it in your own work.'],
-  [`What do I get for ${PRICE}?`, 'Unlimited developer prompts for every framework, on every browser where you enter your key.'],
-  ['I lost my key.', 'It’s in the email we sent when you paid. If that’s gone, the Find my key page says how to get it again.'],
+  [
+    'Does Ogpeel read the pages I visit?',
+    'Only the page you click the icon on, and only at that moment. Nothing is sent anywhere.',
+  ],
+  [
+    'Can I use images I download?',
+    'Ogpeel saves what the page already shares publicly. Who owns the picture doesn’t change, so ask the site before you reuse it in your own work.',
+  ],
+  [
+    `What do I get for ${PRICE}?`,
+    'Unlimited developer prompts for every framework, on every browser where you enter your key.',
+  ],
+  [
+    'I lost my key.',
+    'It’s in the email we sent when you paid. If that’s gone, the Find my key page says how to get it again.',
+  ],
   ['Can I get a refund?', `Yes, within ${REFUND_DAYS} days. Reply to your receipt email.`],
 ];
 const prompt = `Build Open Graph images for every post on my next.js site.
@@ -35,43 +47,94 @@ Layout: dark ground, thin rule grid, mono labels top-left, icon row right.
 Use my brand colours and fonts, not the reference site's.
 Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
 ---
-<Layout title="Ogpeel. Save any page's share image" description="A free browser extension that saves the image a page shows when it's shared, full size, named after the page.">
-  <a href="#main" class="mono sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-card focus:p-3">Skip to content</a>
-  <header class:list={[wrap, 'flex flex-wrap items-center justify-between gap-4 pt-6 pb-4 border-b-4 border-double border-border']}>
+
+<Layout
+  title="Ogpeel. Save any page's share image"
+  description="A free browser extension that saves the image a page shows when it's shared, full size, named after the page."
+>
+  <a
+    href="#main"
+    class="mono sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-card focus:p-3"
+  >
+    Skip to content
+  </a>
+  <header
+    class:list={[
+      wrap,
+      'flex flex-wrap items-center justify-between gap-4 pt-6 pb-4 border-b-4 border-double border-border',
+    ]}
+  >
     <Wordmark href="#top" />
     <nav aria-label="Main" class="mono flex flex-wrap items-center gap-6">
-      <a href="#how">How it works</a><a href="#developers">Developers</a><a href="#pricing">Pricing</a><a href="/privacy">Privacy</a>
-      <ButtonLink variant="solid" size="compact" href="#install">Add to browser</ButtonLink>
+      <a href="#how">How it works</a>
+      <a href="#developers">Developers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/privacy">Privacy</a>
+      <ButtonLink variant="solid" size="compact" href="#install">
+        Add to browser
+      </ButtonLink>
     </nav>
   </header>
 
   <main id="main">
     <section id="top" class:list={[wrap, 'pt-16 pb-24']} aria-labelledby="hero-title">
-      <div class="mono flex justify-between pb-3 rule-b border-border"><span>A browser extension</span><span>Free · Chrome · Edge · Safari</span></div>
+      <div class="mono flex justify-between pb-3 rule-b border-border">
+        <span>A browser extension</span>
+        <span>Free · Chrome · Edge · Safari</span>
+      </div>
       <div class="cols items-end gap-12 pt-12">
         <div class="flex-[2_1_480px]">
-          <h1 id="hero-title" class="m-0 text-hero font-semibold leading-hero tracking-hero">Save any page's share image<Dot /></h1>
-          <p class="mt-8 mb-0 max-w-lead text-2xl italic leading-lead">Every link has a picture it shows when it's shared. Click Ogpeel and it's yours, full size, named after the page.</p>
+          <h1 id="hero-title" class="m-0 text-hero font-semibold leading-hero tracking-hero">
+            Save any page's share image
+            <Dot />
+          </h1>
+          <p class="mt-8 mb-0 max-w-lead text-2xl italic leading-lead">
+            Every link has a picture it shows when it's shared. Click Ogpeel and it's yours, full
+            size, named after the page.
+          </p>
           <div id="install" class="mt-10 flex flex-wrap gap-3">
-            <ButtonLink variant="action" href={LINKS.chrome}>Add to Chrome</ButtonLink>
+            <ButtonLink variant="action" href={LINKS.chrome}>
+              Add to Chrome
+            </ButtonLink>
             <ButtonLink href={LINKS.edge}>Add to Edge</ButtonLink>
             <ButtonLink href={LINKS.safari}>Get for Safari</ButtonLink>
           </div>
         </div>
         <figure class="m-0 flex-[1_1_320px]">
-          <img src="/hero-share-image.webp" width="1200" height="675" alt="Share image saved from a Linear article" class="block h-auto w-full aspect-og rule border-border shadow-block" />
-          <figcaption class="mono mt-5 flex justify-between text-xs"><span>og:image · linear.app</span><span>1200 × 675 · PNG</span></figcaption>
+          <img
+            src="/hero-share-image.webp"
+            width="1200"
+            height="675"
+            alt="Share image saved from a Linear article"
+            class="block h-auto w-full aspect-og rule border-border shadow-block"
+          />
+          <figcaption class="mono mt-5 flex justify-between text-xs">
+            <span>og:image · linear.app</span>
+            <span>1200 × 675 · PNG</span>
+          </figcaption>
         </figure>
       </div>
     </section>
 
     <section id="how" class={section} aria-labelledby="how-title">
       <div class={wrap}>
-        <h2 id="how-title" class="mono m-0 mb-8 font-normal">How it works</h2>
+        <h2 id="how-title" class="mono m-0 mb-8 font-normal">
+          How it works
+        </h2>
         <ol class="cols m-0 list-none p-0 rule-t border-border">
           {steps.map(([n, title, text], i) => (
-            <li class:list={['pt-6', i === 0 && 'pr-6 border-r border-border', i === 1 && 'px-6 border-r border-border', i === 2 && 'pl-6', 'max-[888px]:px-0 max-[888px]:border-r-0 max-[888px]:border-b']}>
-              <div class="mono" aria-hidden="true">{n}</div>
+            <li
+              class:list={[
+                'pt-6',
+                i === 0 && 'pr-6 border-r border-border',
+                i === 1 && 'px-6 border-r border-border',
+                i === 2 && 'pl-6',
+                'max-[888px]:px-0 max-[888px]:border-r-0 max-[888px]:border-b',
+              ]}
+            >
+              <div class="mono" aria-hidden="true">
+                {n}
+              </div>
               <h3 class="mt-3 mb-0 text-3xl font-semibold leading-heading">{title}</h3>
               <p class="my-[18px] text-lg leading-body">{text}</p>
             </li>
@@ -80,11 +143,23 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
       </div>
     </section>
 
-    <section data-look="night" class="bg-background py-24 text-foreground" aria-labelledby="free-title">
+    <section
+      data-look="night"
+      class="bg-background py-24 text-foreground"
+      aria-labelledby="free-title"
+    >
       <div class:list={[wrap, 'cols gap-12']}>
-        <div><p class="mono m-0 mb-6">Free, for everyone</p><h2 id="free-title" class={h2}>No account. No catch<Dot /></h2></div>
+        <div>
+          <p class="mono m-0 mb-6">Free, for everyone</p>
+          <h2 id="free-title" class={h2}>
+            No account. No catch
+            <Dot />
+          </h2>
+        </div>
         <ul class="m-0 list-none p-0 text-xl leading-list rule-t border-border">
-          {free.map((item) => <li class="py-4 border-b border-border">{item}</li>)}
+          {free.map((item) => (
+            <li class="py-4 border-b border-border">{item}</li>
+          ))}
         </ul>
       </div>
     </section>
@@ -93,47 +168,88 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
       <div class:list={[wrap, 'cols items-center gap-12']}>
         <div>
           <p class="mono m-0 mb-6">For developers</p>
-          <h2 id="dev-title" class={h2}>Like a site's share image? Make one in its style<Dot /></h2>
-          <p class="mt-6 mb-0 max-w-copy text-xl leading-snug">Ogpeel writes a prompt for your coding agent. It measures the image and builds one for every page on your site, with your own words and colours. Next.js, Astro, WordPress or plain HTML.</p>
+          <h2 id="dev-title" class={h2}>
+            Like a site's share image? Make one in its style
+            <Dot />
+          </h2>
+          <p class="mt-6 mb-0 max-w-copy text-xl leading-snug">
+            Ogpeel writes a prompt for your coding agent. It measures the image and builds one for
+            every page on your site, with your own words and colours. Next.js, Astro, WordPress or
+            plain HTML.
+          </p>
         </div>
-        <pre aria-label="Example prompt" class="m-0 whitespace-pre-wrap bg-card p-6 font-mono text-code leading-code rule border-border shadow-block">{prompt}</pre>
+        <pre
+          aria-label="Example prompt"
+          class="m-0 whitespace-pre-wrap bg-card p-6 font-mono text-code leading-code rule border-border shadow-block"
+        >{prompt}</pre>
       </div>
     </section>
 
     <section id="pricing" class={section} aria-labelledby="pricing-title">
       <div class={wrap}>
         <p class="mono m-0 mb-6">Pricing</p>
-        <h2 id="pricing-title" class:list={[h2, 'mb-12']}>Two prompts free. Then pay once<Dot /></h2>
+        <h2 id="pricing-title" class:list={[h2, 'mb-12']}>
+          Two prompts free. Then pay once
+          <Dot />
+        </h2>
         <div class="cols rule border-border">
           <div class="flex flex-col gap-4 p-8 rule-r border-border">
             <h3 class="mono m-0 font-normal">Ogpeel</h3>
             <p class="m-0 text-stat font-semibold leading-none">$0</p>
-            <p class="m-0 text-lg leading-body">Everything above, forever. Plus 2 developer prompts.</p>
-            <ButtonLink class="mt-auto" href="#install">Add to browser</ButtonLink>
+            <p class="m-0 text-lg leading-body">
+              Everything above, forever. Plus 2 developer prompts.
+            </p>
+            <ButtonLink class="mt-auto" href="#install">
+              Add to browser
+            </ButtonLink>
           </div>
           <div class="flex flex-col gap-4 bg-card p-8">
             <h3 class="mono m-0 font-normal">Unlimited prompts</h3>
-            <p class="m-0 text-stat font-semibold leading-none">{PRICE} <span class="text-xl font-normal italic">once</span></p>
-            <p class="m-0 text-lg leading-body">Every framework, every site you build. A key by email, no account. Refund within {REFUND_DAYS} days, no questions.</p>
-            <ButtonLink variant="action" class="mt-auto" href={LINKS.checkout}>Pay {PRICE} — secure checkout</ButtonLink>
-            <span class="mono text-xs text-muted-foreground">Card, bank transfer or mobile money · checkout by Bachs</span>
+            <p class="m-0 text-stat font-semibold leading-none">
+              {PRICE} <span class="text-xl font-normal italic">once</span>
+            </p>
+            <p class="m-0 text-lg leading-body">
+              Every framework, every site you build. A key by email, no account. Refund within{' '}
+              {REFUND_DAYS} days, no questions.
+            </p>
+            <ButtonLink variant="action" class="mt-auto" href={LINKS.checkout}>
+              Pay {PRICE} — secure checkout
+            </ButtonLink>
+            <span class="mono text-xs text-muted-foreground">
+              Card, bank transfer or mobile money · checkout by Bachs
+            </span>
           </div>
         </div>
-        <div id="coffee" class="mt-8 flex flex-wrap items-center justify-between gap-6 py-6 rule-y border-border">
+        <div
+          id="coffee"
+          class="mt-8 flex flex-wrap items-center justify-between gap-6 py-6 rule-y border-border"
+        >
           <p class="m-0 text-2xl italic">Don't need prompts but like Ogpeel?</p>
-          <ButtonLink variant="solid" href={LINKS.coffee}>Buy me a coffee · {COFFEE}</ButtonLink>
+          <ButtonLink variant="solid" href={LINKS.coffee}>
+            Buy me a coffee · {COFFEE}
+          </ButtonLink>
         </div>
       </div>
     </section>
 
     <section class={section} aria-labelledby="faq-title">
       <div class:list={[wrap, 'cols gap-12']}>
-        <div><p class="mono m-0 mb-6">Questions</p><h2 id="faq-title" class={h2}>Asked before<Dot /></h2></div>
+        <div>
+          <p class="mono m-0 mb-6">Questions</p>
+          <h2 id="faq-title" class={h2}>
+            Asked before
+            <Dot />
+          </h2>
+        </div>
         <div class="flex-[2_1_480px] rule-t border-border">
           {faq.map(([q, a], i) => (
             <details name="faq" open={i === 0} class="group rule-b border-border">
               <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 text-intro font-semibold [&::-webkit-details-marker]:hidden">
-                <span>{q}</span><span class="mono" aria-hidden="true"><span class="group-open:hidden">+</span><span class="hidden group-open:inline">−</span></span>
+                <span>{q}</span>
+                <span class="mono" aria-hidden="true">
+                  <span class="group-open:hidden">+</span>
+                  <span class="hidden group-open:inline">−</span>
+                </span>
               </summary>
               <p class="mt-0 mb-6 max-w-answer text-lg leading-body">{a}</p>
             </details>
@@ -146,7 +262,12 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
   <footer class="border-t-4 border-double border-border">
     <div class:list={[wrap, 'mono flex flex-wrap justify-between gap-6 pt-6 pb-12 text-xs']}>
       <span>Ogpeel · made by Justice Ekemezie</span>
-      <nav aria-label="Footer" class="flex flex-wrap gap-6"><a href="/privacy">Privacy</a><a href="/key">Find my key</a><a href="#coffee">Buy me a coffee</a><a href="#top">Back to top ↑</a></nav>
+      <nav aria-label="Footer" class="flex flex-wrap gap-6">
+        <a href="/privacy">Privacy</a>
+        <a href="/key">Find my key</a>
+        <a href="#coffee">Buy me a coffee</a>
+        <a href="#top">Back to top ↑</a>
+      </nav>
     </div>
   </footer>
 </Layout>

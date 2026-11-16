@@ -5,7 +5,9 @@ import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { generateKeys } from '@ogpeel/license';
 
 if (existsSync('.dev.vars') && readFileSync('.dev.vars', 'utf8').includes('LICENSE_PRIVATE_KEY=')) {
-  console.error('.dev.vars already has a LICENSE_PRIVATE_KEY. A new pair would stop every key already sold from working.');
+  console.error(
+    '.dev.vars already has a LICENSE_PRIVATE_KEY. A new pair would stop every key already sold from working.',
+  );
   process.exit(1);
 }
 const { publicKey, privateKey } = await generateKeys();

@@ -41,14 +41,16 @@ export function readPage(): RawPage {
     else if (key === 'og:image:height' && og) og.height = parseInt(content, 10) || undefined;
     else if (key === 'og:image:alt' && og) og.alt = content;
     else if (key === 'og:image:type' && og) og.type = content;
-    else if (key === 'twitter:image' || key === 'twitter:image:src') tw = add('twitter:image', content);
+    else if (key === 'twitter:image' || key === 'twitter:image:src')
+      tw = add('twitter:image', content);
     else if (key === 'twitter:image:alt' && tw && !tw.alt) tw.alt = content;
   }
 
   let largest: RawPage['largest'] = null;
   let area = 0;
   for (const img of Array.from(document.images)) {
-    const w = img.naturalWidth, h = img.naturalHeight;
+    const w = img.naturalWidth,
+      h = img.naturalHeight;
     const url = abs(img.currentSrc || img.src);
     if (!url || w < 300 || h < 150 || w * h <= area) continue;
     area = w * h;
@@ -58,7 +60,8 @@ export function readPage(): RawPage {
   return {
     url: location.href,
     title: named['og:title'] || named['twitter:title'] || document.title || '',
-    description: named['og:description'] || named['twitter:description'] || named['description'] || '',
+    description:
+      named['og:description'] || named['twitter:description'] || named['description'] || '',
     images,
     largest,
   };

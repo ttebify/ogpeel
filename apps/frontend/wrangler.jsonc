@@ -4,6 +4,6 @@
   "assets": { "directory": "./dist" },
   "routes": [
     { "pattern": "ogpeel.com", "custom_domain": true },
-    { "pattern": "www.ogpeel.com", "custom_domain": true }
-  ]
+    { "pattern": "www.ogpeel.com", "custom_domain": true },
+  ],
 }

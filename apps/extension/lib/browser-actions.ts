@@ -12,10 +12,15 @@ export async function targetTab() {
 }
 
 /** Reads the tab's share tags. null = the browser keeps extensions out of this page (settings pages, the store, PDFs). */
-export async function readTab(tab: { id?: number; url?: string } | undefined): Promise<RawPage | null> {
+export async function readTab(
+  tab: { id?: number; url?: string } | undefined,
+): Promise<RawPage | null> {
   if (tab?.id === undefined || !/^https?:/i.test(tab.url || '')) return null;
   try {
-    const [res] = await browser.scripting.executeScript({ target: { tabId: tab.id }, func: readPage });
+    const [res] = await browser.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: readPage,
+    });
     return (res?.result as RawPage) || null;
   } catch {
     return null;
@@ -27,14 +32,26 @@ export function probe(url: string, ms = 12000): Promise<{ width: number; height:
   return new Promise((resolve) => {
     const img = new Image();
     const t = setTimeout(() => resolve(null), ms);
-    img.onload = () => { clearTimeout(t); resolve(img.naturalWidth ? { width: img.naturalWidth, height: img.naturalHeight } : null); };
-    img.onerror = () => { clearTimeout(t); resolve(null); };
+    img.onload = () => {
+      clearTimeout(t);
+      resolve(img.naturalWidth ? { width: img.naturalWidth, height: img.naturalHeight } : null);
+    };
+    img.onerror = () => {
+      clearTimeout(t);
+      resolve(null);
+    };
     img.src = url;
   });
 }
 
-export async function downloadImage(img: OgImage, page: PageInfo, naming: 'title' | 'original', n = 0): Promise<Saved> {
-  const stem = naming === 'title' ? slug(page.title, page.host || 'share-image') + (n ? `-${n + 1}` : '') : '';
+export async function downloadImage(
+  img: OgImage,
+  page: PageInfo,
+  naming: 'title' | 'original',
+  n = 0,
+): Promise<Saved> {
+  const stem =
+    naming === 'title' ? slug(page.title, page.host || 'share-image') + (n ? `-${n + 1}` : '') : '';
   const ext = extOf(img.url);
   const opts: { url: string; saveAs: boolean; filename?: string } = { url: img.url, saveAs: false };
   // Chromium only: lets us name the file after the page even when the URL has no extension.
@@ -44,7 +61,9 @@ export async function downloadImage(img: OgImage, page: PageInfo, naming: 'title
   else if (stem && onFilename) {
     listener = (item, suggest) => {
       if (item.url !== img.url && item.finalUrl !== img.url) return;
-      const e = extFromMime(item.mime) || (basename(item.filename || '').match(/\.([a-z0-9]{3,4})$/i)?.[1] ?? '');
+      const e =
+        extFromMime(item.mime) ||
+        (basename(item.filename || '').match(/\.([a-z0-9]{3,4})$/i)?.[1] ?? '');
       suggest({ filename: e ? `${stem}.${e}` : stem });
     };
     onFilename.addListener(listener);
@@ -57,7 +76,12 @@ export async function downloadImage(img: OgImage, page: PageInfo, naming: 'title
       if (item?.state === 'complete') {
         const format = (extFromMime(item.mime) || extOf(item.filename)).toUpperCase() || img.format;
         const bytes = item.fileSize > 0 ? item.fileSize : undefined;
-        return { id, filename: basename(item.filename), image: { ...img, format, bytes }, count: 1 };
+        return {
+          id,
+          filename: basename(item.filename),
+          image: { ...img, format, bytes },
+          count: 1,
+        };
       }
       if (item?.state === 'interrupted') throw new Error(item.error || 'interrupted');
       await new Promise((r) => setTimeout(r, 100));
@@ -91,10 +115,15 @@ async function toPng(blob: Blob): Promise<Blob> {
   return canvas.convertToBlob({ type: 'image/png' });
 }
 
-const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+const esc = (s: string) =>
+  s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
 /** Puts the picture on the clipboard as PNG. With keepSource, rich editors also get a link back to the page. */
-export async function copyImageToClipboard(img: OgImage, page: PageInfo, keepSource: boolean): Promise<void> {
+export async function copyImageToClipboard(
+  img: OgImage,
+  page: PageInfo,
+  keepSource: boolean,
+): Promise<void> {
   const png = await toPng(await fetchBlob(img.url));
   const items: Record<string, Blob> = { 'image/png': png };
   if (keepSource) {

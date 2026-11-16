@@ -20,22 +20,28 @@ const toggleGroupVariants = cva('grid shrink-0 rule border-border', {
   defaultVariants: { layout: 'row', size: 'lg' },
 });
 
-const toggleGroupItemVariants = cva('rounded-md border-border p-0 font-mono font-medium tracking-label', {
-  variants: {
-    selected: {
-      true: 'bg-foreground text-background',
-      false: 'bg-transparent text-foreground',
+const toggleGroupItemVariants = cva(
+  'rounded-md border-border p-0 font-mono font-medium tracking-label',
+  {
+    variants: {
+      selected: {
+        true: 'bg-foreground text-background',
+        false: 'bg-transparent text-foreground',
+      },
     },
   },
-});
+);
 
 type ToggleGroupProps = ComponentProps<'div'> & VariantProps<typeof toggleGroupVariants>;
-type ToggleGroupItemProps = ComponentProps<'button'> & VariantProps<typeof toggleGroupItemVariants> & { selected: boolean };
+type ToggleGroupItemProps = ComponentProps<'button'> &
+  VariantProps<typeof toggleGroupItemVariants> & { selected: boolean };
 
 export function ToggleGroup({ layout, size, class: className, ...props }: ToggleGroupProps) {
   return <div class={cn(toggleGroupVariants({ layout, size }), className as string)} {...props} />;
 }
 
 export function ToggleGroupItem({ selected, class: className, ...props }: ToggleGroupItemProps) {
-  return <button class={cn(toggleGroupItemVariants({ selected }), className as string)} {...props} />;
+  return (
+    <button class={cn(toggleGroupItemVariants({ selected }), className as string)} {...props} />
+  );
 }

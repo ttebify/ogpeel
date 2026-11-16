@@ -1,6 +1,11 @@
 // Everything that changes when the store and the checkout go live.
 export const SITE = 'https://ogpeel.com';
-export const SITE_PAGES = { pricing: SITE + '/#pricing', coffee: SITE + '/#coffee', key: SITE + '/key', privacy: SITE + '/privacy' } as const;
+export const SITE_PAGES = {
+  pricing: SITE + '/#pricing',
+  coffee: SITE + '/#coffee',
+  key: SITE + '/key',
+  privacy: SITE + '/privacy',
+} as const;
 
 export const FREE_PROMPTS = 2;
 

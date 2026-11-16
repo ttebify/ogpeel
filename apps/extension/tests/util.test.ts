@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { checksFor, extFromMime, extOf, formatBytes, hostOf, metaLine, slug, tagLine } from '@/lib/util';
+import {
+  checksFor,
+  extFromMime,
+  extOf,
+  formatBytes,
+  hostOf,
+  metaLine,
+  slug,
+  tagLine,
+} from '@/lib/util';
 import type { OgImage, PageInfo } from '@/lib/types';
 
 describe('slug', () => {
@@ -50,7 +59,9 @@ describe('formatBytes', () => {
 
 describe('metaLine', () => {
   it('joins all parts', () =>
-    expect(metaLine({ url: '', tags: [], width: 1200, height: 675, format: 'PNG', bytes: 302 * 1024 })).toBe('1200 × 675 · PNG · 302 KB'));
+    expect(
+      metaLine({ url: '', tags: [], width: 1200, height: 675, format: 'PNG', bytes: 302 * 1024 }),
+    ).toBe('1200 × 675 · PNG · 302 KB'));
   it('omits missing parts', () => {
     expect(metaLine({ url: '', tags: [], format: 'PNG' })).toBe('PNG');
     expect(metaLine({ url: '', tags: [], width: 1200 })).toBe('');
@@ -66,8 +77,18 @@ describe('hostOf', () => {
 });
 
 describe('checksFor', () => {
-  const page: PageInfo = { url: 'https://e.com', host: 'e.com', title: 'T', description: 'D', hasLargest: false };
-  const img = (o: Partial<OgImage>): OgImage => ({ url: 'https://e.com/a.png', tags: ['og:image', 'twitter:image'], ...o });
+  const page: PageInfo = {
+    url: 'https://e.com',
+    host: 'e.com',
+    title: 'T',
+    description: 'D',
+    hasLargest: false,
+  };
+  const img = (o: Partial<OgImage>): OgImage => ({
+    url: 'https://e.com/a.png',
+    tags: ['og:image', 'twitter:image'],
+    ...o,
+  });
 
   it('all ok for 1200x630 with title, description and alt', () => {
     const c = checksFor(page, img({ width: 1200, height: 630, alt: 'A' }));
@@ -85,7 +106,9 @@ describe('checksFor', () => {
 
 describe('tagLine', () => {
   it('joins every tag that points at the image', () => {
-    expect(tagLine({ url: '', tags: ['og:image', 'twitter:image'] })).toBe('OG:IMAGE + TWITTER:IMAGE');
+    expect(tagLine({ url: '', tags: ['og:image', 'twitter:image'] })).toBe(
+      'OG:IMAGE + TWITTER:IMAGE',
+    );
     expect(tagLine({ url: '', tags: ['og:image'] })).toBe('OG:IMAGE');
   });
 });

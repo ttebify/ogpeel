@@ -14,6 +14,12 @@
     "test": "pnpm -r --if-present test",
     "typecheck": "pnpm -r --if-present typecheck",
     "icons": "pnpm --filter @ogpeel/extension icons",
-    "smoke": "pnpm --filter @ogpeel/extension smoke"
+    "smoke": "pnpm --filter @ogpeel/extension smoke",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2"
   }
 }

@@ -13,12 +13,14 @@
     "test": "playwright test"
   },
   "dependencies": {
+    "@astrojs/preact": "^6.1.6",
     "@ogpeel/pricing": "workspace:*",
     "@ogpeel/theme": "workspace:*",
     "astro": "^7.4.12",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
-    "cookie": "^2.0.2"
+    "cookie": "^2.0.2",
+    "preact": "^11.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",

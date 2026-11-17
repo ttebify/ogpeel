@@ -3,8 +3,8 @@ import Layout from '@/layouts/layout.astro';
 import Wordmark from '@/components/wordmark.astro';
 import ButtonLink from '@/components/button-link.astro';
 import Dot from '@/components/dot.astro';
-import InstallButton from '@/components/install-button.astro';
-import ProductVideo from '@/components/product-video.astro';
+import InstallButton from '@/components/install-button';
+import ProductVideo from '@/components/product-video';
 import { COFFEE, PRICE, REFUND_DAYS } from '@ogpeel/pricing';
 import { LINKS, VIDEO } from '@/config';
 
@@ -95,7 +95,7 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             size, named after the page.
           </p>
           <div id="install" class="mt-10">
-            <InstallButton />
+            <InstallButton client:load />
           </div>
         </div>
         <figure class="m-0 flex-[1_1_320px]">
@@ -128,7 +128,7 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             From an open article to a full-size file in your Downloads, start to finish.
           </p>
         </div>
-        <ProductVideo />
+        <ProductVideo client:visible />
       </div>
     </section>
 

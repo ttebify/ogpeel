@@ -27,7 +27,7 @@
   --text-page--line-height: inherit;
   --text-thanks: clamp(48px, 8vw, 96px);
   --text-thanks--line-height: inherit;
-  --text-hero: clamp(56px, 9vw, 128px);
+  --text-hero: clamp(44px, 6.5vw, 88px);
   --text-hero--line-height: inherit;
 
   --leading-hero: 0.9;
@@ -47,13 +47,13 @@
 
   --container-site: 1200px;
   --container-header: 960px;
+  --container-hero: 920px;
   --container-article: 720px;
   --container-answer: 640px;
   --container-lead: 560px;
   --container-copy: 520px;
 
   --shadow-block: 8px 8px 0 var(--foreground);
-  --aspect-og: 1200 / 675;
 }
 
 @utility mono {

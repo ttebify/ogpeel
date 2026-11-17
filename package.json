@@ -2,7 +2,7 @@
   "name": "ogpeel",
   "version": "0.1.0",
   "private": true,
-  "description": "Save any page's share image. Full size, one click.",
+  "description": "Save the image in a link preview, full size, in one click.",
   "license": "MIT",
   "type": "module",
   "scripts": {

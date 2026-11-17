@@ -28,7 +28,6 @@ export default function ProductVideo() {
               width={1280}
               height={720}
               alt=""
-              loading="lazy"
               class="block size-full object-cover opacity-90"
             />
             <a
@@ -48,7 +47,7 @@ export default function ProductVideo() {
         )}
       </div>
       <figcaption class="mono mt-5 flex flex-wrap justify-between gap-x-6 gap-y-2 text-xs">
-        <span>Ogpeel · save the picture behind a link</span>
+        <span>Watch · {VIDEO.length} · From link to saved image</span>
         <span>Loads from YouTube only when you press play</span>
       </figcaption>
     </figure>

@@ -44,7 +44,7 @@
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":360,"height":600}}'>
 class Component extends DCLogic {
   renderVals() {
-    const s = Object.assign({ name: 'PAGE TITLE', look: 'AUTO', src: 'ON' }, this.state || {});
+    const s = Object.assign({ name: 'PAGE TITLE', look: 'SYSTEM', src: 'ON' }, this.state || {});
     const mk = (key, label, opts) => ({
       label, n: opts.length,
       opts: opts.map((o, i) => ({
@@ -55,9 +55,9 @@ class Component extends DCLogic {
       }))
     });
     return { groups: [
-      mk('name', 'Name saved files after', ['PAGE TITLE', 'ORIGINAL']),
-      mk('look', 'Look', ['AUTO', 'DAY', 'NIGHT']),
-      mk('src', 'Keep the page address with each copy', ['ON', 'OFF'])
+      mk('name', 'Name saved files after', ['PAGE TITLE', 'ORIGINAL NAME']),
+      mk('look', 'Appearance', ['SYSTEM', 'LIGHT', 'DARK']),
+      mk('src', 'Add the page link to copied images (some apps show it)', ['ON', 'OFF'])
     ] };
   }
 }

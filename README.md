@@ -3,9 +3,9 @@
 A browser extension that saves the image a page shows when someone shares its link (`og:image` or `twitter:image`). Full size, named after the page.
 
 - Save the image in one click, or copy the image or its link.
-- See every share image the page sets, not just the first.
+- See every link preview image the page sets, not just the first.
 - Preview the link on X, LinkedIn, Slack and WhatsApp, with checks on size, title, description and alt text.
-- Get a prompt your coding agent can use to build share images for your own site. Covers 19 frameworks, from Next.js and Astro to WordPress and Rails.
+- Get a prompt your coding agent can use to build link preview images for your own site. Covers 19 frameworks, from Next.js and Astro to WordPress and Rails.
 
 ## Privacy
 

@@ -14,7 +14,7 @@
 <div style="width: 360px; height: 600px; box-sizing: border-box; padding: 16px; background: #EFE6D8; color: #1A1714; font-family: Newsreader, serif; display: flex; flex-direction: column">
   <div style="display: flex; align-items: center; gap: 12px; padding-bottom: 8px; border-bottom: 4px double #1A1714">
     <a href="popup.dc.html" aria-label="Back" style="width: 44px; height: 44px; box-sizing: border-box; border: 1.5px solid #1A1714; display: flex; align-items: center; justify-content: center; text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 16px">←</a>
-    <span style="font-size: 24px; font-weight: 600">When shared</span>
+    <span style="font-size: 24px; font-weight: 600">Link preview</span>
   </div>
 
   <div role="tablist" style="margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1.5px solid #1A1714">
@@ -63,9 +63,9 @@ class Component extends DCLogic {
         pick: () => this.setState({ tab: n })
       })),
       checks: [
-        { mark: '✓', color: '#1A1714', text: 'Image is 1200 × 630, the size most apps expect' },
-        { mark: '✓', color: '#1A1714', text: 'Title and description are set' },
-        { mark: '!', color: '#C8401E', text: 'No alt text for the image' }
+        { mark: '✓', color: '#1A1714', text: 'Image is a size most apps expect' },
+        { mark: '✓', color: '#1A1714', text: 'Link has a title and description' },
+        { mark: '!', color: '#C8401E', text: 'No image description (alt text)' }
       ]
     };
   }

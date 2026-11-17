@@ -6,7 +6,7 @@ import Dot from '@/components/dot.astro';
 import InstallButton from '@/components/install-button';
 import ProductVideo from '@/components/product-video';
 import { COFFEE, PRICE, REFUND_DAYS } from '@ogpeel/pricing';
-import { LINKS, VIDEO } from '@/config';
+import { LINKS } from '@/config';
 
 const wrap = 'mx-auto box-border max-w-site px-6';
 const section = 'py-24 rule-t border-border';
@@ -78,55 +78,25 @@ Set og:image, og:image:width, og:image:height and og:image:alt on each page.`;
   </header>
 
   <main id="main">
-    <section id="top" class:list={[wrap, 'pt-16 pb-24']} aria-labelledby="hero-title">
-      <div class="mono flex justify-between pb-3 rule-b border-border">
-        <span>A browser extension</span>
-        <span>Free · Chrome · Edge · Safari</span>
+    <section id="top" class:list={[wrap, 'pt-10 pb-24']} aria-labelledby="hero-title">
+      <div class="mono flex flex-wrap justify-between gap-x-6 gap-y-2 pb-3 rule-b border-border">
+        <span>A free browser extension</span>
+        <span>Chrome · Edge · Safari</span>
       </div>
-      <div class="cols items-end gap-12 pt-12">
-        <div class="flex-[2_1_480px]">
-          <h1 id="hero-title" class="m-0 text-hero font-semibold leading-hero tracking-hero">
-            Save the image in a link preview
-            <Dot />
-          </h1>
-          <p class="mt-8 mb-0 max-w-lead text-2xl italic leading-lead">
-            The picture you see when someone shares a link in a chat. Open the page, click Ogpeel,
-            and download it full size or copy it to paste anywhere.
-          </p>
-          <div id="install" class="mt-10">
-            <InstallButton client:load />
-          </div>
+      <div class="mx-auto max-w-hero pt-10 text-center">
+        <h1 id="hero-title" class="m-0 text-hero font-semibold leading-hero tracking-hero">
+          Save the image in a link preview
+          <Dot />
+        </h1>
+        <p class="mx-auto mt-6 mb-0 max-w-lead text-2xl italic leading-lead">
+          The picture you see when someone shares a link in a chat. Open the page, click Ogpeel, and
+          download it full size or copy it to paste anywhere.
+        </p>
+        <div id="install" class="mt-8 flex justify-center text-left">
+          <InstallButton client:load />
         </div>
-        <figure class="m-0 flex-[1_1_320px]">
-          <img
-            src="/hero-share-image.webp"
-            width="1200"
-            height="675"
-            alt="Link preview image saved from a Linear article"
-            class="block h-auto w-full aspect-og rule border-border shadow-block"
-          />
-          <figcaption class="mono mt-5 flex justify-between text-xs">
-            <span>og:image · linear.app</span>
-            <span>1200 × 675 · PNG</span>
-          </figcaption>
-        </figure>
       </div>
-    </section>
-
-    <section id="watch" class={section} aria-labelledby="watch-title">
-      <div class={wrap}>
-        <div class="cols mb-10 items-end gap-x-12 gap-y-6">
-          <div>
-            <p class="mono m-0 mb-6">Watch · {VIDEO.length}</p>
-            <h2 id="watch-title" class={h2}>
-              One click, one picture
-              <Dot />
-            </h2>
-          </div>
-          <p class="m-0 max-w-copy text-xl leading-snug">
-            From an open article to a saved, full-size image, start to finish.
-          </p>
-        </div>
+      <div class="mt-12">
         <ProductVideo client:visible />
       </div>
     </section>

@@ -12,17 +12,23 @@ if (!existsSync(ext)) throw new Error('Run `pnpm build:e2e` first: ' + ext + ' i
 const out = resolve('.output/smoke');
 mkdirSync(out, { recursive: true });
 
-// Chromium derives an unpacked extension's id from its folder path.
-const id = [...createHash('sha256').update(ext).digest('hex').slice(0, 32)]
+// Chromium derives an unpacked extension's id from its folder path (UTF-16 on Windows).
+const pathBytes = process.platform === 'win32' ? Buffer.from(ext, 'utf16le') : ext;
+const id = [...createHash('sha256').update(pathBytes).digest('hex').slice(0, 32)]
   .map((c) => String.fromCharCode(97 + parseInt(c, 16)))
   .join('');
-const edge = '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge';
 const profile = resolve(tmpdir(), 'ogpeel-smoke-profile');
 rmSync(profile, { recursive: true, force: true });
 
 const ctx = await chromium.launchPersistentContext(profile, {
   headless: false,
-  ...(process.env.SMOKE_BUNDLED ? {} : { executablePath: process.env.SMOKE_BROWSER || edge }),
+  // Installed Edge by default, found on any OS; SMOKE_BROWSER points at another binary,
+  // SMOKE_BUNDLED uses Playwright's own Chromium.
+  ...(process.env.SMOKE_BUNDLED
+    ? {}
+    : process.env.SMOKE_BROWSER
+      ? { executablePath: process.env.SMOKE_BROWSER }
+      : { channel: 'msedge' }),
   args: [`--disable-extensions-except=${ext}`, `--load-extension=${ext}`, '--no-first-run'],
   viewport: { width: 1280, height: 800 },
 });
@@ -82,7 +88,9 @@ try {
     await shot('08c-dev-search');
     await click(/^laravel$/i);
     await shot('08d-dev-picked');
-    await popup.evaluate(() => chrome.storage.local.set({ license: { unlocked: false, freeLeft: 0 } }));
+    await popup.evaluate(() =>
+      chrome.storage.local.set({ license: { unlocked: false, freeLeft: 0 } }),
+    );
     await popup.reload();
     await popup.waitForTimeout(1500);
     await click(/make one like this/i);

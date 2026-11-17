@@ -4,7 +4,6 @@ node_modules
 .pnpm-store
 design
 pnpm-lock.yaml
-*.md
 dist
 .astro
 test-results

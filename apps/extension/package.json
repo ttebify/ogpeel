@@ -9,7 +9,7 @@
     "dev": "wxt -b edge",
     "dev:chrome": "wxt",
     "build": "wxt build",
-    "build:e2e": "OGPEEL_E2E=1 wxt build --mode development",
+    "build:e2e": "cross-env OGPEEL_E2E=1 wxt build --mode development",
     "zip": "wxt zip",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.10.6",
     "@tailwindcss/vite": "^4.3.5",
+    "cross-env": "^10.1.0",
     "happy-dom": "^21.0.4",
     "playwright-core": "^1.65.1",
     "preact": "^11.2.0",

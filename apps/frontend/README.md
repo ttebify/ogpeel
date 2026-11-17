@@ -1,16 +1,21 @@
-# Ogpeel frontend
+# Ogpeel website
 
-ogpeel.com as a static Astro site. Pages: `/` (landing), `/privacy`, `/key` (where a key is, and who to write to if it is lost), `/thanks` (after paying; the key itself is only emailed). Designs: `../../design/site/`.
+ogpeel.com, a static Astro site. Its designs are in `design/site/`.
 
-| Command | What it does |
-|---|---|
-| `pnpm dev` | Local dev server |
-| `pnpm build` | Static site in `dist/` |
-| `pnpm typecheck` | `astro check` (needs TypeScript 6, pinned here) |
-| `pnpm test` | Builds, serves, and runs Playwright: pixel comparison with the design PNGs, axe, keyboard flows |
+| Page       | What it's for                                       |
+| ---------- | --------------------------------------------------- |
+| `/`        | The landing page                                    |
+| `/privacy` | The privacy policy                                  |
+| `/key`     | Where to find your key, and who to write to if lost |
+| `/thanks`  | After paying. Shows no key; the key is only emailed |
 
-The paper look (colours, fonts, theme tokens) comes from `@ogpeel/theme`, shared with the extension. The site's own buttons are in `src/components/button-variants.ts`, its own sizes in `src/styles/site.css`, and the links that change at launch in `src/config.ts`. Prices come from `@ogpeel/pricing`.
+| Command          | What it does                                                     |
+| ---------------- | ---------------------------------------------------------------- |
+| `pnpm dev`       | Local server                                                     |
+| `pnpm build`     | Builds the site into `dist/`                                     |
+| `pnpm typecheck` | Runs `astro check`                                               |
+| `pnpm test`      | Builds the site and checks accessibility, keyboard use and links |
 
-`cookie` is a direct dependency although no file here imports it: without it, `astro build` resolves an older copy from the workspace root and fails with `Named export 'parseCookie' not found`.
+Colours and fonts come from `@ogpeel/theme`, prices from `@ogpeel/pricing`. Links that change at launch are in `src/config.ts`.
 
-`tests/design.spec.ts` renders each page on a real 2x display at 1280 wide and requires the exact design height and at most 0.05% differing pixels. Diffs for a failing page land in `test-results/`. It uses Chrome's forced device scale, not Playwright's emulated one, because emulation makes Chrome draw the 1.5px rules at 1px.
+`cookie` is listed as a dependency though nothing imports it. Without it, `astro build` picks up an older copy and fails with `Named export 'parseCookie' not found`.

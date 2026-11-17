@@ -1,5 +1,5 @@
 # @ogpeel/pricing
 
-Three figures, in one place: the price of unlimited prompts, the coffee, and the refund window. The popup, ogpeel.com and the worker's key email all import them, so a change is one edit.
+The price, the coffee and the refund window. The popup, the site and the key email all read them from here.
 
-The designs in `design/` quote the same figures as plain text; change them there too.
+The designs in `design/` show the same figures as plain text. If you change one, change it there too.

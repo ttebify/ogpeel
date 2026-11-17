@@ -1,11 +1,6 @@
 # @ogpeel/theme
 
-The paper look shared by the extension popup and ogpeel.com. One file, `theme.css`:
-
-- the bundled fonts (Newsreader, IBM Plex Mono);
-- the shadcn-named colour variables, for day and for `data-look="night"`;
-- the Tailwind theme tokens both apps use: spacing, type sizes, `rule` and `rule-b` for the 1.5px ink rule, `shadow-offset` for depth;
-- the base rules: no border unless a utility sets one, and the focus outline.
+The look shared by the popup and ogpeel.com, in one file, `theme.css`: the bundled fonts, the day and night colours, and the Tailwind tokens both apps use.
 
 Import it after Tailwind's theme layer:
 
@@ -16,4 +11,4 @@ Import it after Tailwind's theme layer:
 @import '@ogpeel/theme/theme.css';
 ```
 
-What belongs here is what must be identical in both places. Components do not: the popup is Preact and the site is Astro, so each app keeps its own, built from these tokens. Sizes that only make sense in one place (the 360 × 600 popup, the site's display type) stay in that app's stylesheet.
+Only what both apps need goes here. Components stay in each app, because the popup uses Preact and the site uses Astro.

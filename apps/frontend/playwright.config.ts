@@ -10,13 +10,7 @@ export default defineConfig({
     baseURL: 'http://localhost:4329',
     colorScheme: 'light',
     reducedMotion: 'reduce',
-    // A real 2x display at 1280 wide, like the design previews. Playwright's emulated
-    // deviceScaleFactor makes Chrome snap the 1.5px rules to 1px, so the viewport is left
-    // to the browser and the scale is forced at launch instead.
-    viewport: null,
-    launchOptions: {
-      args: ['--force-device-scale-factor=2', '--window-size=1280,800', '--hide-scrollbars'],
-    },
+    viewport: { width: 1280, height: 800 },
   },
   webServer: {
     command: 'pnpm build && astro preview --port 4329 --ignore-lock',

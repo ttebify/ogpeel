@@ -6,17 +6,18 @@ This file is the single set of instructions for every coding agent. `CLAUDE.md` 
 
 ## Commands
 
-| Command | What it does |
-|---|---|
-| `pnpm dev` | Opens Edge with the extension loaded and live reload (`pnpm dev:chrome` for Chrome) |
-| `pnpm typecheck` | Runs typecheck in each implemented workspace |
-| `pnpm test` | Runs tests in each implemented workspace (extension: Vitest, happy-dom) |
-| `pnpm build` | Builds implemented workspaces; extension store build in `apps/extension/.output/chrome-mv3` |
-| `pnpm build:e2e && pnpm smoke [url]` | Loads the extension in a real browser, clicks through it, saves screenshots to `apps/extension/.output/smoke/` |
-| `pnpm --filter @ogpeel/frontend test` | Builds the site and checks every page against `design/site/*.png` pixel by pixel, plus axe and keyboard tests |
-| `pnpm icons` | Regenerates `apps/extension/public/icon/*.png` |
+| Command                               | What it does                                                                                                   |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`                            | Opens Edge with the extension loaded and live reload (`pnpm dev:chrome` for Chrome)                            |
+| `pnpm typecheck`                      | Runs typecheck in each implemented workspace                                                                   |
+| `pnpm test`                           | Runs tests in each implemented workspace (extension: Vitest, happy-dom)                                        |
+| `pnpm build`                          | Builds implemented workspaces; extension store build in `apps/extension/.output/chrome-mv3`                    |
+| `pnpm build:e2e && pnpm smoke [url]`  | Loads the extension in a real browser, clicks through it, saves screenshots to `apps/extension/.output/smoke/` |
+| `pnpm --filter @ogpeel/frontend test` | Builds the site and runs Playwright: axe, keyboard flows, links, no outside requests                           |
+| `pnpm icons`                          | Regenerates `apps/extension/public/icon/*.png`                                                                 |
+| `pnpm format` / `pnpm format:check`   | Formats every file with Prettier / checks it, as CI does                                                       |
 
-A change is done when typecheck, tests and build pass, and for anything visible in the popup, when the smoke run's screenshots look right. Look at the screenshots; don't assume.
+A change is done when the format check, typecheck, tests and build pass (CI runs all four on every pull request), and for anything visible in the popup, when the smoke run's screenshots look right. Look at the screenshots; don't assume.
 
 ## Layout
 
@@ -30,12 +31,13 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 - `design/` – every design, grouped by where it's used. Each one is a pair with the same name: `name.dc.html` is the source of truth (exact colours, sizes, spacing in inline styles) and `name.png` is how it looks.
   - `design/extension/` – the popup screens, the brand board (`main`) and the icons.
   - `design/store/` – the store screenshots (`shot1`–`shot5`, 1280×800), the small tile (`promo`, 440×280) and the marquee (1400×560). The PNGs are the files to upload.
-  - `design/site/` – the website pages, the receipt email and the site's share image. The pages are built in `apps/frontend/` and tested against these PNGs.
+  - `design/site/` – the website pages, the receipt email and the site's share image. The pages are built in `apps/frontend/`; the designs are the reference, not test fixtures.
 - `tests/` – unit tests. `scripts/` – icons and the smoke test.
 
 ## Project rules
 
 **Privacy is the product.** These are promises made on the store listing and the privacy page.
+
 - Permissions stay `activeTab`, `scripting`, `downloads`, `storage`, `clipboardWrite`. Never add `<all_urls>` or any host permission to the store build. `OGPEEL_E2E=1` adds broad access for the smoke test only.
 - Nothing runs until the icon is clicked: no background script, no content script that loads on its own.
 - No network requests except loading the image the page names. A key is checked on the device, never sent. No analytics, no error reporting, no remote fonts or code.
@@ -43,19 +45,21 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 - If a change would make the privacy page or store listing untrue, stop and ask.
 
 **Code**
+
 - Use kebab-case for project filenames, including component files and design assets. Keep conventional filenames such as `AGENTS.md`, `CLAUDE.md`, `README.md` and `LICENSE`.
 - `readPage()` is injected into pages: it must use nothing from outside its own body.
 - `lib/read-page.ts`, `lib/util.ts` and `lib/prompt.ts` import nothing from the browser API, so they can be unit tested. Keep it that way.
 - Logic goes in `app.tsx` or `lib/`; screens only render `s` and call `a`.
 - Import across folders with `@/` (the extension root, e.g. `@/lib/types`); use `./` only for files in the same folder.
 - Reading tags correctly is the core. Any change to `read-page.ts` comes with a test case.
-- A change to a page of the site starts in its design: edit `design/site/<name>.dc.html`, export the PNG again, then change the page until `pnpm --filter @ogpeel/frontend test` passes.
+- A change to a page of the site starts in its design: edit `design/site/<name>.dc.html` and export the PNG again, then change the page to match and check it by eye; `pnpm --filter @ogpeel/frontend test` must still pass.
 - A lost key is answered by hand (ogpeel.com/key gives an address; `pnpm --filter @ogpeel/worker make-key` prints the key). The thanks page shows no key; it is only emailed.
 - The worker (`apps/worker/`) does two things: `GET /buy` starts a Bachs checkout, `POST /webhook` emails a signed key when Bachs reports the payment. It stores nothing, and the extension never contacts it. Ask before adding a route or storing anything.
 - The key format lives in `packages/license/`: the worker signs, the extension verifies. A change there, or a new signing pair, stops every key already sold from working.
 - Secrets (Bachs keys, the Resend key, the private signing key) live in `apps/worker/.dev.vars` and Wrangler secrets, never in the repository.
 
 **Design**
+
 - Match the designs in `design/`. Paper look: square corners, 1.5px ink rules, a double rule under headers, depth as a 3px offset ink block, never a soft shadow or a gradient.
 - Colours only through the shadcn-named CSS variables in `packages/theme/theme.css` (`--background`, `--card`, `--foreground`, `--muted`, `--muted-foreground`, `--primary`, `--primary-foreground`, `--border`, `--ring`), so the night look keeps working. Vermilion (`--primary`) is for actions that save a file or pay.
 - Sizes come from theme tokens: the 4px `--spacing` scale, `text-xs/sm/base/2xl/display`, `leading-heading/body`, `tracking-label/brand/display`, `rule` / `rule-b` / `rule-t`… for the 1.5px rules, `aspect-share`. Borders are solid and zero-width unless a utility sets a width, so never write `border-0` or `border-solid`. Reach for an arbitrary `[value]` only for a true one-off.
@@ -75,7 +79,9 @@ The extension paths below are relative to `apps/extension/`; `design/` remains a
 These bias toward caution over speed. For trivial tasks, use judgment.
 
 ### 1. Think before coding
+
 Don't assume. Don't hide confusion. Surface tradeoffs.
+
 - State your assumptions explicitly. If uncertain, ask.
 - If multiple interpretations exist, present them; don't pick silently.
 - If a simpler approach exists, say so. Push back when warranted.
@@ -83,7 +89,9 @@ Don't assume. Don't hide confusion. Surface tradeoffs.
 - When you ask a question, use the interactive ask tool if one is available. Offer concrete options and put your recommended option first. Fall back to plain text only when there is no such tool.
 
 ### 2. Simplicity first
+
 Minimum code that solves the problem. Nothing speculative.
+
 - No features beyond what was asked.
 - No abstractions for single-use code.
 - No "flexibility" or "configurability" that wasn't requested.
@@ -92,7 +100,9 @@ Minimum code that solves the problem. Nothing speculative.
 - Ask: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
 ### 3. Surgical changes
+
 Touch only what you must. Clean up only your own mess.
+
 - Don't "improve" adjacent code, comments or formatting.
 - Don't refactor things that aren't broken.
 - Match existing style, even if you'd do it differently.
@@ -101,13 +111,16 @@ Touch only what you must. Clean up only your own mess.
 - The test: every changed line traces directly to the request.
 
 ### 4. Goal-driven execution
+
 Define success criteria. Loop until verified.
+
 - "Add validation" → write tests for invalid inputs, then make them pass.
 - "Fix the bug" → write a test that reproduces it, then make it pass.
 - "Refactor X" → tests pass before and after.
 - For multi-step tasks, state a brief plan, each step with its check: `1. [step] → verify: [check]`.
 
 ### 5. Report honestly
+
 - Say what you verified and how, and what you didn't. "Builds" is not "works".
 - If a test fails or a step was skipped, say so with the output.
 - Never invent a number, a price, a file size or an API's behaviour. Check it, or mark it as unverified.

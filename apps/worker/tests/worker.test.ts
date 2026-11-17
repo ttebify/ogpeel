@@ -94,6 +94,22 @@ describe('POST /webhook', () => {
     expect(await verifyKey(publicKey, key)).toBe(true);
   });
 
+  it('sends the designed receipt with the key, the amount paid and the date', async () => {
+    const calls = stubFetch(() => Response.json({ id: 'email_1' }));
+    await deliver(paid());
+
+    const { html, text } = calls[0].body;
+    expect(html).toContain(text.match(/OGPEEL-\S+/)[0]);
+    expect(html).toContain('RECEIPT · 22 SEP 2026');
+    expect(html.match(/\$9\.00/g)).toHaveLength(2);
+    expect(html).toContain('Reply within 14 days');
+    expect(html).toContain('Checkout by Bachs.');
+    expect(html).toContain('href="https://ogpeel.com/key"');
+    expect(text).toContain('Paid: $9.00');
+    // Nothing is fetched when the email is opened: no remote fonts, images or styles.
+    expect(html).not.toMatch(/<(img|link|script)|url\(|@import/);
+  });
+
   it('sends the same key when Bachs delivers the payment again', async () => {
     const calls = stubFetch(() => Response.json({ id: 'email_1' }));
     await deliver(paid());

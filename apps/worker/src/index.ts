@@ -8,9 +8,12 @@ export type { Env };
 type CollectionSucceeded = {
   id: string;
   type: string;
+  created_at: string;
   data: {
     charge_id: string | null;
     checkout_id: string | null;
+    amount: string;
+    currency: string;
     product_cart: { product_id: string }[] | null;
     customer: { email?: string };
   };
@@ -48,7 +51,12 @@ async function webhook(request: Request, env: Env): Promise<Response> {
     return new Response('No email');
   }
   const key = await signKey(env.LICENSE_PRIVATE_KEY, paymentId);
-  await sendKeyEmail(env, email, key, paymentId);
+  await sendKeyEmail(env, email, key, {
+    id: paymentId,
+    amount: event.data.amount,
+    currency: event.data.currency,
+    paidAt: event.created_at,
+  });
   return new Response('Sent');
 }
 

@@ -1,15 +1,17 @@
 # Ogpeel
 
-A browser extension that saves the image a page shows when someone shares its link (`og:image` or `twitter:image`). Full size, named after the page.
+Save the image in a link preview. A free, open-source browser extension. [ogpeel.com](https://ogpeel.com)
 
-- Save the image in one click, or copy the image or its link.
-- See every link preview image the page sets, not just the first.
-- Preview the link on X, LinkedIn, Slack and WhatsApp, with checks on size, title, description and alt text.
-- Get a prompt your coding agent can use to build link preview images for your own site. Covers 19 frameworks, from Next.js and Astro to WordPress and Rails.
+[![Watch the Ogpeel video (0:44)](apps/frontend/public/product-video-poster.jpg)](https://www.youtube.com/watch?v=IWw3EUP1pn8)
+
+- Download the link preview image full size, or copy the image or its link.
+- See every preview image a page sets, or try the largest image when it has none.
+- Preview the link on X, LinkedIn, Slack and WhatsApp.
+- For developers: get a prompt your coding agent can use to build preview images for your own site.
 
 ## Privacy
 
-Ogpeel reads a page only when you click its icon. It sends nothing anywhere. It asks for access to an image's host only when you use Copy image, one host at a time.
+Ogpeel reads a page only when you click its icon. It has no analytics, error reporting, remote code or remote fonts, and loads only the image the page names. It asks for access to an image's website only when you use Copy image, one site at a time. Your key is checked on your device, never sent.
 
 ## Run it
 

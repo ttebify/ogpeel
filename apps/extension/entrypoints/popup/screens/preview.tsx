@@ -34,8 +34,11 @@ export function Preview({ s, a }: ScreenProps) {
   return (
     <Frame>
       <NavHead a={a} to="popup">
-        When shared
+        Link preview
       </NavHead>
+      <p class="m-0 mt-3 text-base italic leading-body text-muted-foreground">
+        Approximate preview. Apps may show it differently.
+      </p>
       <ToggleGroup size="md" class="mt-4 grid-cols-4" role="tablist">
         {TABS.map((t) => (
           <ToggleGroupItem

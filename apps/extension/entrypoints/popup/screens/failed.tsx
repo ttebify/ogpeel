@@ -5,8 +5,9 @@ import { tagLine } from '@/lib/util';
 import { ErrorLine, Head, Notice } from './parts';
 
 export function Failed({ s, a }: ScreenProps) {
-  const img = s.images[0];
+  const img = s.images[s.current];
   const tag = img ? tagLine(img) : '';
+  const more = s.images.length - 1;
   return (
     <Frame>
       <Head s={s} />
@@ -17,13 +18,19 @@ export function Failed({ s, a }: ScreenProps) {
           </span>
         )}
       </div>
-      <Notice title="The image didn't load">
-        The page names one, but its link isn't answering right now.
-      </Notice>
+      <Notice title="The image didn't load">Try again, or copy the image link.</Notice>
       {img && (
         <div class="break-all rule-b border-border py-3 font-mono text-xs">
           {img.url.replace(/^[a-z]+:\/\//i, '')}
         </div>
+      )}
+      {more > 0 && (
+        <Button variant="row" onClick={() => a.go('all')}>
+          <span>
+            {more} MORE IMAGE{more === 1 ? '' : 'S'} ON THIS PAGE
+          </span>
+          <span>→</span>
+        </Button>
       )}
       <div class="mt-auto flex flex-col gap-3">
         <ErrorLine s={s} />

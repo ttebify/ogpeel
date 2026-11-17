@@ -21,7 +21,11 @@ export function SavedScreen({ s, a }: ScreenProps) {
             />
             <div class="flex flex-col gap-2">
               <span class="font-mono text-xs tracking-label">✓ SAVED</span>
-              <span class="text-2xl leading-heading">In your Downloads</span>
+              <span class="text-2xl leading-heading">
+                {saved.requested === 1
+                  ? 'Image saved'
+                  : `${saved.count} of ${saved.requested} images saved`}
+              </span>
             </div>
           </div>
           <div class="mt-6 break-all rule-y border-foreground py-3 font-mono text-xs leading-[1.6]">

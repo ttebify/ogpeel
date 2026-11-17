@@ -13,16 +13,16 @@ const section = 'py-24 rule-t border-border';
 const h2 = 'm-0 text-h2 font-semibold leading-h2 tracking-h2';
 
 const steps = [
-  ['01', 'Open any article', 'A blog post, a product page, a news story.'],
-  ['02', 'Click the Ogpeel icon', 'You see the image, its size and its format.'],
-  ['03', 'Download or copy', 'The original file, or straight to your clipboard.'],
+  ['01', 'Open a page', 'An article, a product page, a news story.'],
+  ['02', 'Click Ogpeel', 'See its link preview image, size and format.'],
+  ['03', 'Download or copy', 'Save the full-size file, or paste it anywhere.'],
 ];
 const free = [
-  'Download the share image, full size',
+  'Download the link preview image, full size',
   'Copy the image or its link',
-  'Every image a page sets, listed',
-  'See how a link looks on X, LinkedIn, Slack and WhatsApp',
-  'Reads a page only when you click the icon',
+  'See every preview image a page offers',
+  'Preview a link on X, LinkedIn, Slack and WhatsApp',
+  'Reads a page only when you click Ogpeel',
 ];
 const faq = [
   [
@@ -31,28 +31,27 @@ const faq = [
   ],
   [
     'Can I use images I download?',
-    'Ogpeel saves what the page already shares publicly. Who owns the picture doesn’t change, so ask the site before you reuse it in your own work.',
+    'The image still belongs to whoever made it. Ask the site before you reuse it.',
   ],
   [
     `What do I get for ${PRICE}?`,
-    'Unlimited developer prompts for every framework, on every browser where you enter your key.',
+    'Unlimited developer prompts. Saving and copying images is always free.',
   ],
   [
     'I lost my key.',
-    'It’s in the email we sent when you paid. If that’s gone, the Find my key page says how to get it again.',
+    'Search your email for “Your Ogpeel key”. Can’t find it? Write from the address you paid with and a person sends it again.',
   ],
-  ['Can I get a refund?', `Yes, within ${REFUND_DAYS} days. Reply to your receipt email.`],
+  ['Can I get a refund?', `Yes, within ${REFUND_DAYS} days of paying. Reply to your key email.`],
 ];
-const prompt = `Build Open Graph images for every post on my next.js site.
+const prompt = `Build link preview images (Open Graph) for the pages of my Next.js site.
 Size: 1200 × 630, PNG.
-Layout: dark ground, thin rule grid, mono labels top-left, icon row right.
-Use my brand colours and fonts, not the reference site's.
-Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
+Match the reference layout, but use my own colours, fonts and words.
+Set og:image, og:image:width, og:image:height and og:image:alt on each page.`;
 ---
 
 <Layout
-  title="Ogpeel. Save any page's share image"
-  description="A free browser extension that saves the image a page shows when it's shared, full size, named after the page."
+  title="Ogpeel. Save the image in a link preview"
+  description="A free browser extension that saves the image you see when someone shares a link. Full size, named after the page."
 >
   <a
     href="#main"
@@ -87,12 +86,12 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
       <div class="cols items-end gap-12 pt-12">
         <div class="flex-[2_1_480px]">
           <h1 id="hero-title" class="m-0 text-hero font-semibold leading-hero tracking-hero">
-            Save any page's share image
+            Save the image in a link preview
             <Dot />
           </h1>
           <p class="mt-8 mb-0 max-w-lead text-2xl italic leading-lead">
-            Every link has a picture it shows when it's shared. Click Ogpeel and it's yours, full
-            size, named after the page.
+            The picture you see when someone shares a link in a chat. Open the page, click Ogpeel,
+            and download it full size or copy it to paste anywhere.
           </p>
           <div id="install" class="mt-10">
             <InstallButton client:load />
@@ -103,7 +102,7 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             src="/hero-share-image.webp"
             width="1200"
             height="675"
-            alt="Share image saved from a Linear article"
+            alt="Link preview image saved from a Linear article"
             class="block h-auto w-full aspect-og rule border-border shadow-block"
           />
           <figcaption class="mono mt-5 flex justify-between text-xs">
@@ -125,7 +124,7 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             </h2>
           </div>
           <p class="m-0 max-w-copy text-xl leading-snug">
-            From an open article to a full-size file in your Downloads, start to finish.
+            From an open article to a saved, full-size image, start to finish.
           </p>
         </div>
         <ProductVideo client:visible />
@@ -185,13 +184,12 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
         <div>
           <p class="mono m-0 mb-6">For developers</p>
           <h2 id="dev-title" class={h2}>
-            Like a site's share image? Make one in its style
+            Like a site's preview image? Get one in its style
             <Dot />
           </h2>
           <p class="mt-6 mb-0 max-w-copy text-xl leading-snug">
-            Ogpeel writes a prompt for your coding agent. It measures the image and builds one for
-            every page on your site, with your own words and colours. Next.js, Nuxt, SvelteKit,
-            Astro, Hugo, WordPress, Laravel, Shopify and 11 more.
+            Ogpeel writes a prompt you paste into your coding agent. It asks for preview images in
+            that style for your pages, with your own words and colours.
           </p>
         </div>
         <pre
@@ -213,7 +211,7 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             <h3 class="mono m-0 font-normal">Ogpeel</h3>
             <p class="m-0 text-stat font-semibold leading-none">$0</p>
             <p class="m-0 text-lg leading-body">
-              Everything above, forever. Plus 2 developer prompts.
+              Download, copy and preview images. Plus 2 developer prompts.
             </p>
             <ButtonLink class="mt-auto" href="#install">
               Add to browser
@@ -225,15 +223,13 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
               {PRICE} <span class="text-xl font-normal italic">once</span>
             </p>
             <p class="m-0 text-lg leading-body">
-              Every framework, every site you build. A key by email, no account. Refund within{' '}
-              {REFUND_DAYS} days, no questions.
+              Optional. Only for developer prompts. Your key comes by email, no account. Refund
+              within {REFUND_DAYS} days.
             </p>
             <ButtonLink variant="action" class="mt-auto" href={LINKS.checkout}>
               Pay {PRICE} — secure checkout
             </ButtonLink>
-            <span class="mono text-xs text-muted-foreground">
-              Card, bank transfer or mobile money · checkout by Bachs
-            </span>
+            <span class="mono text-xs text-muted-foreground">Checkout by Bachs</span>
           </div>
         </div>
         <div
@@ -253,7 +249,7 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
         <div>
           <p class="mono m-0 mb-6">Questions</p>
           <h2 id="faq-title" class={h2}>
-            Asked before
+            Common questions
             <Dot />
           </h2>
         </div>

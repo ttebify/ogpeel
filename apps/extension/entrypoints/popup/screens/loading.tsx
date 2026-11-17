@@ -8,7 +8,7 @@ export function Loading({ s }: ScreenProps) {
       <Head s={s} />
       <div class="mt-4 shrink-0 rule border-border bg-transparent">
         <div class="flex aspect-share items-center justify-center bg-[repeating-linear-gradient(135deg,var(--muted)_0_8px,var(--background)_8px_16px)] font-mono text-xs tracking-label">
-          READING THE PAGE…
+          FINDING THE IMAGE…
         </div>
         <div class="flex h-8.25 items-center gap-2 rule-t border-border px-3">
           <div class="h-3 w-18 bg-foreground opacity-15" />

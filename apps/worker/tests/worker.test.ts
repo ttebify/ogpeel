@@ -192,6 +192,14 @@ describe('GET /buy', () => {
     });
   });
 
+  it('answers in plain words when the checkout cannot start', async () => {
+    stubFetch(() => new Response('down', { status: 500 }));
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    const res = await worker.fetch(new Request('https://worker.test/buy'), env);
+    expect(res.status).toBe(502);
+    expect(await res.text()).toContain('try again');
+  });
+
   it('says so when there is no product yet', async () => {
     const res = await worker.fetch(new Request('https://worker.test/buy'), {
       ...env,

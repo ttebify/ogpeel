@@ -17,7 +17,7 @@ export function Popup({ s, a }: ScreenProps) {
         <img
           class="block max-h-47.5 w-full bg-foreground object-contain"
           src={img.url}
-          alt={img.alt || 'Share image'}
+          alt={img.alt || 'Link preview image'}
         />
         <div class="flex items-center justify-between gap-2 rule-t border-border px-3 py-2 font-mono text-xs">
           <span
@@ -26,8 +26,9 @@ export function Popup({ s, a }: ScreenProps) {
           >
             {s.usingLargest
               ? 'LARGEST IMAGE'
-              : (img.tags[0] || '').toUpperCase() +
-                (img.tags.length > 1 ? ' +' + (img.tags.length - 1) : '')}
+              : s.images.length > 1
+                ? `IMAGE ${s.current + 1}`
+                : 'LINK PREVIEW'}
           </span>
           <span>{metaLine(img)}</span>
         </div>
@@ -41,7 +42,7 @@ export function Popup({ s, a }: ScreenProps) {
         </Button>
       )}
       <Button variant="row" onClick={() => a.go('preview')}>
-        <span>SEE HOW IT LOOKS WHEN SHARED</span>
+        <span>PREVIEW LINK</span>
         <span>→</span>
       </Button>
       <div class="mt-auto flex flex-col gap-3 pt-3">
@@ -54,7 +55,7 @@ export function Popup({ s, a }: ScreenProps) {
             {s.copied === 'image' ? '✓ COPIED' : 'COPY IMAGE'}
           </ToggleGroupItem>
           <ToggleGroupItem selected={s.copied === 'link'} disabled={busy} onClick={a.copyLink}>
-            {s.copied === 'link' ? '✓ COPIED' : 'COPY LINK'}
+            {s.copied === 'link' ? '✓ COPIED' : 'COPY IMAGE LINK'}
           </ToggleGroupItem>
         </ToggleGroup>
         <div class="flex items-center justify-between rule-t border-border pt-1">

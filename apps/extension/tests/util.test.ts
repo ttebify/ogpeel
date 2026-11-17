@@ -101,7 +101,7 @@ describe('checksFor', () => {
   });
   it('flags missing alt', () => {
     const c = checksFor(page, img({ width: 1200, height: 630 }));
-    expect(c.find((x) => x.text.includes('alt'))?.ok).toBe(false);
+    expect(c.find((x) => x.text.includes('alt text'))?.ok).toBe(false);
   });
 });
 

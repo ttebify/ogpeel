@@ -70,20 +70,10 @@ export function App() {
     const head = images[0];
     if (!head) return;
     const first = await probe(head.url);
-    if (!first) {
-      set({
-        status: 'failed',
-        page,
-        images: [{ ...head, broken: true }, ...images.slice(1)],
-        current: 0,
-        usingLargest,
-      });
-      return;
-    }
-    const sized: OgImage = { ...head, ...first };
+    const sized: OgImage = first ? { ...head, ...first } : { ...head, broken: true };
     images = [sized, ...images.slice(1)];
     set({
-      status: 'ready',
+      status: first ? 'ready' : 'failed',
       page,
       images,
       current: 0,
@@ -201,8 +191,14 @@ export function App() {
     go: (route) => set({ route, error: null, keyError: false, picking: false, frameworkQuery: '' }),
     select: (current) => {
       const cur = ref.current;
-      if (cur.images[current] && cur.page)
-        set({ current, route: 'popup', checks: checksFor(cur.page, cur.images[current]) });
+      const image = cur.images[current];
+      if (image && cur.page)
+        set({
+          current,
+          route: 'popup',
+          status: image.broken ? 'failed' : 'ready',
+          checks: checksFor(cur.page, image),
+        });
     },
     retry: () => {
       load();
@@ -239,7 +235,7 @@ export function App() {
           return { ...prev, images, saved, busy: null, route: 'saved' };
         });
       } catch {
-        set({ busy: null, error: "That didn't download. Try again, or copy the link." });
+        set({ busy: null, error: "Couldn't download the image. Try again or copy its link." });
       }
     },
     downloadAll: async () => {
@@ -256,8 +252,12 @@ export function App() {
         }
       }
       if (!done.length)
-        return set({ busy: null, error: "Those didn't download. Try one at a time." });
-      set({ busy: null, saved: { ...done[0]!, count: done.length }, route: 'saved' });
+        return set({ busy: null, error: "Couldn't download the images. Try one at a time." });
+      set({
+        busy: null,
+        saved: { ...done[0]!, count: done.length, requested: list.length },
+        route: 'saved',
+      });
     },
     showInFolder: () => {
       const id = ref.current.saved?.id;
@@ -276,8 +276,8 @@ export function App() {
         set({
           busy: null,
           error: denied
-            ? "Ogpeel needs your OK to read this image's site before it can copy it."
-            : "That didn't copy. Download it instead.",
+            ? "Allow access to the image's website, then try Copy image again."
+            : "Couldn't copy the image. Try Download image instead.",
         });
       }
     },
@@ -288,7 +288,7 @@ export function App() {
         await navigator.clipboard.writeText(image.url);
         flash('link');
       } catch {
-        set({ error: "That didn't copy." });
+        set({ error: "Couldn't copy the image link. Try again." });
       }
     },
     setFramework: (framework) => {
@@ -304,7 +304,7 @@ export function App() {
       try {
         await navigator.clipboard.writeText(cur.prompt);
       } catch {
-        return set({ error: "That didn't copy." });
+        return set({ error: "Couldn't copy the prompt. Try again." });
       }
       const license = cur.license.unlocked
         ? cur.license
@@ -342,7 +342,7 @@ export function App() {
       return <Unlock {...p} />;
   }
   if (s.status === 'loading') return <Loading {...p} />;
-  if (s.status === 'failed') return <Failed {...p} />;
+  if (s.status === 'failed') return s.route === 'all' ? <AllImages {...p} /> : <Failed {...p} />;
   if (s.status === 'empty') return <Empty {...p} />;
   switch (s.route) {
     case 'all':

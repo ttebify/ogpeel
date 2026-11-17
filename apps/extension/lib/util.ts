@@ -85,20 +85,21 @@ export function checksFor(page: PageInfo, img: OgImage): Check[] {
     if (img.width < 600)
       out.push({
         ok: false,
-        text: `Image is ${img.width} × ${img.height}, small enough that some apps show a tiny thumbnail`,
+        text: 'Image is small; some apps may show it as a thumbnail',
       });
     else if (!wide)
       out.push({
         ok: false,
-        text: `Image is ${img.width} × ${img.height}; most apps crop to about 1.91:1`,
+        text: 'Image is not wide; most apps may crop it (about 1.91:1)',
       });
     else
       out.push({
         ok: true,
-        text: `Image is ${img.width} × ${img.height}, a size most apps expect`,
+        text: 'Image is a size most apps expect',
       });
   }
-  if (page.title && page.description) out.push({ ok: true, text: 'Title and description are set' });
+  if (page.title && page.description)
+    out.push({ ok: true, text: 'Link has a title and description' });
   else
     out.push({
       ok: false,
@@ -106,10 +107,8 @@ export function checksFor(page: PageInfo, img: OgImage): Check[] {
     });
   out.push(
     img.alt
-      ? { ok: true, text: 'Image has alt text' }
-      : { ok: false, text: 'No alt text for the image' },
+      ? { ok: true, text: 'Image has a description (alt text)' }
+      : { ok: false, text: 'No image description (alt text)' },
   );
-  if (!img.tags.includes('twitter:image') && img.tags.includes('og:image'))
-    out.push({ ok: true, text: 'No twitter:image, so X uses the og:image' });
   return out;
 }

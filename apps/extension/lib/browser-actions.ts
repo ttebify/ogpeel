@@ -81,6 +81,7 @@ export async function downloadImage(
           filename: basename(item.filename),
           image: { ...img, format, bytes },
           count: 1,
+          requested: 1,
         };
       }
       if (item?.state === 'interrupted') throw new Error(item.error || 'interrupted');

@@ -76,7 +76,14 @@ export type Route =
 /** What the 'popup' route shows. */
 export type Status = 'loading' | 'ready' | 'empty' | 'failed';
 
-export type Saved = { id: number; filename: string; image: OgImage; count: number };
+/** count: how many files were saved; requested: how many were tried. */
+export type Saved = {
+  id: number;
+  filename: string;
+  image: OgImage;
+  count: number;
+  requested: number;
+};
 export type Check = { ok: boolean; text: string };
 
 export type State = {

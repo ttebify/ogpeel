@@ -9,7 +9,7 @@ const e2e = process.env.OGPEEL_E2E === '1';
 export default defineConfig({
   manifest: {
     name: 'Ogpeel',
-    description: "Save any page's share image. Full size, one click.",
+    description: 'Save the image in a link preview, full size, in one click.',
     permissions: ['activeTab', 'scripting', 'downloads', 'storage', 'clipboardWrite'],
     host_permissions: e2e ? ['<all_urls>'] : [],
     // Asked for one image host at a time, only when Copy image needs it.

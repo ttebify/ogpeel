@@ -44,14 +44,14 @@ export function SettingsScreen({ s, a }: ScreenProps) {
       </NavHead>
       {group('naming', 'Name saved files after', [
         { value: 'title', label: 'PAGE TITLE' },
-        { value: 'original', label: 'ORIGINAL' },
+        { value: 'original', label: 'ORIGINAL NAME' },
       ])}
-      {group('look', 'Look', [
-        { value: 'auto', label: 'AUTO' },
-        { value: 'day', label: 'DAY' },
-        { value: 'night', label: 'NIGHT' },
+      {group('look', 'Appearance', [
+        { value: 'auto', label: 'SYSTEM' },
+        { value: 'day', label: 'LIGHT' },
+        { value: 'night', label: 'DARK' },
       ])}
-      {group('keepSource', 'Keep the page address with each copy', [
+      {group('keepSource', 'Add the page link to copied images (some apps show it)', [
         { value: true, label: 'ON' },
         { value: false, label: 'OFF' },
       ])}

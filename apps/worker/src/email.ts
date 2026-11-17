@@ -8,10 +8,10 @@ export type Payment = {
   paidAt: string;
 };
 
-const THANKS = "Thank you for paying for Ogpeel. Here's your key for unlimited developer prompts.";
+const THANKS = 'Thank you for buying Ogpeel. Here is your key for unlimited developer prompts.';
 const HOW =
-  'In Ogpeel, open “Make one like this for your site”, choose “I have a key” and paste it. It works on every browser you use.';
-const REFUND = `Changed your mind? Reply within ${REFUND_DAYS} days and you'll get every cent back.`;
+  'To unlock: click Ogpeel, open Settings (the gear), choose Enter key, paste the key and click Unlock prompts. It works on every browser you use.';
+const REFUND = `Changed your mind? Reply within ${REFUND_DAYS} days of the payment date for a full refund.`;
 const SIGNED = '— Justice, who made Ogpeel';
 
 const INK = '#1A1714';

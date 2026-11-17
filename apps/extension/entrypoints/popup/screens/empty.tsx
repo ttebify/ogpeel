@@ -14,17 +14,17 @@ export function Empty({ s, a }: ScreenProps) {
         —
       </div>
       {s.restricted ? (
-        <Notice title="Ogpeel can't read this page">
-          Browsers keep extensions out of pages like this one. Try it on an article.
+        <Notice title="Ogpeel can't open this page">
+          Your browser blocks extensions here. Try a regular web page.
         </Notice>
       ) : (
-        <Notice title="No share image on this page">
-          It doesn't set an og:image or twitter:image.
+        <Notice title="No link preview image found">
+          This page hasn't chosen an image for shared links.
         </Notice>
       )}
       {!s.restricted && s.page?.hasLargest && (
         <Button class="mt-auto" disabled={!!s.busy} onClick={a.showLargest}>
-          SHOW THE LARGEST IMAGE INSTEAD
+          TRY LARGEST IMAGE
         </Button>
       )}
     </Frame>

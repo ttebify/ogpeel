@@ -16,15 +16,13 @@ export function EnterKey({ s, a }: ScreenProps) {
     return (
       <Frame>
         <NavHead a={a} to="unlock">
-          Enter your key
+          Unlock key
         </NavHead>
         <div class="mt-8 font-mono text-xs tracking-label">✓ UNLOCKED ON THIS BROWSER</div>
         <div class="mt-2 text-display font-semibold leading-none tracking-display">
           Thank you<span class="text-primary">.</span>
         </div>
-        <p class="m-0 mt-3 text-base leading-body">
-          Prompts are unlimited now, for every framework.
-        </p>
+        <p class="m-0 mt-3 text-base leading-body">Unlimited prompts unlocked.</p>
         <Button variant="solid" class="mt-auto" onClick={() => a.go('dev')}>
           BACK TO MY PROMPT
         </Button>
@@ -35,11 +33,11 @@ export function EnterKey({ s, a }: ScreenProps) {
   return (
     <Frame>
       <NavHead a={a} to="unlock">
-        Enter your key
+        Unlock key
       </NavHead>
-      <p class="m-0 mt-6 text-base leading-body">It's in the email we sent when you paid.</p>
+      <p class="m-0 mt-6 text-base leading-body">Your key is in the email you got after paying.</p>
       <label for="k" class="mt-6 font-mono text-xs tracking-label">
-        LICENSE KEY
+        UNLOCK KEY
       </label>
       <Input
         id="k"
@@ -59,12 +57,12 @@ export function EnterKey({ s, a }: ScreenProps) {
       />
       {s.keyError && (
         <div id="k-err" role="alert" class="mt-2 text-base text-primary">
-          That key doesn't match. Check for a missing letter, or copy it again from your email.
+          That key isn't valid. Copy the full key from your email.
         </div>
       )}
       <div class="mt-auto flex flex-col gap-2">
         <Button variant="solid" disabled={!!s.busy} onClick={submit}>
-          {checking ? 'CHECKING…' : 'UNLOCK'}
+          {checking ? 'CHECKING…' : 'UNLOCK PROMPTS'}
         </Button>
         <Button variant="italic-link" onClick={() => a.openSite('key')}>
           Lost it? Find my key ↗

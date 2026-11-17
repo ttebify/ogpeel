@@ -52,7 +52,7 @@ try {
   );
   if (tabId === undefined) await fail('could not find the page tab');
   await popup.goto(`chrome-extension://${id}/popup.html?tabId=${tabId}`);
-  await popup.waitForFunction(() => !document.body.innerText.includes('READING THE PAGE'), null, {
+  await popup.waitForFunction(() => !document.body.innerText.includes('FINDING THE IMAGE'), null, {
     timeout: 20000,
   });
   await popup.waitForTimeout(800);
@@ -67,7 +67,7 @@ try {
     await popup.waitForTimeout(500);
   };
   for (const [name, open, back] of [
-    ['07-preview', /when shared/i, /back/i],
+    ['07-preview', /preview link/i, /back/i],
     ['08-dev', /make one like this/i, /back/i],
     ['12-settings', /settings/i, /back/i],
   ]) {
@@ -105,11 +105,11 @@ try {
   }
   try {
     await click(/settings/i);
-    await click(/^night$/i);
+    await click(/^dark$/i);
     await click(/back/i);
     await shot('01-popup-night');
     await click(/settings/i);
-    await click(/^auto$/i);
+    await click(/^system$/i);
     await click(/back/i);
   } catch (e) {
     console.error('WARN night', e.message.split('\n')[0]);

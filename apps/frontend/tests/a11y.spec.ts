@@ -52,7 +52,7 @@ test('FAQ opens one answer at a time, by keyboard', async ({ page }) => {
   await page.keyboard.press('Enter');
   await expect(items.nth(4)).toHaveAttribute('open', '');
   await expect(items.nth(0)).not.toHaveAttribute('open');
-  await expect(page.getByText('Yes, within 14 days.')).toBeVisible();
+  await expect(page.getByText('Yes, within 14 days of paying.')).toBeVisible();
   await expect(page.getByText('Only the page you click the icon on')).toBeHidden();
 });
 
@@ -67,9 +67,7 @@ test('Find my key gives an address to write to, and has no form', async ({ page 
 
 test('thanks says the key is emailed and shows none', async ({ page }) => {
   await page.goto('/thanks/?key=OGPEEL-7Q2K-M4XD-91RB');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Thank you. Your key is on its way.',
-  );
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Thank you for buying Ogpeel.');
   await expect(page.getByText('OGPEEL-')).toHaveCount(0);
 });
 

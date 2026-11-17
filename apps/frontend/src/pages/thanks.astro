@@ -1,32 +1,31 @@
 ---
-import { PRICE, REFUND_DAYS } from '@ogpeel/pricing';
+import { REFUND_DAYS } from '@ogpeel/pricing';
 import Layout from '@/layouts/layout.astro';
 import PageHeader from '@/components/page-header.astro';
 import Dot from '@/components/dot.astro';
 
 const steps = [
-  'Click the Ogpeel icon, then “Make one like this for your site”.',
-  'Choose “I have a key” and paste it.',
+  'Click Ogpeel, then the Settings gear.',
+  'Choose Enter key, paste your key and click Unlock prompts.',
   'Use the same key on any browser you work in.',
 ];
 ---
 
-<Layout title="Thank you · Ogpeel" description="Your Ogpeel key is on its way, and how to use it.">
+<Layout title="Thank you · Ogpeel" description="How to get and use your Ogpeel key.">
   <meta name="robots" content="noindex" slot="head" />
   <div class="min-h-[900px]">
     <PageHeader rule="column" />
     <main class="mx-auto box-border max-w-header px-6 pt-16 pb-24">
-      <p class="mono m-0">✓ Payment received · {PRICE}</p>
-      <h1 class="mt-4 mb-0 text-thanks font-semibold leading-page tracking-hero">
-        Thank you. Your key is on its way
+      <h1 class="mt-0 mb-0 text-thanks font-semibold leading-page tracking-hero">
+        Thank you for buying Ogpeel
         <Dot />
       </h1>
 
       <div class="mt-12 bg-card p-6 rule border-border shadow-block">
         <p class="mono m-0">Check your inbox</p>
         <p class="mt-3 mb-0 text-xl leading-snug">
-          We sent it to the email you paid with, under the subject “Your Ogpeel key”. It can take a
-          minute; look in spam too.
+          After payment, your key is emailed to the address you paid with, under the subject “Your
+          Ogpeel key”. Look in spam too. No email? <a href="/key">Get help</a>.
         </p>
       </div>
 
@@ -42,7 +41,8 @@ const steps = [
         ))}
       </ol>
       <p class="mono mt-12 text-xs text-muted-foreground">
-        Changed your mind? Reply to the receipt within {REFUND_DAYS} days for a full refund.
+        Changed your mind? Reply to the key email within {REFUND_DAYS} days of paying for a full
+        refund.
       </p>
     </main>
   </div>

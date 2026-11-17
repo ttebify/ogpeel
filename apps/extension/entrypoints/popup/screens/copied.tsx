@@ -5,9 +5,9 @@ import type { ScreenProps } from '@/lib/types';
 import { NavHead } from './parts';
 
 const STEPS = [
-  "Open your agent in the site's folder.",
-  "Paste. It asks for your colours and fonts if it can't find them.",
-  'Open one of your pages and click Ogpeel to check the result.',
+  'Open your project in your coding agent.',
+  'Paste the prompt.',
+  'Check the result on one of your pages with Ogpeel.',
 ];
 
 export function Copied({ s, a }: ScreenProps) {
@@ -19,9 +19,7 @@ export function Copied({ s, a }: ScreenProps) {
         Prompt copied
       </NavHead>
       <div class="mt-6 font-mono text-xs tracking-label">✓ ON YOUR CLIPBOARD · {fw}</div>
-      <div class="mt-2 text-2xl leading-[1.15]">
-        Paste it into your coding agent, in your project.
-      </div>
+      <div class="mt-2 text-2xl leading-[1.15]">Paste it into your coding agent.</div>
       <div class="mt-6 rule-t border-foreground">
         {STEPS.map((t, i) => (
           <div class="flex gap-3 border-b border-foreground py-3 text-base" key={i}>

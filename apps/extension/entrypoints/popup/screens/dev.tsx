@@ -21,10 +21,10 @@ export function Dev({ s, a }: ScreenProps) {
         Make one like this
       </NavHead>
       <p class="m-0 mt-3 text-base leading-[1.35]">
-        A prompt for your coding agent. It builds a share image in this style for every page on your
-        site, with your own words and colours.
+        Ogpeel writes a prompt for your coding agent, asking for link preview images in this style,
+        with your own words and colours.
       </p>
-      <div class="mt-4 font-mono text-xs tracking-label">YOUR SITE IS BUILT WITH</div>
+      <div class="mt-4 font-mono text-xs tracking-label">YOUR SITE'S FRAMEWORK</div>
       {s.picking ? (
         <>
           <Input
@@ -55,7 +55,7 @@ export function Dev({ s, a }: ScreenProps) {
               </div>
             ))}
             {!groups.length && (
-              <p class="m-0 text-base">No match. Pick the closest one, or Plain HTML.</p>
+              <p class="m-0 text-base">No matching framework. Try another search.</p>
             )}
           </div>
         </>
@@ -64,7 +64,7 @@ export function Dev({ s, a }: ScreenProps) {
           <div class="mt-2 flex shrink-0 items-stretch rule border-foreground">
             <div class="flex h-10 flex-1 items-center gap-2 px-3 font-mono text-xs tracking-label">
               <span class="font-medium">{current?.label}</span>
-              {detected && <span class="text-muted-foreground">DETECTED</span>}
+              {detected && <span class="text-muted-foreground">FROM THIS PAGE</span>}
             </div>
             <Button variant="segment" aria-expanded={false} onClick={a.openPicker}>
               CHANGE
@@ -90,7 +90,7 @@ export function Dev({ s, a }: ScreenProps) {
                 {s.license.freeLeft} OF {FREE_PROMPTS} FREE PROMPTS LEFT
               </span>
               <Button variant="link" onClick={() => a.go('unlock')}>
-                UNLIMITED →
+                UNLOCK →
               </Button>
             </>
           )}

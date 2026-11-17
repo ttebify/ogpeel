@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildPrompt, FRAMEWORKS } from '@/lib/prompt';
+import { buildPrompt, FRAMEWORKS, lockedPreview } from '@/lib/prompt';
 import type { Framework, OgImage, PageInfo } from '@/lib/types';
 
 const image: OgImage = {
@@ -15,12 +15,28 @@ const page: PageInfo = {
   title: 'Post',
   description: '',
   hasLargest: false,
+  framework: null,
 };
 const phrase: Record<Framework, string> = {
   nextjs: 'opengraph-image.tsx',
   astro: 'getStaticPaths',
   wordpress: 'wp_head',
   html: 'plain HTML',
+  nuxt: 'nuxt-og-image',
+  sveltekit: '+server.ts',
+  reactrouter: 'resource route',
+  tanstack: 'head()',
+  gatsby: 'Gatsby Head API',
+  vite: 'prerender',
+  hugo: 'images.Text',
+  eleventy: 'eleventy.after',
+  jekyll: 'jekyll-seo-tag',
+  docusaurus: 'postBuild',
+  laravel: 'Blade',
+  django: 'Pillow',
+  rails: 'content_for',
+  shopify: 'metafield',
+  ghost: '@tryghost/admin-api',
 };
 
 describe('buildPrompt', () => {
@@ -40,5 +56,15 @@ describe('buildPrompt', () => {
     );
     const p = buildPrompt({ framework: 'html', image, page, palette: ['#112233', '#ffffff'] });
     expect(p).toContain('Its main colours, measured: #112233, #ffffff');
+  });
+});
+
+describe('lockedPreview', () => {
+  it('keeps only the opening lines', () => {
+    const full = buildPrompt({ framework: 'nextjs', image, page, palette: [] });
+    const short = lockedPreview(full);
+    expect(short.split('\n')).toHaveLength(5);
+    expect(short).not.toContain('opengraph-image.tsx');
+    expect(full.startsWith(short.slice(0, -2))).toBe(true);
   });
 });

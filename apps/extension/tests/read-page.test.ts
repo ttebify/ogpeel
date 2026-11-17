@@ -128,3 +128,65 @@ describe('readPage', () => {
     expect(readPage().description).toBe('M');
   });
 });
+
+describe('readPage framework', () => {
+  const cases: [string, string, string, string | null][] = [
+    ['WordPress by generator', '<meta name="generator" content="WordPress 6.6">', '', 'wordpress'],
+    ['Hugo by generator', '<meta name="generator" content="Hugo 0.139.0">', '', 'hugo'],
+    ['Ghost by generator', '<meta name="generator" content="Ghost 5.100">', '', 'ghost'],
+    ['Astro by generator', '<meta name="generator" content="Astro v5.1.0">', '', 'astro'],
+    [
+      'Next.js by its data script',
+      '',
+      '<script id="__NEXT_DATA__" type="application/json">{}</script>',
+      'nextjs',
+    ],
+    [
+      'Next.js by its chunks',
+      '<script src="/_next/static/chunks/main.js" defer></script>',
+      '',
+      'nextjs',
+    ],
+    ['Nuxt by its root', '', '<div id="__nuxt"></div>', 'nuxt'],
+    [
+      'SvelteKit by its assets',
+      '<link rel="modulepreload" href="/_app/immutable/entry/start.js">',
+      '',
+      'sveltekit',
+    ],
+    ['Astro by an island', '', '<astro-island></astro-island>', 'astro'],
+    ['Gatsby by its root', '', '<div id="___gatsby"></div>', 'gatsby'],
+    [
+      'React Router by its context',
+      '',
+      '<script>window.__reactRouterContext = {};</script>',
+      'reactrouter',
+    ],
+    ['Remix by its context', '', '<script>window.__remixContext = {};</script>', 'reactrouter'],
+    [
+      'WordPress by its theme files',
+      '<link rel="stylesheet" href="/wp-content/themes/x/style.css">',
+      '',
+      'wordpress',
+    ],
+    [
+      'Shopify by its CDN',
+      '<link rel="stylesheet" href="https://cdn.shopify.com/s/files/theme.css">',
+      '',
+      'shopify',
+    ],
+    ['Rails by its CSRF tag', '<meta name="csrf-param" content="authenticity_token">', '', 'rails'],
+    ['nothing on a plain page', '<title>Hi</title>', '<p>Hello</p>', null],
+  ];
+  for (const [name, head, body, want] of cases) {
+    it(`detects ${name}`, () => {
+      set(head, body);
+      expect(readPage().framework).toBe(want);
+    });
+  }
+
+  it('prefers the generator tag over markup', () => {
+    set('<meta name="generator" content="Docusaurus v3.5">', '<div id="__nuxt"></div>');
+    expect(readPage().framework).toBe('docusaurus');
+  });
+});

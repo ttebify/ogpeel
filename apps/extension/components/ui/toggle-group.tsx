@@ -2,12 +2,14 @@ import type { ComponentProps } from 'preact';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 
-const toggleGroupVariants = cva('grid shrink-0 rule border-border', {
+const toggleGroupVariants = cva('grid shrink-0', {
   variants: {
-    /** One row with a rule between items (set the columns with `grid-cols-*`), or a 2 × 2 grid. */
+    /** One row with a rule between items (set the columns with `grid-cols-*`), a 2 × 2 grid, or separate tiles two to a row. */
     layout: {
-      row: '[&>button+button]:rule-l',
-      grid: 'grid-cols-2 [&>button:nth-child(odd)]:rule-r [&>button:nth-child(-n+2)]:rule-b',
+      row: 'rule border-border [&>button+button]:rule-l',
+      grid: 'rule border-border grid-cols-2 [&>button:nth-child(odd)]:rule-r [&>button:nth-child(-n+2)]:rule-b',
+      tiles:
+        'grid-cols-2 gap-1 [&>button]:rule [&>button]:border-border [&>button]:px-2 [&>button]:text-left',
     },
     /** Item height and label size: 44px/13px, 44px/12px, 40px/12px, 36px/12px. */
     size: {

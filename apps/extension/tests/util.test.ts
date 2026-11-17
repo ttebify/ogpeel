@@ -83,6 +83,7 @@ describe('checksFor', () => {
     title: 'T',
     description: 'D',
     hasLargest: false,
+    framework: null,
   };
   const img = (o: Partial<OgImage>): OgImage => ({
     url: 'https://e.com/a.png',

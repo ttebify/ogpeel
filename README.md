@@ -5,7 +5,7 @@ A browser extension that saves the image a page shows when it is shared (its `og
 - Save the share image in one click, or copy the image or its link.
 - See every share image a page sets, not just the first.
 - Preview how the link looks on X, LinkedIn, Slack and WhatsApp, with plain checks on size, title, description and alt text.
-- Get a prompt for your coding agent to build share images for your own site in the same style, for Next.js, Astro, WordPress or plain HTML.
+- Get a prompt for your coding agent to build share images for your own site in the same style, for 19 frameworks, including Next.js, Nuxt, SvelteKit, Astro, Hugo, WordPress, Laravel, Django, Rails and Shopify.
 
 ## Privacy
 

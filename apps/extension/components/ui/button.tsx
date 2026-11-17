@@ -21,6 +21,9 @@ const buttonVariants = cva('box-border flex shrink-0 items-center justify-center
       /** The same line for links that leave the popup. */
       external:
         'h-10 w-full justify-between border-b border-border bg-transparent p-0 font-serif text-base text-foreground',
+      /** A button inside a bordered box, ruled off on its left. */
+      segment:
+        'h-10 rule-l border-border bg-transparent px-3 py-0 font-mono text-xs font-medium tracking-label text-foreground',
       icon: 'size-11 bg-transparent p-0 text-foreground',
       'icon-outline':
         'size-11 rule border-border bg-transparent p-0 font-mono text-base text-foreground',

@@ -1,4 +1,4 @@
-import type { RawPage } from './types';
+import type { Framework, RawPage } from './types';
 
 /**
  * Runs inside the page (chrome.scripting.executeScript), so it must not use
@@ -57,6 +57,38 @@ export function readPage(): RawPage {
     largest = { url, width: w, height: h, alt: img.alt || undefined };
   }
 
+  const generator = (named['generator'] || '').toLowerCase();
+  const has = (sel: string) => !!document.querySelector(sel);
+  const inScript = (text: string) =>
+    Array.from(document.scripts).some((el) => !el.src && (el.textContent || '').includes(text));
+  const byGenerator: [string, Framework][] = [
+    ['wordpress', 'wordpress'],
+    ['ghost', 'ghost'],
+    ['hugo', 'hugo'],
+    ['jekyll', 'jekyll'],
+    ['eleventy', 'eleventy'],
+    ['docusaurus', 'docusaurus'],
+    ['gatsby', 'gatsby'],
+    ['astro', 'astro'],
+  ];
+  let framework: Framework | null =
+    byGenerator.find(([word]) => generator.includes(word))?.[1] ?? null;
+  if (!framework) {
+    if (has('#__NEXT_DATA__, script[src*="/_next/"]')) framework = 'nextjs';
+    else if (has('#__nuxt, #__NUXT_DATA__, script[src*="/_nuxt/"]')) framework = 'nuxt';
+    else if (has('[href*="/_app/immutable/"], script[src*="/_app/immutable/"]'))
+      framework = 'sveltekit';
+    else if (has('astro-island, [href*="/_astro/"], script[src*="/_astro/"]')) framework = 'astro';
+    else if (has('#___gatsby')) framework = 'gatsby';
+    else if (inScript('__reactRouterContext') || inScript('__remixContext'))
+      framework = 'reactrouter';
+    else if (has('[href*="/wp-content/"], [src*="/wp-content/"], [src*="/wp-includes/"]'))
+      framework = 'wordpress';
+    else if (has('script[src*="cdn.shopify.com"], link[href*="cdn.shopify.com"]'))
+      framework = 'shopify';
+    else if (has('meta[name="csrf-param"][content="authenticity_token"]')) framework = 'rails';
+  }
+
   return {
     url: location.href,
     title: named['og:title'] || named['twitter:title'] || document.title || '',
@@ -64,5 +96,6 @@ export function readPage(): RawPage {
       named['og:description'] || named['twitter:description'] || named['description'] || '',
     images,
     largest,
+    framework,
   };
 }

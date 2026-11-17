@@ -1,10 +1,27 @@
-import type { Framework, OgImage, PageInfo } from './types';
+import type { Framework, FrameworkGroup, OgImage, PageInfo } from './types';
 
-export const FRAMEWORKS: { id: Framework; label: string }[] = [
-  { id: 'nextjs', label: 'NEXT.JS' },
-  { id: 'astro', label: 'ASTRO' },
-  { id: 'wordpress', label: 'WORDPRESS' },
-  { id: 'html', label: 'PLAIN HTML' },
+export const FRAMEWORK_GROUPS: FrameworkGroup[] = ['JAVASCRIPT', 'STATIC', 'SERVER', 'HOSTED'];
+
+export const FRAMEWORKS: { id: Framework; label: string; group: FrameworkGroup }[] = [
+  { id: 'nextjs', label: 'NEXT.JS', group: 'JAVASCRIPT' },
+  { id: 'nuxt', label: 'NUXT', group: 'JAVASCRIPT' },
+  { id: 'sveltekit', label: 'SVELTEKIT', group: 'JAVASCRIPT' },
+  { id: 'astro', label: 'ASTRO', group: 'JAVASCRIPT' },
+  { id: 'reactrouter', label: 'REACT ROUTER', group: 'JAVASCRIPT' },
+  { id: 'tanstack', label: 'TANSTACK START', group: 'JAVASCRIPT' },
+  { id: 'gatsby', label: 'GATSBY', group: 'JAVASCRIPT' },
+  { id: 'vite', label: 'VITE SPA', group: 'JAVASCRIPT' },
+  { id: 'hugo', label: 'HUGO', group: 'STATIC' },
+  { id: 'eleventy', label: 'ELEVENTY', group: 'STATIC' },
+  { id: 'jekyll', label: 'JEKYLL', group: 'STATIC' },
+  { id: 'docusaurus', label: 'DOCUSAURUS', group: 'STATIC' },
+  { id: 'html', label: 'PLAIN HTML', group: 'STATIC' },
+  { id: 'laravel', label: 'LARAVEL', group: 'SERVER' },
+  { id: 'django', label: 'DJANGO', group: 'SERVER' },
+  { id: 'rails', label: 'RAILS', group: 'SERVER' },
+  { id: 'wordpress', label: 'WORDPRESS', group: 'HOSTED' },
+  { id: 'shopify', label: 'SHOPIFY', group: 'HOSTED' },
+  { id: 'ghost', label: 'GHOST', group: 'HOSTED' },
 ];
 
 const HOW: Record<Framework, string> = {
@@ -21,6 +38,66 @@ const HOW: Record<Framework, string> = {
 - Generate one image per post with GD or Imagick when a post is saved (\`save_post\`), store it in uploads and keep its ID in post meta. Regenerate when the title changes.
 - Output og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image in \`wp_head\`.
 - If an SEO plugin (Yoast, Rank Math, SEOPress) is active, hook into its image filter instead of printing a second set of tags.`,
+  nuxt: `Stack: Nuxt 3 or later.
+- Use the \`nuxt-og-image\` module. Add a component in \`components/OgImage/\` that draws the image, and call \`defineOgImageComponent()\` in each content page with that page's title.
+- Read the title (and date or author if the layout has room) from the same source the page uses (\`@nuxt/content\` or my data).
+- Let the module emit the og:image and twitter:image tags; set og:image:alt and twitter:card=summary_large_image with \`useSeoMeta\`, and remove any hand-written tags that would clash.`,
+  sveltekit: `Stack: SvelteKit.
+- Add an endpoint such as \`src/routes/og/[...slug].png/+server.ts\` that renders the image with \`satori\` and converts it with \`@resvg/resvg-js\`. Prerender it (\`export const prerender = true\` with \`entries\`) if the site is static.
+- Read the title (and date or author if the layout has room) from the same source the page's \`load\` uses.
+- In \`<svelte:head>\` of each page or the root layout, set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image to the absolute URL.`,
+  reactrouter: `Stack: React Router 7 (framework mode) or Remix.
+- Add a resource route such as \`app/routes/og.$slug[.png].tsx\` whose \`loader\` renders the image with \`satori\` and \`@resvg/resvg-js\` and returns it with \`Content-Type: image/png\` and a long cache header.
+- Read the title (and date or author if the layout has room) from the same source the page's loader uses.
+- In each page route's \`meta\` export, return og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with absolute URLs.`,
+  tanstack: `Stack: TanStack Start.
+- Add a server route at \`/og/$slug.png\` that renders the image with \`satori\` and \`@resvg/resvg-js\` and returns it as \`image/png\` with a long cache header. Use the server route API of the version in my package.json.
+- Read the title (and date or author if the layout has room) from the same loader the page uses.
+- In each route's \`head()\` option, return og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with absolute URLs.`,
+  gatsby: `Stack: Gatsby.
+- In \`gatsby-node\`, after the pages are created, render one image per page with \`satori\` and \`@resvg/resvg-js\` into \`public/og/<slug>.png\`, reading titles from the same GraphQL query the pages use.
+- Use the Gatsby Head API (\`export const Head\`) in each template to set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with absolute URLs (\`siteMetadata.siteUrl\`).
+- If \`gatsby-plugin-react-helmet\` or an SEO component already sets these tags, change it instead of adding a second set.`,
+  vite: `Stack: a Vite single-page app (React, Vue or Svelte without a server framework).
+- Link previews are made by crawlers that do not run JavaScript, so tags added at runtime are not seen. First check whether my built HTML has per-page tags without JS.
+- If it doesn't, prerender each route to static HTML at build time (a prerender plugin, or a build script with Playwright) so each page's HTML carries its own tags.
+- Render one image per route with \`satori\` and \`@resvg/resvg-js\` into \`public/og/\` in the same build step, and set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with absolute URLs.`,
+  hugo: `Stack: Hugo.
+- Generate images with Hugo's own image processing: a base image in \`assets/\`, drawn on with \`images.Text\` (and a font from \`assets/\`) in a partial, once per page. No Node needed.
+- Wrap long titles with the filter's \`linespacing\` and a width limit; check the result for long titles.
+- In my head partial, set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with \`.Permalink\` of the generated resource. If the theme already prints these tags, change its partial instead of adding a second set.`,
+  eleventy: `Stack: Eleventy (11ty).
+- In an \`eleventy.after\` event, render one image per page in \`collections.all\` with \`satori\` and \`@resvg/resvg-js\` into \`_site/og/<slug>.png\`.
+- Read the title (and date or author if the layout has room) from each page's front matter.
+- In my base layout's <head>, set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image to the absolute URL (my site URL from global data).`,
+  jekyll: `Stack: Jekyll.
+- Add a Node script, run after \`jekyll build\`, that renders one image per post or page with \`satori\` and \`@resvg/resvg-js\` into \`_site/og/<slug>.png\`, reading titles from front matter. Keep the whole build to one command.
+- If \`jekyll-seo-tag\` is in use, set each page's \`image\` (in front matter defaults) instead of printing a second set of tags.
+- Otherwise, in \`_includes/head.html\`, set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with \`absolute_url\`.`,
+  docusaurus: `Stack: Docusaurus.
+- Write a small local plugin whose \`postBuild\` renders one image per doc and blog post with \`satori\` and \`@resvg/resvg-js\` into the build folder under \`/og/\`.
+- Point each page at its image with the \`image\` front matter field (set by the plugin or a script), and set \`themeConfig.image\` as the site default.
+- Let Docusaurus emit the tags; don't add a second set by hand.`,
+  laravel: `Stack: Laravel.
+- Add a route such as \`/og/{slug}.png\` whose controller renders the image (Intervention Image with a bundled font, or \`spatie/browsershot\` over a Blade template) and caches the PNG in storage, so each image is made once and redone only when the title changes.
+- Read the title from the same model the page uses.
+- In my layout's <head> (\`@section\` / \`@stack\`), set og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with \`url()\`.`,
+  django: `Stack: Django.
+- Add a view at \`og/<slug>.png\` that renders the image with Pillow and a bundled font file, and cache it (file or cache framework) so each image is made once and redone only when the title changes.
+- Read the title from the same model the page uses.
+- In my base template, add a block for these tags and fill it per page: og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image, with absolute URLs from \`request.build_absolute_uri\`.`,
+  rails: `Stack: Ruby on Rails.
+- Add a route and controller action for \`/og/:slug.png\` that renders the image (\`ruby-vips\` or MiniMagick with a bundled font, or a headless browser over an ERB template) and caches it, so each image is made once and redone only when the title changes.
+- Read the title from the same model the page uses.
+- In my layout, \`yield :head\` and set per page, with \`content_for :head\`, og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image with absolute URLs.`,
+  shopify: `Stack: Shopify (Online Store 2.0 theme, Liquid).
+- Liquid can't draw images, so write a small Node script that reads my products, collections, pages and articles through the Admin API, renders each image with \`satori\` and \`@resvg/resvg-js\`, uploads it to Files, and stores it in a metafield such as \`custom.og_image\`.
+- In the theme's meta tags snippet (often \`snippets/meta-tags.liquid\`), use that metafield when it is set and fall back to the current \`page_image\`.
+- Keep og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image in that one snippet; don't print a second set.`,
+  ghost: `Stack: Ghost.
+- Ghost already prints share tags through \`{{ghost_head}}\`, using each post's Facebook and X card image when set. Don't add tags to the theme.
+- Write a small Node script with \`@tryghost/admin-api\` that renders one image per post and page with \`satori\` and \`@resvg/resvg-js\`, uploads it, and sets \`og_image\` and \`twitter_image\` on that post.
+- Skip posts that already have a hand-picked card image, and make it safe to run again after new posts.`,
   html: `Stack: plain HTML, no framework.
 - Write a small Node script (\`satori\` + \`@resvg/resvg-js\`, or Playwright screenshotting an HTML template) that reads each page's <title> and writes \`/og/<page>.png\`.
 - Add og:image, og:image:width, og:image:height, og:image:alt, twitter:card=summary_large_image and twitter:image to each page's <head> with absolute URLs.
@@ -103,4 +180,9 @@ export async function samplePalette(url: string): Promise<string[]> {
   } catch {
     return [];
   }
+}
+
+/** The first lines of a prompt, shown when no free prompts are left so the full text is not on screen. */
+export function lockedPreview(prompt: string, lines = 4): string {
+  return prompt.split('\n').slice(0, lines).join('\n') + '\n…';
 }

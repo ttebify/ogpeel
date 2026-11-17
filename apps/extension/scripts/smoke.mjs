@@ -74,6 +74,28 @@ try {
     }
   }
   try {
+    await click(/make one like this/i);
+    await click(/^change$/i);
+    await shot('08b-dev-picker');
+    await popup.getByRole('textbox', { name: /search frameworks/i }).fill('lar');
+    await popup.waitForTimeout(300);
+    await shot('08c-dev-search');
+    await click(/^laravel$/i);
+    await shot('08d-dev-picked');
+    await popup.evaluate(() => chrome.storage.local.set({ license: { unlocked: false, freeLeft: 0 } }));
+    await popup.reload();
+    await popup.waitForTimeout(1500);
+    await click(/make one like this/i);
+    await popup.waitForTimeout(800);
+    await shot('08e-dev-locked');
+    console.log('LOCKED TEXT:', (await popup.innerText('body')).replace(/\s+/g, ' ').slice(0, 500));
+    await popup.evaluate(() => chrome.storage.local.remove(['license', 'framework']));
+    await popup.reload();
+    await popup.waitForTimeout(1500);
+  } catch (e) {
+    console.error('WARN picker', e.message.split('\n')[0]);
+  }
+  try {
     await click(/settings/i);
     await click(/^night$/i);
     await click(/back/i);

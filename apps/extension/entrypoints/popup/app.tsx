@@ -9,12 +9,13 @@ import {
 } from '@/lib/browser-actions';
 import { SITE_PAGES } from '@/lib/config';
 import { activateKey } from '@/lib/license';
-import { buildPrompt, samplePalette } from '@/lib/prompt';
+import { buildPrompt, FRAMEWORKS, lockedPreview, samplePalette } from '@/lib/prompt';
 import {
   DEFAULT_LICENSE,
   DEFAULT_SETTINGS,
   loadPrefs,
   saveLicense,
+  saveFramework,
   saveSettings,
 } from '@/lib/storage';
 import type { Actions, OgImage, PageInfo, RawPage, State } from '@/lib/types';
@@ -47,6 +48,9 @@ const initial: State = {
   settings: DEFAULT_SETTINGS,
   license: DEFAULT_LICENSE,
   framework: 'nextjs',
+  frameworkPicked: false,
+  picking: false,
+  frameworkQuery: '',
   prompt: '',
   checks: [],
   keyError: false,
@@ -106,6 +110,7 @@ export function App() {
       title: tab?.title || '',
       description: '',
       hasLargest: false,
+      framework: null,
     };
     const r = (raw.current = await readTab(tab));
     if (!r) return set({ status: 'empty', restricted: true, page: blank, images: [] });
@@ -115,7 +120,9 @@ export function App() {
       title: r.title,
       description: r.description,
       hasLargest: !!r.largest,
+      framework: r.framework,
     };
+    if (r.framework && !ref.current.frameworkPicked) set({ framework: r.framework });
     const images: OgImage[] = r.images.map((i) => ({
       url: i.url,
       tags: i.tags,
@@ -130,7 +137,13 @@ export function App() {
 
   useEffect(() => {
     loadPrefs()
-      .then(set)
+      .then(({ framework, ...prefs }) =>
+        set(
+          framework && FRAMEWORKS.some((f) => f.id === framework)
+            ? { ...prefs, framework, frameworkPicked: true }
+            : prefs,
+        ),
+      )
       .catch(() => {});
     load();
   }, []);
@@ -152,11 +165,17 @@ export function App() {
   useEffect(() => {
     if (s.route !== 'dev' || !img || !s.page) return;
     let live = true;
-    const make = (colors: string[]) =>
-      live &&
-      set({
-        prompt: buildPrompt({ framework: s.framework, image: img, page: s.page!, palette: colors }),
+    const locked = !s.license.unlocked && s.license.freeLeft <= 0;
+    const make = (colors: string[]) => {
+      if (!live) return;
+      const prompt = buildPrompt({
+        framework: s.framework,
+        image: img,
+        page: s.page!,
+        palette: colors,
       });
+      set({ prompt: locked ? lockedPreview(prompt) : prompt });
+    };
     if (palette.current?.url === img.url) make(palette.current.colors);
     else {
       make([]);
@@ -168,7 +187,7 @@ export function App() {
     return () => {
       live = false;
     };
-  }, [s.route, s.framework, img?.url, img?.width]);
+  }, [s.route, s.framework, img?.url, img?.width, s.license.unlocked, s.license.freeLeft]);
 
   const flash = (copied: State['copied']) => {
     set({ copied, busy: null, error: null });
@@ -179,7 +198,7 @@ export function App() {
   };
 
   const a: Actions = {
-    go: (route) => set({ route, error: null, keyError: false }),
+    go: (route) => set({ route, error: null, keyError: false, picking: false, frameworkQuery: '' }),
     select: (current) => {
       const cur = ref.current;
       if (cur.images[current] && cur.page)
@@ -272,7 +291,12 @@ export function App() {
         set({ error: "That didn't copy." });
       }
     },
-    setFramework: (framework) => set({ framework }),
+    setFramework: (framework) => {
+      saveFramework(framework);
+      set({ framework, frameworkPicked: true, picking: false, frameworkQuery: '' });
+    },
+    openPicker: () => set({ picking: true, frameworkQuery: '' }),
+    searchFrameworks: (frameworkQuery) => set({ frameworkQuery }),
     copyPrompt: async () => {
       const cur = ref.current;
       if (!cur.prompt) return;

@@ -14,6 +14,8 @@ export type RawPage = {
   description: string;
   images: RawImage[];
   largest: { url: string; width: number; height: number; alt?: string } | null;
+  /** The framework the page appears to be built with, when its markup shows one. */
+  framework: Framework | null;
 };
 
 export type OgImage = {
@@ -38,6 +40,8 @@ export type PageInfo = {
   title: string;
   description: string;
   hasLargest: boolean;
+  /** The framework this page appears to be built with, if any. */
+  framework: Framework | null;
 };
 
 export type Naming = 'title' | 'original';
@@ -45,7 +49,27 @@ export type Look = 'auto' | 'day' | 'night';
 export type Settings = { naming: Naming; look: Look; keepSource: boolean };
 export type License = { unlocked: boolean; key?: string; freeLeft: number };
 
-export type Framework = 'nextjs' | 'astro' | 'wordpress' | 'html';
+export type Framework =
+  | 'nextjs'
+  | 'nuxt'
+  | 'sveltekit'
+  | 'astro'
+  | 'reactrouter'
+  | 'tanstack'
+  | 'gatsby'
+  | 'vite'
+  | 'hugo'
+  | 'eleventy'
+  | 'jekyll'
+  | 'docusaurus'
+  | 'html'
+  | 'laravel'
+  | 'django'
+  | 'rails'
+  | 'wordpress'
+  | 'shopify'
+  | 'ghost';
+export type FrameworkGroup = 'JAVASCRIPT' | 'STATIC' | 'SERVER' | 'HOSTED';
 
 export type Route =
   'popup' | 'all' | 'saved' | 'preview' | 'dev' | 'copied' | 'unlock' | 'key' | 'settings';
@@ -76,6 +100,11 @@ export type State = {
   settings: Settings;
   license: License;
   framework: Framework;
+  /** The framework was picked by the person (and remembered), not detected. */
+  frameworkPicked: boolean;
+  /** The framework list is open on the dev screen, and what is typed in its search. */
+  picking: boolean;
+  frameworkQuery: string;
   /** The developer prompt for the current image and framework. */
   prompt: string;
   checks: Check[];
@@ -95,6 +124,8 @@ export type Actions = {
   copyImage(): void;
   copyLink(): void;
   setFramework(f: Framework): void;
+  openPicker(): void;
+  searchFrameworks(q: string): void;
   copyPrompt(): void;
   submitKey(key: string): void;
   clearKeyError(): void;

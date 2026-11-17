@@ -11,7 +11,7 @@ export const LINKS = {
 } as const;
 
 /** The product video on YouTube. Its poster is public/product-video-poster.jpg. */
-export const VIDEO = { id: 'k_uak-mVf6Q', length: '0:44' } as const;
+export const VIDEO = { id: 'IWw3EUP1pn8', length: '0:44' } as const;
 
 /** Where a buyer writes for a lost key. The same address the worker sends keys from (MAIL_FROM), so it must receive mail. */
 export const SUPPORT_EMAIL = 'hello@ogpeel.com';

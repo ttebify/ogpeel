@@ -17,6 +17,15 @@ a{color:#1A1714}
 .btn{min-height:52px;padding:0 24px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid #1A1714;text-decoration:none;font:500 13px 'IBM Plex Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:#1A1714;background:transparent}
 .hot{background:#C8401E;color:#fff;box-shadow:3px 3px 0 #1A1714}
 .ink{background:#1A1714;color:#EFE6D8}
+.btn svg{width:18px;height:18px;margin-right:12px;flex:none}
+.split{padding:0 16px;border-left:0;box-shadow:none}
+.menu{position:absolute;top:100%;left:0;z-index:2;margin:8px 0 0;padding:0;list-style:none;min-width:100%;background:#F7F1E6;border:1.5px solid #1A1714;box-shadow:3px 3px 0 #1A1714}
+.menu a{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 16px;border-top:1.5px solid #1A1714;text-decoration:none;font:400 13px 'IBM Plex Mono',monospace;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.menu a:hover{background:#E4D9C7}
+.menu svg{width:18px;height:18px;flex:none}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-height:64px;padding:0 28px;gap:14px;box-shadow:3px 3px 0 #EFE6D8;cursor:pointer;white-space:nowrap}
+@media (max-width:640px){.play{min-height:48px;padding:0 20px}}
+.play svg{width:16px;height:16px;margin:0}
 .h1{font-size:clamp(56px,9vw,128px);font-weight:600;line-height:.9;letter-spacing:-.03em;margin:0}
 .h2{font-size:clamp(40px,5vw,64px);font-weight:600;line-height:.95;letter-spacing:-.02em;margin:0}
 .sec{padding:96px 0;border-top:1.5px solid #1A1714}
@@ -39,13 +48,39 @@ a{color:#1A1714}
       <div style="flex: 2 1 480px">
         <h1 class="h1">Save any page's share image<span style="color: #C8401E">.</span></h1>
         <p style="margin: 32px 0 0; font-size: 24px; font-style: italic; line-height: 1.35; max-width: 560px">Every link has a picture it shows when it's shared. Click Ogpeel and it's yours, full size, named after the page.</p>
-        <div id="install" style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px">
-          <a class="btn hot" href="#install">Add to Chrome</a><a class="btn" href="#install">Add to Edge</a><a class="btn" href="#install">Get for Safari</a>
+        <div id="install" style="margin-top: 40px">
+          <div style="position: relative; display: inline-flex; box-shadow: 3px 3px 0 #1A1714">
+            <a class="btn hot" href="#install" style="box-shadow: none"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"></path></svg>Add to Chrome</a>
+            <button class="btn hot split" type="button" aria-label="Other browsers" aria-expanded="{{menuExpanded}}" onClick="{{toggleMenu}}"><svg viewBox="0 0 12 12" aria-hidden="true" style="width: 12px; height: 12px; margin: 0; transform: {{caretTurn}}"><path d="M1.5 4l4.5 4.5L10.5 4" fill="none" stroke="currentColor" stroke-width="1.75"></path></svg></button>
+            <sc-if value="{{menuOpen}}" hint-placeholder-val="{{ true }}">
+              <ul class="menu">
+                <li class="m" style="padding: 12px 16px 8px; font-size: 12px; color: #5E554B">Other browsers</li>
+                <li><a href="#install"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.86 17.86q.14 0 .25.12.1.13.1.25t-.11.33l-.32.46-.43.53-.44.5q-.21.25-.38.42l-.22.23q-.58.53-1.34 1.04-.76.51-1.6.91-.86.4-1.74.64t-1.67.24q-.9 0-1.69-.28-.8-.28-1.48-.78-.68-.5-1.22-1.17-.53-.66-.92-1.44-.38-.77-.58-1.6-.2-.83-.2-1.67 0-1 .32-1.96.33-.97.87-1.8.14.95.55 1.77.41.82 1.02 1.5.6.68 1.38 1.21.78.54 1.64.9.86.36 1.77.56.92.2 1.8.2 1.12 0 2.18-.24 1.06-.23 2.06-.72l.2-.1.2-.05zm-15.5-1.27q0 1.1.27 2.15.27 1.06.78 2.03.51.96 1.24 1.77.74.82 1.66 1.4-1.47-.2-2.8-.74-1.33-.55-2.48-1.37-1.15-.83-2.08-1.9-.92-1.07-1.58-2.33T.36 14.94Q0 13.54 0 12.06q0-.81.32-1.49.31-.68.83-1.23.53-.55 1.2-.96.66-.4 1.35-.66.74-.27 1.5-.39.78-.12 1.55-.12.7 0 1.42.1.72.12 1.4.35.68.23 1.32.57.63.35 1.16.83-.35 0-.7.07-.33.07-.65.23v-.02q-.63.28-1.2.74-.57.46-1.05 1.04-.48.58-.87 1.26-.38.67-.65 1.39-.27.71-.42 1.44-.15.72-.15 1.38zM11.96.06q1.7 0 3.33.39 1.63.38 3.07 1.15 1.43.77 2.62 1.93 1.18 1.16 1.98 2.7.49.94.76 1.96.28 1 .28 2.08 0 .89-.23 1.7-.24.8-.69 1.48-.45.68-1.1 1.22-.64.53-1.45.88-.54.24-1.11.36-.58.13-1.16.13-.42 0-.97-.03-.54-.03-1.1-.12-.55-.1-1.05-.28-.5-.19-.84-.5-.12-.09-.23-.24-.1-.16-.1-.33 0-.15.16-.35.16-.2.35-.5.2-.28.36-.68.16-.4.16-.95 0-1.06-.4-1.96-.4-.91-1.06-1.64-.66-.74-1.52-1.28-.86-.55-1.79-.89-.84-.3-1.72-.44-.87-.14-1.76-.14-1.55 0-3.06.45T.94 7.55q.71-1.74 1.81-3.13 1.1-1.38 2.52-2.35Q6.68 1.1 8.37.58q1.7-.52 3.58-.52Z"></path></svg>Add to Edge</a></li>
+                <li><a href="#install"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="10.5"></circle><path d="M16.5 7.5l-6 3-3 6 6-3z" fill="currentColor" stroke-linejoin="round"></path></svg>Get for Safari</a></li>
+              </ul>
+            </sc-if>
+          </div>
         </div>
       </div>
       <figure style="margin: 0; flex: 1 1 320px">
         <img src="/_blob/eebcf5f573a066a8d8e631baa9a4b9dc" alt="Share image saved from a Linear article" style="display: block; width: 100%; aspect-ratio: 1200 / 675; border: 1.5px solid #1A1714; box-shadow: 8px 8px 0 #1A1714">
         <figcaption class="m" style="margin-top: 20px; display: flex; justify-content: space-between; font-size: 12px"><span>og:image · linear.app</span><span>1200 × 675 · PNG</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="watch" class="sec">
+    <div class="w">
+      <div class="cols" style="gap: 24px 48px; align-items: flex-end; margin-bottom: 40px">
+        <div><div class="m" style="margin-bottom: 24px">Watch · 0:44</div><h2 class="h2">One click, one picture<span style="color: #C8401E">.</span></h2></div>
+        <p style="margin: 0; font-size: 20px; line-height: 1.45; max-width: 520px">From an open article to a full-size file in your Downloads, start to finish.</p>
+      </div>
+      <figure style="margin: 0">
+        <div style="position: relative; border: 1.5px solid #1A1714; box-shadow: 8px 8px 0 #1A1714; background: #1A1714">
+          <img src="/_blob/08a7df38aba4b9ddf9aa7591c7aba8d0" alt="" style="display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; opacity: .92">
+          <button class="btn ink play" type="button"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"></path></svg>Play the video</button>
+        </div>
+        <figcaption class="m" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 12px"><span>Ogpeel · save the picture behind a link</span><span>Loads from YouTube only when you press play</span></figcaption>
       </figure>
     </div>
   </section>
@@ -135,10 +170,11 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.</pr
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3400}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":4200}}'>
 class Component extends DCLogic {
   renderVals() {
     const open = (this.state && this.state.open) ?? 0;
+    const menuOpen = !!(this.state && this.state.menu);
     const items = [
       ['Does Ogpeel read the pages I visit?', 'Only the page you click the icon on, and only at that moment. Nothing is sent anywhere.'],
       ['Can I use images I download?', 'Ogpeel saves what the page already shares publicly. Who owns the picture doesn’t change, so ask the site before you reuse it in your own work.'],
@@ -146,7 +182,9 @@ class Component extends DCLogic {
       ['I lost my key.', 'It’s in the email we sent when you paid. If that’s gone, the Find my key page says how to get it again.'],
       ['Can I get a refund?', 'Yes, within 14 days. Reply to your receipt email.']
     ];
-    return { faq: items.map(([q, a], i) => ({
+    return { menuOpen, menuExpanded: menuOpen ? 'true' : 'false', caretTurn: menuOpen ? 'rotate(180deg)' : 'none',
+      toggleMenu: () => this.setState({ menu: !menuOpen }),
+      faq: items.map(([q, a], i) => ({
       q, a, isOpen: open === i, open: open === i ? 'true' : 'false', sign: open === i ? '−' : '+',
       toggle: () => this.setState({ open: open === i ? -1 : i })
     })) };

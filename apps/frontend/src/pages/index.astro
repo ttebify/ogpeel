@@ -3,8 +3,10 @@ import Layout from '@/layouts/layout.astro';
 import Wordmark from '@/components/wordmark.astro';
 import ButtonLink from '@/components/button-link.astro';
 import Dot from '@/components/dot.astro';
+import InstallButton from '@/components/install-button.astro';
+import ProductVideo from '@/components/product-video.astro';
 import { COFFEE, PRICE, REFUND_DAYS } from '@ogpeel/pricing';
-import { LINKS } from '@/config';
+import { LINKS, VIDEO } from '@/config';
 
 const wrap = 'mx-auto box-border max-w-site px-6';
 const section = 'py-24 rule-t border-border';
@@ -92,12 +94,8 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             Every link has a picture it shows when it's shared. Click Ogpeel and it's yours, full
             size, named after the page.
           </p>
-          <div id="install" class="mt-10 flex flex-wrap gap-3">
-            <ButtonLink variant="action" href={LINKS.chrome}>
-              Add to Chrome
-            </ButtonLink>
-            <ButtonLink href={LINKS.edge}>Add to Edge</ButtonLink>
-            <ButtonLink href={LINKS.safari}>Get for Safari</ButtonLink>
+          <div id="install" class="mt-10">
+            <InstallButton />
           </div>
         </div>
         <figure class="m-0 flex-[1_1_320px]">
@@ -113,6 +111,24 @@ Add og:image, og:image:width, og:image:height and og:image:alt to each page.`;
             <span>1200 × 675 · PNG</span>
           </figcaption>
         </figure>
+      </div>
+    </section>
+
+    <section id="watch" class={section} aria-labelledby="watch-title">
+      <div class={wrap}>
+        <div class="cols mb-10 items-end gap-x-12 gap-y-6">
+          <div>
+            <p class="mono m-0 mb-6">Watch · {VIDEO.length}</p>
+            <h2 id="watch-title" class={h2}>
+              One click, one picture
+              <Dot />
+            </h2>
+          </div>
+          <p class="m-0 max-w-copy text-xl leading-snug">
+            From an open article to a full-size file in your Downloads, start to finish.
+          </p>
+        </div>
+        <ProductVideo />
       </div>
     </section>
 

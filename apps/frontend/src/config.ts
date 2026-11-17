@@ -10,5 +10,8 @@ export const LINKS = {
   coffee: 'https://checkout.bachs.io/pay/pl_2488450572b7',
 } as const;
 
+/** The product video on YouTube. Its poster is public/product-video-poster.jpg. */
+export const VIDEO = { id: 'k_uak-mVf6Q', length: '0:44' } as const;
+
 /** Where a buyer writes for a lost key. The same address the worker sends keys from (MAIL_FROM), so it must receive mail. */
 export const SUPPORT_EMAIL = 'hello@ogpeel.com';

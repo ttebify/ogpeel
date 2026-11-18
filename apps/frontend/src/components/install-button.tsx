@@ -40,13 +40,20 @@ export default function InstallButton() {
 
   return (
     <div class="relative inline-flex shadow-offset">
-      <a
-        href={main.href}
-        class="box-border flex min-h-13 items-center gap-3 bg-primary px-6 font-mono text-sm font-medium tracking-label text-primary-foreground uppercase no-underline rule border-border"
-      >
-        <BrowserIcon browser={main.id} />
-        {main.label}
-      </a>
+      {main.href ? (
+        <a
+          href={main.href}
+          class="box-border flex min-h-13 items-center gap-3 bg-primary px-6 font-mono text-sm font-medium tracking-label text-primary-foreground uppercase no-underline rule border-border"
+        >
+          <BrowserIcon browser={main.id} />
+          {main.label}
+        </a>
+      ) : (
+        <p class="m-0 box-border flex min-h-13 items-center gap-3 bg-card px-6 font-mono text-sm font-medium tracking-label text-muted-foreground uppercase rule border-border">
+          <BrowserIcon browser={main.id} />
+          Coming to Safari
+        </p>
+      )}
       <details ref={menu} class="group" onKeyDown={onKeyDown}>
         <summary
           aria-label="Other browsers"
@@ -66,13 +73,20 @@ export default function InstallButton() {
             .filter((b) => b.id !== current)
             .map((b) => (
               <li key={b.id}>
-                <a
-                  href={b.href}
-                  class="flex min-h-12 items-center gap-3 px-4 font-mono text-sm tracking-label uppercase no-underline rule-t border-border hover:bg-muted"
-                >
-                  <BrowserIcon browser={b.id} />
-                  {b.label}
-                </a>
+                {b.href ? (
+                  <a
+                    href={b.href}
+                    class="flex min-h-12 items-center gap-3 px-4 font-mono text-sm tracking-label uppercase no-underline rule-t border-border hover:bg-muted"
+                  >
+                    <BrowserIcon browser={b.id} />
+                    {b.label}
+                  </a>
+                ) : (
+                  <span class="flex min-h-12 items-center gap-3 px-4 font-mono text-sm tracking-label text-muted-foreground uppercase rule-t border-border">
+                    <BrowserIcon browser={b.id} />
+                    Safari: coming soon
+                  </span>
+                )}
               </li>
             ))}
         </ul>

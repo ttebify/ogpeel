@@ -3,9 +3,11 @@
 
 /** Store and checkout links. */
 export const LINKS = {
-  chrome: '#install',
-  edge: '#install',
-  safari: '#install',
+  chrome: 'https://chromewebstore.google.com/detail/jblomcmfnidepcijecnmfnpchkmcneli',
+  // Edge installs from the Chrome Web Store until it has its own listing.
+  edge: 'https://chromewebstore.google.com/detail/jblomcmfnidepcijecnmfnpchkmcneli',
+  /** Empty until the Safari version is out; the button then says it is coming. */
+  safari: '',
   checkout: 'https://api.ogpeel.com/buy',
   coffee: 'https://checkout.bachs.io/pay/pl_2488450572b7',
 } as const;

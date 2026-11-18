@@ -2,6 +2,8 @@
 
 Save the image in a link preview. A free, open-source browser extension. [ogpeel.com](https://ogpeel.com)
 
+[Add to Chrome](https://chromewebstore.google.com/detail/jblomcmfnidepcijecnmfnpchkmcneli)
+
 [![Watch the Ogpeel video (0:44)](apps/frontend/public/product-video-poster.jpg)](https://www.youtube.com/watch?v=IWw3EUP1pn8)
 
 - Download the link preview image full size, or copy the image or its link.
